@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+  /* Botanical Theme - Light Mode */
+  --color-bg-primary: #FCF9F2; /* Cream base */
+  --color-bg-secondary: #F3ECE1; /* Deeper cream */
+  --color-primary: #F2B5D4; /* Soft petal pink */
+  --color-primary-light: #FBE6F0; /* Ultra light pink */
+  --color-secondary: #BBE5D3; /* Sage/Mint green */
+  --color-accent: #D0C3ED; /* Lavender */
+  
+  --color-text-primary: #2C3A33; /* Deep forest green / almost black */
+  --color-text-secondary: #586B61; /* Muted sage text */
+  --color-text-muted: #8F9E96;
+
+  /* Glassmorphism Tokens */
+  --glass-bg: rgba(252, 249, 242, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-shadow: 0 8px 32px 0 rgba(187, 229, 211, 0.25);
+  --glass-blur: blur(12px);
+
+  /* Typography */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Spacing & Borders */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 9999px;
+
+  /* Transitions */
+  --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Base Glassmorphism Utility Class */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--radius-lg);
+}
+
+/* Botanical Glows & Gradients */
+.bg-gradient-floral {
+  background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-bg-primary) 50%, #E8F4EE 100%);
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #D486B2, #85B8A1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D486B2;
+}
+
+/* Animations */
+@keyframes drift {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+
+.petal {
+  position: absolute;
+  background: radial-gradient(circle at 30% 30%, var(--color-primary), var(--color-primary-light));
+  border-radius: 50% 0 50% 50%;
+  opacity: 0;
+  pointer-events: none;
+  animation: drift linear infinite;
+  filter: drop-shadow(0 2px 4px rgba(242, 181, 212, 0.4));
+}
