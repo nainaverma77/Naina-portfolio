@@ -1,12 +1,24 @@
 "use client";
+import React, { useState, useEffect } from 'react';
 
 import SkillsSection from '@/components/sections/SkillsSection';
 import EducationSection from '@/components/sections/EducationSection';
 import ProjectsSection from '@/components/sections/ProjectsSection';
 import ConnectForm from '@/components/sections/ConnectForm';
 import { Download } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Home() {
+  const [beeLanded, setBeeLanded] = useState(false);
+
+  useEffect(() => {
+    // Wait 4 seconds for the bee to fly around before it officially 'lands'
+    const timer = setTimeout(() => {
+      setBeeLanded(true);
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div>
       {/* NAVBAR */}
@@ -40,15 +52,57 @@ export default function Home() {
       {/* HERO SECTION */}
       <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center relative" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', animation: 'fadeInUp 1s ease-out' }}>
         
-        {/* System Status Pill */}
-        <div className="glass-pill" style={{ padding: '0.5rem 1.5rem', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', fontWeight: 600, letterSpacing: '0.1em' }}>
-          <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--color-primary)', boxShadow: '0 0 10px var(--color-primary)' }}></div>
-          GARDEN STATUS: BLOOMING
-        </div>
 
         {/* Main Text */}
         <h1 className="tech-heading" style={{ fontSize: '6.5rem', lineHeight: 1.1, margin: 0, color: 'var(--color-text-primary)', fontStyle: 'italic' }}>
-          Naina Verma
+          <span style={{ position: 'relative', display: 'inline-block' }}>
+            N
+            {/* The sitting/flying bee */}
+            {!beeLanded ? (
+              <motion.div
+                initial={{ x: 500, y: -400, opacity: 0, rotate: -45 }}
+                animate={{ 
+                  x: [500, 200, -150, 50, 0], 
+                  y: [-400, -100, -300, -100, 0], 
+                  opacity: [0, 1, 1, 1, 1],
+                  rotate: [-45, 30, -30, 20, 0]
+                }}
+                transition={{ 
+                  duration: 4, 
+                  ease: "easeInOut",
+                  times: [0, 0.3, 0.6, 0.85, 1] 
+                }}
+                style={{ 
+                  position: 'absolute', 
+                  top: '-2.5rem', 
+                  left: '1.5rem', 
+                  fontSize: '3rem', 
+                  zIndex: 10, 
+                  pointerEvents: 'none', 
+                  filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.2))' 
+                }}
+              >
+                🐝
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ x: 0, y: 0, rotate: 0 }}
+                animate={{ y: [0, -8, 0], rotate: [0, 10, -5, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                style={{ 
+                  position: 'absolute', 
+                  top: '-2.5rem', 
+                  left: '1.5rem', 
+                  fontSize: '3rem', 
+                  zIndex: 10, 
+                  pointerEvents: 'none', 
+                  filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.2))' 
+                }}
+              >
+                🐝
+              </motion.div>
+            )}
+          </span>aina Verma
         </h1>
         <h1 className="tech-heading text-gradient" style={{ fontSize: '4.5rem', lineHeight: 1.1, margin: 0, marginBottom: '2rem' }}>
           Developer

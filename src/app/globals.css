@@ -137,21 +137,21 @@ a {
 
 .droplet {
   position: absolute;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(181, 210, 222, 0.4) 100%);
-  border-radius: 0 50% 50% 50%; /* Pointy top-left corner */
-  transform: rotate(45deg); /* Rotates the point to face straight UP */
-  box-shadow: inset -2px -2px 5px rgba(255,255,255,0.5), 0 4px 10px rgba(181, 210, 222, 0.6);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(130, 180, 210, 0.6) 100%);
+  border-radius: 0 50% 50% 50%;
+  transform: rotate(45deg);
+  box-shadow: inset -2px -2px 6px rgba(255,255,255,0.8), 0 6px 12px rgba(80, 130, 160, 0.8);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   pointer-events: none;
 }
 
 .leaf {
   position: absolute;
-  background: linear-gradient(135deg, rgba(187, 229, 211, 0.8) 0%, rgba(133, 184, 161, 0.4) 100%);
-  border-radius: 50% 0 50% 0; /* Classic leaf shape */
-  box-shadow: inset 2px 2px 5px rgba(255,255,255,0.4), 0 4px 10px rgba(133, 184, 161, 0.4);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  background: linear-gradient(135deg, rgba(90, 150, 110, 0.9) 0%, rgba(50, 100, 70, 0.8) 100%);
+  border-radius: 50% 0 50% 0;
+  box-shadow: inset 2px 2px 6px rgba(255,255,255,0.6), 0 6px 15px rgba(20, 60, 40, 0.9);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   pointer-events: none;
 }

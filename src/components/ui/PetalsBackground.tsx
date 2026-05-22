@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 export default function PetalsBackground() {
   const [droplets, setDroplets] = useState<{ id: string; left: string; size: number; duration: number; delay: number }[]>([]);
   const [leaves, setLeaves] = useState<{ id: string; left: string; size: number; duration: number; delay: number; rotateDir: number }[]>([]);
-  const [bees, setBees] = useState<{ id: number; top: string; duration: number; delay: number; scale: number; reverse: boolean }[]>([]);
 
   useEffect(() => {
     // Generate droplets for the left side (0% to 20% width)
@@ -50,17 +49,6 @@ export default function PetalsBackground() {
     }));
 
     setLeaves([...leftLeaves, ...rightLeaves]);
-
-    // Generate 3 random bees
-    const newBees = Array.from({ length: 3 }).map((_, i) => ({
-      id: i,
-      top: `${Math.random() * 60 + 20}vh`, // Fly somewhere in the middle 60% of the screen
-      duration: Math.random() * 15 + 20, // Very slow, 20s to 35s to cross screen
-      delay: Math.random() * 15,
-      scale: Math.random() * 0.5 + 1, // 1x to 1.5x size
-      reverse: Math.random() > 0.5 // 50% chance to fly right-to-left
-    }));
-    setBees(newBees);
   }, []);
 
   return (
@@ -115,43 +103,6 @@ export default function PetalsBackground() {
             ease: "linear"
           }}
         />
-      ))}
-
-      {/* Flying Bees */}
-      {bees.map((bee) => (
-        <motion.div
-          key={`bee-${bee.id}`}
-          style={{
-            position: 'absolute',
-            top: bee.top,
-            fontSize: `${bee.scale * 2}rem`,
-            filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.15))',
-            zIndex: 10
-          }}
-          initial={{
-            x: bee.reverse ? '110vw' : '-10vw',
-            scaleX: bee.reverse ? -1 : 1 // Flip the bee emoji if flying left
-          }}
-          animate={{
-            x: bee.reverse ? ['110vw', '-10vw'] : ['-10vw', '110vw'],
-            y: ['0vh', '-5vh', '5vh', '-2vh', '0vh'], // Wiggling up and down
-          }}
-          transition={{
-            x: {
-              duration: bee.duration,
-              delay: bee.delay,
-              repeat: Infinity,
-              ease: "linear"
-            },
-            y: {
-              duration: 4, // Wiggle speed
-              repeat: Infinity,
-              ease: "easeInOut"
-            }
-          }}
-        >
-          🐝
-        </motion.div>
       ))}
     </div>
   );
