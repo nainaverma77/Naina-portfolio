@@ -135,19 +135,23 @@ a {
   opacity: 0.8; /* Slight opacity so it blends nicely with the cream bg */
 }
 
-@keyframes drift {
-  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-  10% { opacity: 0.25; }
-  90% { opacity: 0.25; }
-  100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+.droplet {
+  position: absolute;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(181, 210, 222, 0.4) 100%);
+  border-radius: 0 50% 50% 50%; /* Pointy top-left corner */
+  transform: rotate(45deg); /* Rotates the point to face straight UP */
+  box-shadow: inset -2px -2px 5px rgba(255,255,255,0.5), 0 4px 10px rgba(181, 210, 222, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  pointer-events: none;
 }
 
-.petal {
+.leaf {
   position: absolute;
-  background: radial-gradient(circle at 30% 30%, var(--color-primary), var(--color-primary-light));
-  border-radius: 50% 0 50% 50%;
-  opacity: 0;
+  background: linear-gradient(135deg, rgba(187, 229, 211, 0.8) 0%, rgba(133, 184, 161, 0.4) 100%);
+  border-radius: 50% 0 50% 0; /* Classic leaf shape */
+  box-shadow: inset 2px 2px 5px rgba(255,255,255,0.4), 0 4px 10px rgba(133, 184, 161, 0.4);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   pointer-events: none;
-  animation: drift linear infinite;
-  filter: drop-shadow(0 2px 4px rgba(242, 181, 212, 0.4));
 }
