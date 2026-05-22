@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "degree": "B.S. in Computer Science",
+    "institution": "University of Technology",
+    "year": "2021 - 2025",
+    "description": "Graduated with honors. Focused on full-stack web development and user interface design.",
+    "enabled": true
+  },
+  {
+    "id": "2",
+    "degree": "Advanced UI/UX Certification",
+    "institution": "Design Academy",
+    "year": "2023",
+    "description": "Intensive coursework on modern design principles, wireframing, and interactive prototyping.",
+    "enabled": true
+  }
+]

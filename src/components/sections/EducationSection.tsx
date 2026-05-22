@@ -1,0 +1,101 @@
+"use client";
+
+import React from 'react';
+import { motion } from 'framer-motion';
+import educationData from '@/data/education.json';
+
+export default function EducationSection() {
+  const activeEducation = educationData.filter(ed => ed.enabled);
+
+  return (
+    <section id="education" style={{ padding: '6rem 2rem', position: 'relative', zIndex: 10 }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          style={{ textAlign: 'center', marginBottom: '4rem' }}
+        >
+          <h2 style={{ fontSize: '3rem', color: 'var(--color-text-primary)', marginBottom: '1rem' }}>
+            My <span className="text-gradient">Roots</span>
+          </h2>
+          <p style={{ color: 'var(--color-text-secondary)', fontSize: '1.125rem' }}>
+            The academic foundation that supports my growth.
+          </p>
+        </motion.div>
+
+        <div style={{ position: 'relative', paddingLeft: '2rem' }}>
+          {/* The Vine (Timeline Line) */}
+          <motion.div 
+            initial={{ height: 0 }}
+            whileInView={{ height: '100%' }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            style={{
+              position: 'absolute',
+              left: '0',
+              top: '0',
+              width: '4px',
+              background: 'linear-gradient(to bottom, var(--color-secondary), var(--color-primary))',
+              borderRadius: '9999px',
+              boxShadow: '0 0 10px rgba(187, 229, 211, 0.5)'
+            }}
+          />
+
+          {activeEducation.map((ed, index) => (
+            <motion.div
+              key={ed.id}
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.3, duration: 0.6 }}
+              style={{
+                position: 'relative',
+                marginBottom: index === activeEducation.length - 1 ? '0' : '3rem',
+              }}
+            >
+              {/* Leaf/Bud Node */}
+              <div style={{
+                position: 'absolute',
+                left: '-2.5rem',
+                top: '0.5rem',
+                width: '16px',
+                height: '16px',
+                backgroundColor: 'var(--color-bg-primary)',
+                border: '3px solid var(--color-secondary)',
+                borderRadius: '50% 0 50% 50%', /* Leaf shape */
+                transform: 'rotate(-45deg)',
+                boxShadow: '0 0 10px rgba(187, 229, 211, 0.5)'
+              }} />
+
+              <div className="glass-panel" style={{ padding: '2rem', transition: 'var(--transition-smooth)' }}>
+                <span style={{ 
+                  display: 'inline-block',
+                  color: 'var(--color-secondary)',
+                  fontWeight: 600,
+                  fontSize: '0.875rem',
+                  marginBottom: '0.5rem',
+                  backgroundColor: 'rgba(187, 229, 211, 0.2)',
+                  padding: '0.25rem 0.75rem',
+                  borderRadius: '9999px'
+                }}>
+                  {ed.year}
+                </span>
+                <h3 style={{ fontSize: '1.5rem', color: 'var(--color-text-primary)', marginBottom: '0.25rem' }}>
+                  {ed.degree}
+                </h3>
+                <h4 style={{ fontSize: '1.125rem', color: 'var(--color-primary)', marginBottom: '1rem', fontWeight: 500 }}>
+                  {ed.institution}
+                </h4>
+                <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+                  {ed.description}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

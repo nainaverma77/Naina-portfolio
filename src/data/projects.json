@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "title": "Floral Boutique E-commerce",
+    "description": "A fully functional e-commerce platform built for a boutique florist, featuring real-time inventory and a beautiful user interface.",
+    "repoUrl": "https://github.com/naina/floral-boutique",
+    "liveUrl": "https://floral-boutique-demo.vercel.app",
+    "techStack": ["Next.js", "React", "Node.js", "Stripe"],
+    "image": "/images/project-1.jpg"
+  },
+  {
+    "id": "2",
+    "title": "Garden Planner App",
+    "description": "An interactive web application that allows users to design and layout their own virtual gardens with drag-and-drop mechanics.",
+    "repoUrl": "https://github.com/naina/garden-planner",
+    "liveUrl": "https://garden-planner-app.vercel.app",
+    "techStack": ["React", "Framer Motion", "MongoDB", "Express"],
+    "image": "/images/project-2.jpg"
+  }
+]

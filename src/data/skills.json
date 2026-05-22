@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "name": "React.js",
+    "level": 90,
+    "category": "Frontend"
+  },
+  {
+    "id": "2",
+    "name": "Next.js",
+    "level": 85,
+    "category": "Frontend"
+  },
+  {
+    "id": "3",
+    "name": "Node.js",
+    "level": 80,
+    "category": "Backend"
+  },
+  {
+    "id": "4",
+    "name": "TypeScript",
+    "level": 85,
+    "category": "Languages"
+  },
+  {
+    "id": "5",
+    "name": "CSS/Framer Motion",
+    "level": 95,
+    "category": "Design"
+  }
+]
