@@ -43,10 +43,6 @@ html, body {
   max-width: 100vw;
   overflow-x: hidden;
   background-color: var(--color-bg-primary);
-  background-image: url('/holographic-bg.png');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
   color: var(--color-text-primary);
   font-family: var(--font-body);
   scroll-behavior: smooth;
@@ -120,6 +116,25 @@ a {
 }
 
 /* Animations */
+@keyframes bg-rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.animated-bg {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 150vmax;
+  height: 150vmax;
+  background-image: url('/holographic-bg.png');
+  background-size: cover;
+  background-position: center;
+  z-index: -2; /* Behind everything including petals */
+  animation: bg-rotate 180s linear infinite;
+  opacity: 0.8; /* Slight opacity so it blends nicely with the cream bg */
+}
+
 @keyframes drift {
   0% { transform: translateY(0) rotate(0deg); opacity: 0; }
   10% { opacity: 0.25; }

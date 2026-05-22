@@ -78,8 +78,9 @@ export default function ProjectsSection() {
                       fontSize: '0.75rem',
                       padding: '0.25rem 0.75rem',
                       borderRadius: '9999px',
-                      backgroundColor: 'rgba(212, 134, 178, 0.1)',
-                      color: '#D486B2',
+                      background: 'linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1))',
+                      border: '1px solid rgba(255,255,255,0.5)',
+                      color: 'var(--color-text-primary)',
                       fontWeight: 500
                     }}>
                       {tech}

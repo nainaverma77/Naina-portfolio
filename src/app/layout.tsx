@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import PetalsBackground from "@/components/ui/PetalsBackground";
+import LoadingScreen from "@/components/ui/LoadingScreen";
 
 export const metadata: Metadata = {
   title: "Naina | Floral Portfolio",
@@ -15,6 +16,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-gradient-floral">
+        <LoadingScreen />
+        <div className="animated-bg" />
         <div className="min-h-screen relative overflow-hidden">
           <PetalsBackground />
           <main className="relative z-10">

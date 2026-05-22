@@ -4,25 +4,33 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export default function PetalsBackground() {
-  const [petals, setPetals] = useState<{ id: number; left: string; size: number; duration: number; delay: number }[]>([]);
+  const [petals, setPetals] = useState<{ id: string; left: string; size: number; duration: number; delay: number }[]>([]);
 
   useEffect(() => {
-    // Generate random petals
-    const newPetals = Array.from({ length: 20 }).map((_, i) => ({
-      id: i,
-      left: `${Math.random() * 100}vw`,
+    // Generate petals for the left side (0% to 20% width)
+    const leftPetals = Array.from({ length: 25 }).map((_, i) => ({
+      id: `left-${i}`,
+      left: `${Math.random() * 20}vw`,
       size: Math.random() * 15 + 10, // 10px to 25px
-      duration: Math.random() * 15 + 15, // 15s to 30s (slower)
-      delay: Math.random() * 5, // 0s to 5s
+      duration: Math.random() * 10 + 10, // 10s to 20s
+      delay: Math.random() * 10, // 0s to 10s stagger
     }));
-    setPetals(newPetals);
+
+    // Generate petals for the right side (80% to 100% width)
+    const rightPetals = Array.from({ length: 25 }).map((_, i) => ({
+      id: `right-${i}`,
+      left: `${80 + Math.random() * 20}vw`,
+      size: Math.random() * 15 + 10,
+      duration: Math.random() * 10 + 10,
+      delay: Math.random() * 10,
+    }));
+
+    setPetals([...leftPetals, ...rightPetals]);
   }, []);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" style={{ zIndex: -1 }}>
-
-
-      {/* Floating Petals */}
+      {/* Falling Petals */}
       {petals.map((petal) => (
         <motion.div
           key={petal.id}
@@ -31,11 +39,11 @@ export default function PetalsBackground() {
             left: petal.left,
             width: `${petal.size}px`,
             height: `${petal.size}px`,
-            bottom: '-50px',
+            top: '-50px', // Start above the screen
           }}
           animate={{
-            y: ['0vh', '-120vh'],
-            x: ['0vw', `${Math.random() * 20 - 10}vw`],
+            y: ['0vh', '120vh'], // Fall downwards
+            x: ['0vw', `${Math.random() * 10 - 5}vw`], // Gentle sway
             rotate: [0, 360],
           }}
           transition={{

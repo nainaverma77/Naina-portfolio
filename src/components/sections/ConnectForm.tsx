@@ -104,18 +104,19 @@ export default function ConnectForm() {
           <button 
             disabled={status !== 'idle'}
             type="submit"
+            className="glass-pill"
             style={{
-              background: status === 'success' ? '#85B8A1' : 'linear-gradient(45deg, var(--color-primary), var(--color-accent))',
-              color: 'white',
-              border: 'none',
               padding: '1rem',
-              borderRadius: '8px',
+              width: '100%',
               fontSize: '1rem',
               fontWeight: 600,
               cursor: status === 'idle' ? 'pointer' : 'default',
-              boxShadow: '0 4px 15px rgba(242, 181, 212, 0.4)',
-              transition: 'var(--transition-smooth)',
-              marginTop: '1rem'
+              marginTop: '1rem',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              background: status === 'success' ? 'rgba(181, 210, 222, 0.4)' : undefined,
+              color: status === 'success' ? 'var(--color-text-primary)' : undefined,
             }}
           >
             {status === 'idle' ? 'Send Message' : status === 'submitting' ? 'Sending...' : 'Message Sent! 🌸'}

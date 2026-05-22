@@ -39,7 +39,7 @@ export default function EducationSection() {
               width: '4px',
               background: 'linear-gradient(to bottom, var(--color-secondary), var(--color-primary))',
               borderRadius: '9999px',
-              boxShadow: '0 0 10px rgba(187, 229, 211, 0.5)'
+              boxShadow: '0 0 10px rgba(181, 210, 222, 0.5)'
             }}
           />
 
@@ -66,7 +66,7 @@ export default function EducationSection() {
                 border: '3px solid var(--color-secondary)',
                 borderRadius: '50% 0 50% 50%', /* Leaf shape */
                 transform: 'rotate(-45deg)',
-                boxShadow: '0 0 10px rgba(187, 229, 211, 0.5)'
+                boxShadow: '0 0 10px rgba(181, 210, 222, 0.5)'
               }} />
 
               <div className="glass-panel" style={{ padding: '2rem', transition: 'var(--transition-smooth)' }}>
@@ -76,7 +76,7 @@ export default function EducationSection() {
                   fontWeight: 600,
                   fontSize: '0.875rem',
                   marginBottom: '0.5rem',
-                  backgroundColor: 'rgba(187, 229, 211, 0.2)',
+                  backgroundColor: 'rgba(181, 210, 222, 0.2)',
                   padding: '0.25rem 0.75rem',
                   borderRadius: '9999px'
                 }}>
