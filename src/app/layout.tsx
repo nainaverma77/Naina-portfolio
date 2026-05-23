@@ -3,9 +3,11 @@ import "./globals.css";
 import PetalsBackground from "@/components/ui/PetalsBackground";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 
+import portfolioData from "@/data/portfolio.json";
+
 export const metadata: Metadata = {
-  title: "Naina | Floral Portfolio",
-  description: "A beautiful, premium developer portfolio blooming with creativity.",
+  title: portfolioData.settings?.seoTitle || "Naina | Floral Portfolio",
+  description: portfolioData.settings?.seoDescription || "A beautiful, premium developer portfolio blooming with creativity.",
 };
 
 export default function RootLayout({

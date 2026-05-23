@@ -11,9 +11,23 @@
     "location": "Digital Greenhouse",
     "specialization": "Frontend & UI Engineering",
     "bio": "Hello! I am a passionate developer who treats code like a digital garden—carefully planting seeds of logic, nurturing them with beautiful design, and watching them bloom into seamless user experiences. With a deep love for front-end architecture and interactive interfaces, I specialize in crafting applications that are not only highly functional but aesthetically enchanting.",
-    "avatarUrl": "https://i.vgy.me/7wOc0D.png"
+    "avatarUrl": "https://i.vgy.me/7wOc0D.png",
+    "summaryCards": [
+      {
+        "title": "Enchanting Interfaces",
+        "description": "Crafting pixel-perfect, beautifully responsive designs that feel organic and fluid."
+      },
+      {
+        "title": "Deep-Rooted Architecture",
+        "description": "Building robust, scalable backend systems ensuring your digital garden thrives seamlessly."
+      }
+    ]
   },
   "skills": [
+    {
+      "name": "test",
+      "level": 77
+    },
     {
       "name": "React.js",
       "level": 90,
@@ -28,7 +42,7 @@
     },
     {
       "name": "Node.js",
-      "level": 80,
+      "level": 87,
       "category": "Backend",
       "visible": true
     },
@@ -120,7 +134,8 @@
     "animationsEnabled": true,
     "seoTitle": "Naina | Floral Portfolio",
     "seoDescription": "A beautiful, premium developer portfolio blooming with creativity.",
-    "resumeUrl": "/resume.pdf"
+    "resumeUrl": "/resume.pdf",
+    "githubUsername": "nainaverma77"
   },
   "stats": {
     "repos": 16,

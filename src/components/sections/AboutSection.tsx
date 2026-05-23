@@ -125,6 +125,36 @@ export default function AboutSection() {
             </div>
           </motion.div>
         </div>
+
+        {/* Operational Summary Cards */}
+        {about.summaryCards && about.summaryCards.length > 0 && (
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
+            gap: '2rem', 
+            marginTop: '4rem' 
+          }}>
+            {about.summaryCards.map((card: any, idx: number) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="glass-panel" 
+                style={{ 
+                  padding: '2rem', 
+                  borderTop: '4px solid var(--color-rose-gold)',
+                  transition: 'var(--transition-smooth)'
+                }}
+                whileHover={{ y: -5, boxShadow: '0 12px 30px rgba(184, 138, 114, 0.2)' }}
+              >
+                <h5 style={{ fontSize: '1.25rem', color: 'var(--color-text-primary)', marginBottom: '0.75rem', fontWeight: 600 }}>{card.title}</h5>
+                <p style={{ fontSize: '0.95rem', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{card.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
