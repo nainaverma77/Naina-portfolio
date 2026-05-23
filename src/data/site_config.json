@@ -1,0 +1,43 @@
+{
+  "logoText": "NAINA'S GARDEN",
+  "navLinks": [
+    { "label": "HOME", "href": "#" },
+    { "label": "ABOUT", "href": "#about" },
+    { "label": "SKILLS", "href": "#skills" },
+    { "label": "PROJECTS", "href": "#projects" },
+    { "label": "CONTACT", "href": "#contact" }
+  ],
+  "socialLinks": {
+    "github": "https://github.com",
+    "linkedin": "https://linkedin.com",
+    "resume": "/resume.pdf"
+  },
+  "hero": {
+    "primaryButton": { "label": "EXPLORE_BLOOMS", "href": "#projects" },
+    "secondaryButton": { "label": "PLANT_A_SEED", "href": "#contact" }
+  },
+  "sections": {
+    "about": {
+      "title": "About The Gardener",
+      "subtitle": "Discover the roots of my digital journey."
+    },
+    "skills": {
+      "title": "Skills Garden",
+      "subtitle": "The tools and technologies I use to cultivate digital experiences."
+    },
+    "education": {
+      "title": "Educational Roots",
+      "subtitle": "Where my knowledge began to sprout and grow."
+    },
+    "projects": {
+      "title": "Featured Blooms",
+      "subtitle": "A collection of my finest digital creations."
+    },
+    "contact": {
+      "title": "Leave a Love Letter",
+      "subtitle": "Let's connect and plant the seeds for something amazing.",
+      "buttonText": "Send Message",
+      "successText": "Message Sent! 🌸"
+    }
+  }
+}

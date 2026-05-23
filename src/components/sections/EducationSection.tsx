@@ -2,10 +2,11 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import educationData from '@/data/education.json';
+import portfolioData from '@/data/portfolio.json';
+import siteConfig from '@/data/site_config.json';
 
 export default function EducationSection() {
-  const activeEducation = educationData.filter(ed => ed.enabled);
+  const activeEducation = portfolioData.education.filter(ed => ed.visible !== false);
 
   return (
     <section id="education" style={{ padding: '6rem 2rem', position: 'relative', zIndex: 10 }}>
@@ -17,11 +18,9 @@ export default function EducationSection() {
           transition={{ duration: 0.8 }}
           style={{ textAlign: 'center', marginBottom: '4rem' }}
         >
-          <h2 style={{ fontSize: '3rem', color: 'var(--color-text-primary)', marginBottom: '1rem' }}>
-            My <span className="text-gradient">Roots</span>
-          </h2>
+          <h2 style={{ fontSize: '3rem', color: 'var(--color-text-primary)', marginBottom: '1rem' }} dangerouslySetInnerHTML={{ __html: siteConfig.sections.education.title.replace(/ (.*?)$/, ' <span class="text-gradient">$1</span>') }} />
           <p style={{ color: 'var(--color-text-secondary)', fontSize: '1.125rem' }}>
-            The academic foundation that supports my growth.
+            {siteConfig.sections.education.subtitle}
           </p>
         </motion.div>
 
@@ -45,7 +44,7 @@ export default function EducationSection() {
 
           {activeEducation.map((ed, index) => (
             <motion.div
-              key={ed.id}
+              key={index}
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -80,7 +79,7 @@ export default function EducationSection() {
                   padding: '0.25rem 0.75rem',
                   borderRadius: '9999px'
                 }}>
-                  {ed.year}
+                  {ed.timeline}
                 </span>
                 <h3 style={{ fontSize: '1.5rem', color: 'var(--color-text-primary)', marginBottom: '0.25rem' }}>
                   {ed.degree}
@@ -89,7 +88,7 @@ export default function EducationSection() {
                   {ed.institution}
                 </h4>
                 <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
-                  {ed.description}
+                  {ed.summary}
                 </p>
               </div>
             </motion.div>

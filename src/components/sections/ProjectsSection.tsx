@@ -3,11 +3,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
-import projectsData from '@/data/projects.json';
+import portfolioData from '@/data/portfolio.json';
+import siteConfig from '@/data/site_config.json';
 import ProjectModal from '@/components/ui/ProjectModal';
 
 export default function ProjectsSection() {
-  const [selectedProject, setSelectedProject] = useState<any | null>(null);
+  const [selectedProject, setSelectedProject] = useState<typeof portfolioData.projects[0] | null>(null);
 
   return (
     <section id="projects" style={{ padding: '6rem 2rem', position: 'relative', zIndex: 10 }}>
@@ -19,11 +20,9 @@ export default function ProjectsSection() {
           transition={{ duration: 0.8 }}
           style={{ textAlign: 'center', marginBottom: '4rem' }}
         >
-          <h2 style={{ fontSize: '3rem', color: 'var(--color-text-primary)', marginBottom: '1rem' }}>
-            Featured <span className="text-gradient">Blooms</span>
-          </h2>
+          <h2 style={{ fontSize: '3rem', color: 'var(--color-text-primary)', marginBottom: '1rem' }} dangerouslySetInnerHTML={{ __html: siteConfig.sections.projects.title.replace(/ (.*?)$/, ' <span class="text-gradient">$1</span>') }} />
           <p style={{ color: 'var(--color-text-secondary)', fontSize: '1.125rem' }}>
-            A collection of my finest digital creations.
+            {siteConfig.sections.projects.subtitle}
           </p>
         </motion.div>
 
@@ -32,7 +31,7 @@ export default function ProjectsSection() {
           gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
           gap: '3rem' 
         }}>
-          {projectsData.map((project, index) => (
+          {portfolioData.projects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 30 }}
@@ -61,19 +60,19 @@ export default function ProjectsSection() {
                 fontSize: '3rem',
                 fontFamily: 'var(--font-heading)'
               }}>
-                {project.title.charAt(0)}
+                {project.name.charAt(0)}
               </div>
 
               <div style={{ padding: '2rem' }}>
                 <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: 'var(--color-text-primary)' }}>
-                  {project.title}
+                  {project.name}
                 </h3>
                 <p style={{ color: 'var(--color-text-secondary)', marginBottom: '1.5rem', lineHeight: 1.6 }}>
                   {project.description}
                 </p>
 
                 <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
-                  {project.techStack.map(tech => (
+                  {project.tech.map(tech => (
                     <span key={tech} style={{
                       fontSize: '0.75rem',
                       padding: '0.25rem 0.75rem',
@@ -89,14 +88,14 @@ export default function ProjectsSection() {
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--color-border)', paddingTop: '1rem' }}>
-                  <button onClick={(e) => { e.stopPropagation(); window.open(project.liveUrl, '_blank'); }} style={{
+                  <button onClick={(e) => { e.stopPropagation(); window.open(project.links.live, '_blank'); }} style={{
                     display: 'flex', alignItems: 'center', gap: '0.5rem',
                     background: 'transparent', border: 'none', color: 'var(--color-primary)',
                     fontWeight: 600, cursor: 'pointer', fontSize: '0.875rem'
                   }}>
                     <ExternalLink size={16} /> Live
                   </button>
-                  <button onClick={(e) => { e.stopPropagation(); window.open(project.repoUrl, '_blank'); }} style={{
+                  <button onClick={(e) => { e.stopPropagation(); window.open(project.links.github, '_blank'); }} style={{
                     display: 'flex', alignItems: 'center', gap: '0.5rem',
                     background: 'transparent', border: 'none', color: 'var(--color-text-secondary)',
                     fontWeight: 600, cursor: 'pointer', fontSize: '0.875rem'

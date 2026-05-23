@@ -1,0 +1,80 @@
+{
+  "hero": {
+    "heading": "𝓝𝓪𝓲𝓷𝓪 𝓥𝓮𝓻𝓶𝓪",
+    "subtitle": "Developer",
+    "subtext": "✿ STEP INTO MY DIGITAL GARDEN ✿"
+  },
+  "about": {
+    "name": "Naina Verma",
+    "role": "Developer",
+    "status": "Available",
+    "location": "Digital Greenhouse",
+    "specialization": "Frontend & UI Engineering",
+    "bio": "Hello! I am a passionate developer who treats code like a digital garden—carefully planting seeds of logic, nurturing them with beautiful design, and watching them bloom into seamless user experiences. With a deep love for front-end architecture and interactive interfaces, I specialize in crafting applications that are not only highly functional but aesthetically enchanting.",
+    "avatarUrl": ""
+  },
+  "skills": [
+    { "name": "React.js", "level": 90, "category": "Frontend", "visible": true },
+    { "name": "Next.js", "level": 85, "category": "Frontend", "visible": true },
+    { "name": "Node.js", "level": 80, "category": "Backend", "visible": true },
+    { "name": "TypeScript", "level": 85, "category": "Languages", "visible": true },
+    { "name": "CSS/Framer Motion", "level": 95, "category": "Design", "visible": true }
+  ],
+  "projects": [
+    {
+      "id": "1",
+      "name": "Floral Boutique E-commerce",
+      "description": "A fully functional e-commerce platform built for a boutique florist, featuring real-time inventory and a beautiful user interface.",
+      "links": {
+        "live": "https://floral-boutique-demo.vercel.app",
+        "github": "https://github.com/naina/floral-boutique"
+      },
+      "tech": ["Next.js", "React", "Node.js", "Stripe"],
+      "status": "COMPLETED",
+      "visible": true
+    },
+    {
+      "id": "2",
+      "name": "Garden Planner App",
+      "description": "An interactive web application that allows users to design and layout their own virtual gardens with drag-and-drop mechanics.",
+      "links": {
+        "live": "https://garden-planner-app.vercel.app",
+        "github": "https://github.com/naina/garden-planner"
+      },
+      "tech": ["React", "Framer Motion", "MongoDB", "Express"],
+      "status": "LIVE",
+      "visible": true
+    }
+  ],
+  "education": [
+    {
+      "id": "1",
+      "degree": "B.S. in Computer Science",
+      "institution": "University of Technology",
+      "timeline": "2021 - 2025",
+      "summary": "Graduated with honors. Focused on full-stack web development and user interface design.",
+      "visible": true
+    },
+    {
+      "id": "2",
+      "degree": "Advanced UI/UX Certification",
+      "institution": "Design Academy",
+      "timeline": "2023",
+      "summary": "Intensive coursework on modern design principles, wireframing, and interactive prototyping.",
+      "visible": true
+    }
+  ],
+  "experience": [],
+  "testimonials": [],
+  "socials": [
+    { "id": "s1", "platform": "GitHub", "url": "https://github.com/naina", "enabled": true },
+    { "id": "s2", "platform": "LinkedIn", "url": "https://linkedin.com/in/naina", "enabled": true }
+  ],
+  "settings": {
+    "theme": "floral",
+    "animationsEnabled": true,
+    "seoTitle": "Naina | Floral Portfolio",
+    "seoDescription": "A beautiful, premium developer portfolio blooming with creativity.",
+    "resumeUrl": "/resume.pdf"
+  }
+}

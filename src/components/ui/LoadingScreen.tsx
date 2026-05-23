@@ -2,11 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 export default function LoadingScreen() {
+  const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    if (pathname && pathname.startsWith('/admin')) return;
     // Lock scroll while loading
     document.body.style.overflow = 'hidden';
     
@@ -19,7 +22,11 @@ export default function LoadingScreen() {
       clearTimeout(timer);
       document.body.style.overflow = 'unset';
     };
-  }, []);
+  }, [pathname]);
+
+  if (pathname && pathname.startsWith('/admin')) {
+    return null;
+  }
 
   return (
     <AnimatePresence>

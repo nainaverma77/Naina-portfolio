@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import skillsData from '@/data/skills.json';
+import portfolioData from '@/data/portfolio.json';
+import siteConfig from '@/data/site_config.json';
 
 export default function SkillsSection() {
   return (
@@ -15,11 +16,9 @@ export default function SkillsSection() {
           transition={{ duration: 0.8 }}
           style={{ textAlign: 'center', marginBottom: '4rem' }}
         >
-          <h2 style={{ fontSize: '3rem', color: 'var(--color-text-primary)', marginBottom: '1rem' }}>
-            My <span className="text-gradient">Skills</span>
-          </h2>
+          <h2 style={{ fontSize: '3rem', color: 'var(--color-text-primary)', marginBottom: '1rem' }} dangerouslySetInnerHTML={{ __html: siteConfig.sections.skills.title.replace(/ (.*?)$/, ' <span class="text-gradient">$1</span>') }} />
           <p style={{ color: 'var(--color-text-secondary)', fontSize: '1.125rem' }}>
-            The seeds I've planted to grow my digital garden.
+            {siteConfig.sections.skills.subtitle}
           </p>
         </motion.div>
 
@@ -28,9 +27,9 @@ export default function SkillsSection() {
           gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
           gap: '2rem' 
         }}>
-          {skillsData.map((skill, index) => (
+          {portfolioData.skills.map((skill, index) => (
             <motion.div
-              key={skill.id}
+              key={index}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}

@@ -22,6 +22,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: false, error: 'Incorrect password' }, { status: 401 });
   } catch (error) {
+    console.error(error);
     return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
   }
 }

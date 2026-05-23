@@ -1,0 +1,85 @@
+﻿
+> flower-portfolio@0.1.0 lint
+> eslint
+
+
+F:\Portfolio\Naina-Portfolio\Naina-portfolio\src\app\admin\page.tsx
+  30:14  warning  'err' is defined but never used  @typescript-eslint/no-unused-vars
+
+F:\Portfolio\Naina-Portfolio\Naina-portfolio\src\app\api\auth\login\route.ts
+  24:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+F:\Portfolio\Naina-Portfolio\Naina-portfolio\src\app\page.tsx
+  30:57  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+F:\Portfolio\Naina-Portfolio\Naina-portfolio\src\components\sections\ConnectForm.tsx
+  33:16  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+F:\Portfolio\Naina-Portfolio\Naina-portfolio\src\components\sections\ProjectsSection.tsx
+  10:58  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+F:\Portfolio\Naina-Portfolio\Naina-portfolio\src\components\sections\SkillsSection.tsx
+  22:24  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+F:\Portfolio\Naina-Portfolio\Naina-portfolio\src\components\ui\PetalsBackground.tsx
+  29:5   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+F:\Portfolio\Naina-Portfolio\Naina-portfolio\src\components\ui\PetalsBackground.tsx:29:5
+  27 |     }));
+  28 |
+> 29 |     setDroplets([...leftDroplets, ...rightDroplets]);
+     |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  30 |
+  31 |     // Generate Leaves for left side
+  32 |     const leftLeaves = Array.from({ length: 15 }).map((_, i) => ({  react-hooks/set-state-in-effect
+  70:27  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+F:\Portfolio\Naina-Portfolio\Naina-portfolio\src\components\ui\PetalsBackground.tsx:70:27
+  68 |           animate={{
+  69 |             y: ['0vh', '120vh'], // Fall downwards
+> 70 |             x: ['0vw', `${Math.random() * 10 - 5}vw`], // Gentle sway
+     |                           ^^^^^^^^^^^^^ Cannot call impure function
+  71 |             opacity: [0, 0.8, 0.8, 0] // Fade in and out
+  72 |           }}
+  73 |           transition={{                                                                                                                                                                                                                                                                                                            react-hooks/purity
+  95:27  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+F:\Portfolio\Naina-Portfolio\Naina-portfolio\src\components\ui\PetalsBackground.tsx:95:27
+  93 |           animate={{
+  94 |             y: ['0vh', '120vh'],
+> 95 |             x: ['0vw', `${Math.random() * 20 - 10}vw`], // Wider sway for leaves
+     |                           ^^^^^^^^^^^^^ Cannot call impure function
+  96 |             rotate: [0, leaf.rotateDir], // Twirling as they fall
+  97 |             opacity: [0, 0.9, 0.9, 0]
+  98 |           }}                                                                                                                                                                                                                                                                                            react-hooks/purity
+
+F:\Portfolio\Naina-Portfolio\Naina-portfolio\src\components\ui\ProjectModal.tsx
+  30:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+F:\Portfolio\Naina-Portfolio\Naina-portfolio\src\components\ui\ProjectModal.tsx:30:7
+  28 |   useEffect(() => {
+  29 |     if (isOpen && project?.repoUrl) {
+> 30 |       setIsLoading(true);
+     |       ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  31 |       fetch(`/api/github/readme?repoUrl=${encodeURIComponent(project.repoUrl)}`)
+  32 |         .then(res => res.json())
+  33 |         .then(data => {  react-hooks/set-state-in-effect
+
+Ô£û 10 problems (8 errors, 2 warnings)
+

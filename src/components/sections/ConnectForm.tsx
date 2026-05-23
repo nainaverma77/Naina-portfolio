@@ -2,18 +2,34 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import siteConfig from '@/data/site_config.json';
+import { submitContactForm } from '@/app/actions';
 
 export default function ConnectForm() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
-    // Simulate API call to save message
-    setTimeout(() => {
-      setStatus('success');
-      setTimeout(() => setStatus('idle'), 3000);
-    }, 1500);
+    
+    try {
+      const res = await submitContactForm({ name, email, message });
+      if (res.success) {
+        setStatus('success');
+        setName('');
+        setEmail('');
+        setMessage('');
+        setTimeout(() => setStatus('idle'), 3000);
+      } else {
+        setStatus('idle');
+      }
+    } catch {
+      setStatus('idle');
+    }
   };
 
   return (
@@ -26,11 +42,9 @@ export default function ConnectForm() {
           transition={{ duration: 0.8 }}
           style={{ textAlign: 'center', marginBottom: '3rem' }}
         >
-          <h2 style={{ fontSize: '3rem', color: 'var(--color-text-primary)', marginBottom: '1rem' }}>
-            Leave a <span className="text-gradient">Love Letter</span>
-          </h2>
+          <h2 style={{ fontSize: '3rem', color: 'var(--color-text-primary)', marginBottom: '1rem' }} dangerouslySetInnerHTML={{ __html: siteConfig.sections.contact.title.replace(/ (.*?)$/, ' <span class="text-gradient">$1</span>') }} />
           <p style={{ color: 'var(--color-text-secondary)', fontSize: '1.125rem' }}>
-            Let's connect and plant the seeds for something amazing.
+            {siteConfig.sections.contact.subtitle}
           </p>
         </motion.div>
 
@@ -49,6 +63,8 @@ export default function ConnectForm() {
               required
               type="text" 
               placeholder="Your name"
+              value={name}
+              onChange={e => setName(e.target.value)}
               style={{
                 width: '100%',
                 padding: '1rem',
@@ -68,6 +84,8 @@ export default function ConnectForm() {
               required
               type="email" 
               placeholder="Your email address"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
               style={{
                 width: '100%',
                 padding: '1rem',
@@ -87,6 +105,8 @@ export default function ConnectForm() {
               required
               placeholder="What's on your mind?"
               rows={4}
+              value={message}
+              onChange={e => setMessage(e.target.value)}
               style={{
                 width: '100%',
                 padding: '1rem',
@@ -119,7 +139,7 @@ export default function ConnectForm() {
               color: status === 'success' ? 'var(--color-text-primary)' : undefined,
             }}
           >
-            {status === 'idle' ? 'Send Message' : status === 'submitting' ? 'Sending...' : 'Message Sent! 🌸'}
+            {status === 'idle' ? siteConfig.sections.contact.buttonText : status === 'submitting' ? 'Sending...' : siteConfig.sections.contact.successText}
           </button>
         </motion.form>
       </div>
