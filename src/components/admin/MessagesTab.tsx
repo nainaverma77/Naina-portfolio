@@ -111,10 +111,10 @@ export default function MessagesTab() {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex items-end justify-between">
         <div>
-          <h2 className="text-3xl font-orbitron font-bold text-white mb-2 flex items-center gap-3">
-            <Mail className="text-neon-cyan" /> Secure Inbox
+          <h2 className="text-3xl font-serif font-bold text-gray-800 mb-2 flex items-center gap-3">
+            <Mail className="text-rose-500" /> Secure Inbox
           </h2>
-          <p className="text-white/50 font-mono text-sm">
+          <p className="text-gray-600 font-sans text-sm">
             Review direct messages from the comm-link.
           </p>
         </div>
@@ -123,7 +123,7 @@ export default function MessagesTab() {
           <button
             onClick={loadMessages}
             disabled={loading}
-            className="flex items-center gap-2 px-4 py-2 border border-white/10 rounded-md text-white/70 hover:text-white hover:bg-white/5 transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 border border-white/60 rounded-md text-gray-700 hover:text-gray-800 hover:bg-white/5 transition-colors disabled:opacity-50"
           >
             <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
             Refresh
@@ -132,7 +132,7 @@ export default function MessagesTab() {
           <button
             onClick={handleExportCSV}
             disabled={messages.length === 0}
-            className="flex items-center gap-2 px-4 py-2 bg-neon-cyan/10 border border-neon-cyan/30 text-neon-cyan rounded-md hover:bg-neon-cyan/20 transition-colors shadow-[0_0_15px_rgba(0,245,255,0.1)] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-4 py-2 bg-neon-cyan/10 border border-neon-cyan/30 text-rose-500 rounded-md hover:bg-neon-cyan/20 transition-colors shadow-[0_0_15px_rgba(0,245,255,0.1)] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Download size={16} />
             Export CSV
@@ -140,9 +140,9 @@ export default function MessagesTab() {
         </div>
       </div>
 
-      <div className="cyber-border bg-dark-gray/50 border-white/10 rounded-lg overflow-hidden">
+      <div className="cyber-border bg-dark-gray/50 border-white/60 rounded-lg overflow-hidden">
         {loading ? (
-          <div className="p-12 flex justify-center text-neon-cyan">
+          <div className="p-12 flex justify-center text-rose-500">
             <RefreshCw size={24} className="animate-spin" />
           </div>
         ) : error ? (
@@ -151,7 +151,7 @@ export default function MessagesTab() {
             <p>{error}</p>
           </div>
         ) : messages.length === 0 ? (
-          <div className="p-12 text-center text-white/30 font-mono">
+          <div className="p-12 text-center text-gray-400 font-sans">
             <p>No transmissions intercepted yet.</p>
           </div>
         ) : (
@@ -159,7 +159,7 @@ export default function MessagesTab() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-black/40 border-b border-white/10 font-orbitron text-xs tracking-widest text-white/50 uppercase">
+                  <tr className="bg-white/30 border-b border-white/60 font-serif text-xs tracking-widest text-gray-600 uppercase">
                     <th className="p-4 font-normal">Timestamp</th>
                     <th className="p-4 font-normal">Identity</th>
                     <th className="p-4 font-normal">Vector (Email)</th>
@@ -174,14 +174,14 @@ export default function MessagesTab() {
                       onClick={() => setSelectedMessage(msg)}
                       className="hover:bg-white/5 transition-colors group cursor-pointer"
                     >
-                      <td className="p-4 text-white/40 font-mono text-xs whitespace-nowrap">
+                      <td className="p-4 text-gray-500 font-sans text-xs whitespace-nowrap">
                         {new Date(msg.timestamp).toLocaleString()}
                       </td>
-                      <td className="p-4 text-white/90 font-medium">
+                      <td className="p-4 text-gray-800/90 font-medium">
                         {msg.name}
                       </td>
                       <td
-                        className="p-4 text-neon-cyan"
+                        className="p-4 text-rose-500"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <a
@@ -191,15 +191,15 @@ export default function MessagesTab() {
                           {msg.email}
                         </a>
                       </td>
-                      <td className="p-4 text-white/70">
-                        <div className="line-clamp-1 group-hover:text-white transition-colors duration-300">
+                      <td className="p-4 text-gray-700">
+                        <div className="line-clamp-1 group-hover:text-gray-800 transition-colors duration-300">
                           {msg.message}
                         </div>
                       </td>
                       <td className="p-4 text-right">
                         <div className="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
                           <button
-                            className="text-white/50 hover:text-neon-cyan transition-colors"
+                            className="text-gray-600 hover:text-rose-500 transition-colors"
                             onClick={(e) => {
                               e.stopPropagation();
                               setSelectedMessage(msg);
@@ -209,7 +209,7 @@ export default function MessagesTab() {
                           </button>
                           <button
                             onClick={(e) => handleDeleteClick(msg.id, e)}
-                            className="text-white/50 hover:text-red-400 transition-colors"
+                            className="text-gray-600 hover:text-red-400 transition-colors"
                           >
                             <Trash2 size={18} />
                           </button>
@@ -244,41 +244,41 @@ export default function MessagesTab() {
         {selectedMessage && (
           <div className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-black/30 p-4 rounded-md border border-white/5">
-                <p className="text-[10px] font-orbitron tracking-widest text-white/40 uppercase mb-1">
+              <div className="bg-white/30 p-4 rounded-md border border-white/40">
+                <p className="text-[10px] font-serif tracking-widest text-gray-500 uppercase mb-1">
                   Identity
                 </p>
-                <p className="text-white/90 font-medium">
+                <p className="text-gray-800/90 font-medium">
                   {selectedMessage.name}
                 </p>
               </div>
-              <div className="bg-black/30 p-4 rounded-md border border-white/5">
-                <p className="text-[10px] font-orbitron tracking-widest text-white/40 uppercase mb-1">
+              <div className="bg-white/30 p-4 rounded-md border border-white/40">
+                <p className="text-[10px] font-serif tracking-widest text-gray-500 uppercase mb-1">
                   Timestamp
                 </p>
-                <p className="text-white/70 font-mono text-sm">
+                <p className="text-gray-700 font-sans text-sm">
                   {new Date(selectedMessage.timestamp).toLocaleString()}
                 </p>
               </div>
             </div>
 
-            <div className="bg-black/30 p-4 rounded-md border border-white/5">
-              <p className="text-[10px] font-orbitron tracking-widest text-white/40 uppercase mb-1">
+            <div className="bg-white/30 p-4 rounded-md border border-white/40">
+              <p className="text-[10px] font-serif tracking-widest text-gray-500 uppercase mb-1">
                 Return Vector
               </p>
               <a
                 href={`mailto:${selectedMessage.email}`}
-                className="text-neon-cyan hover:underline"
+                className="text-rose-500 hover:underline"
               >
                 {selectedMessage.email}
               </a>
             </div>
 
-            <div className="bg-black/30 p-4 rounded-md border border-white/5">
-              <p className="text-[10px] font-orbitron tracking-widest text-white/40 uppercase mb-2">
+            <div className="bg-white/30 p-4 rounded-md border border-white/40">
+              <p className="text-[10px] font-serif tracking-widest text-gray-500 uppercase mb-2">
                 Decrypted Payload
               </p>
-              <p className="text-white/80 whitespace-pre-wrap font-inter leading-relaxed">
+              <p className="text-gray-800/80 whitespace-pre-wrap font-inter leading-relaxed">
                 {selectedMessage.message}
               </p>
             </div>
@@ -297,7 +297,7 @@ export default function MessagesTab() {
               size={48}
               className="text-red-500/80 mb-4 drop-shadow-[0_0_10px_rgba(239,68,68,0.5)]"
             />
-            <p className="text-white/80 font-inter mb-8">
+            <p className="text-gray-800/80 font-inter mb-8">
               Are you sure you want to permanently delete this intercepted
               transmission?
               <br />
@@ -310,7 +310,7 @@ export default function MessagesTab() {
               <button
                 onClick={() => setMessageToDelete(null)}
                 disabled={!!deletingId}
-                className="flex-1 py-3 px-4 border border-white/10 rounded-md text-white/70 hover:text-white hover:bg-white/5 transition-colors font-mono uppercase text-sm disabled:opacity-50"
+                className="flex-1 py-3 px-4 border border-white/60 rounded-md text-gray-700 hover:text-gray-800 hover:bg-white/5 transition-colors font-sans uppercase text-sm disabled:opacity-50"
               >
                 Cancel
               </button>
@@ -319,7 +319,7 @@ export default function MessagesTab() {
                   messageToDelete && confirmDelete(messageToDelete)
                 }
                 disabled={!!deletingId}
-                className="flex-1 py-3 px-4 bg-red-500/10 border border-red-500/30 text-red-400 rounded-md hover:bg-red-500/20 transition-colors shadow-[0_0_15px_rgba(239,68,68,0.1)] font-mono uppercase text-sm disabled:opacity-50 flex justify-center items-center gap-2"
+                className="flex-1 py-3 px-4 bg-red-500/10 border border-red-500/30 text-red-400 rounded-md hover:bg-red-500/20 transition-colors shadow-[0_0_15px_rgba(239,68,68,0.1)] font-sans uppercase text-sm disabled:opacity-50 flex justify-center items-center gap-2"
               >
                 {!!deletingId ? (
                   <>

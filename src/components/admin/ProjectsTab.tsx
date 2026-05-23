@@ -120,10 +120,10 @@ export default function ProjectsTab({
     if (s.includes("live") || s.includes("completed"))
       return "bg-green-500/20 text-green-400 border-green-500/30";
     if (s.includes("progress") || s.includes("sync"))
-      return "bg-neon-cyan/20 text-neon-cyan border-neon-cyan/30";
+      return "bg-neon-cyan/20 text-rose-500 border-neon-cyan/30";
     if (s.includes("archived"))
-      return "bg-white/10 text-white/50 border-white/20";
-    return "bg-electric-purple/20 text-electric-purple border-electric-purple/30";
+      return "bg-white/10 text-gray-600 border-white/20";
+    return "bg-electric-purple/20 text-green-600 border-electric-purple/30";
   };
 
   return (
@@ -131,10 +131,10 @@ export default function ProjectsTab({
       {/* Header Actions */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h2 className="text-xl font-orbitron font-bold text-white tracking-widest uppercase">
+          <h2 className="text-xl font-serif font-bold text-gray-800 tracking-widest uppercase">
             Mission Log
           </h2>
-          <p className="text-white/40 text-sm font-mono">
+          <p className="text-gray-500 text-sm font-sans">
             Manage and synchronize projects
           </p>
         </div>
@@ -142,33 +142,33 @@ export default function ProjectsTab({
           <div className="relative group">
             <Search
               size={14}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-neon-cyan"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-rose-500"
             />
             <input
               type="text"
               placeholder="Search projects..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-black/50 border border-white/10 rounded px-3 py-1.5 pl-9 text-sm text-white focus:outline-none focus:border-neon-cyan/50 w-48"
+              className="bg-white/40 border border-white/60 rounded px-3 py-1.5 pl-9 text-sm text-gray-800 focus:outline-none focus:border-rose-400 w-48"
             />
           </div>
 
-          <div className="flex items-center gap-2 border border-white/10 rounded p-1 bg-black/30">
+          <div className="flex items-center gap-2 border border-white/60 rounded p-1 bg-white/30">
             <input
               type="text"
               placeholder="GitHub User"
               value={githubUsername}
               onChange={(e) => setGithubUsername(e.target.value)}
-              className="bg-transparent border-none text-xs text-white px-2 py-1 w-24 focus:outline-none"
+              className="bg-transparent border-none text-xs text-gray-800 px-2 py-1 w-24 focus:outline-none"
             />
             <button
               onClick={() => onSyncGithub(githubUsername)}
               disabled={isSyncing || !githubUsername}
-              className="flex items-center gap-1 text-xs bg-white/5 hover:bg-white/10 px-2 py-1 rounded disabled:opacity-50 text-white transition-colors"
+              className="flex items-center gap-1 text-xs bg-white/5 hover:bg-white/10 px-2 py-1 rounded disabled:opacity-50 text-gray-800 transition-colors"
             >
               <RefreshCw
                 size={12}
-                className={isSyncing ? "animate-spin text-neon-cyan" : ""}
+                className={isSyncing ? "animate-spin text-rose-500" : ""}
               />{" "}
               Sync
             </button>
@@ -176,7 +176,7 @@ export default function ProjectsTab({
 
           <button
             onClick={handleAddNew}
-            className="flex items-center gap-1 text-sm bg-neon-cyan/10 hover:bg-neon-cyan/20 border border-neon-cyan/30 text-neon-cyan px-3 py-1.5 rounded transition-all"
+            className="flex items-center gap-1 text-sm bg-neon-cyan/10 hover:bg-neon-cyan/20 border border-neon-cyan/30 text-rose-500 px-3 py-1.5 rounded transition-all"
           >
             <Plus size={16} /> New Project
           </button>
@@ -184,11 +184,11 @@ export default function ProjectsTab({
       </div>
 
       {/* Projects Table */}
-      <div className="bg-[#0B1220]/50 backdrop-blur border border-white/10 rounded-xl overflow-hidden">
+      <div className="bg-white/40 backdrop-blur border border-white/60 rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-black/40 border-b border-white/10 font-orbitron text-xs tracking-wider uppercase text-white/50">
+              <tr className="bg-white/30 border-b border-white/60 font-serif text-xs tracking-wider uppercase text-gray-600">
                 <th className="p-4 font-normal">Visibility</th>
                 <th className="p-4 font-normal">ID</th>
                 <th className="p-4 font-normal">Project Name</th>
@@ -203,7 +203,7 @@ export default function ProjectsTab({
                 <tr>
                   <td
                     colSpan={7}
-                    className="p-8 text-center text-white/40 font-mono text-sm"
+                    className="p-8 text-center text-gray-500 font-sans text-sm"
                   >
                     NO_RECORDS_FOUND
                   </td>
@@ -215,12 +215,12 @@ export default function ProjectsTab({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}
                     key={project.id}
-                    className="border-b border-white/5 hover:bg-white/[0.02] transition-colors group"
+                    className="border-b border-white/40 hover:bg-white/[0.02] transition-colors group"
                   >
                     <td className="p-4 w-12 text-center">
                       <button
                         onClick={() => toggleVisibility(project.id)}
-                        className={`p-1.5 rounded-md transition-colors ${project.visible !== false ? "bg-neon-cyan/10 text-neon-cyan border border-neon-cyan/20" : "bg-black/50 text-white/30 border border-white/10"}`}
+                        className={`p-1.5 rounded-md transition-colors ${project.visible !== false ? "bg-neon-cyan/10 text-rose-500 border border-neon-cyan/20" : "bg-white/40 text-gray-400 border border-white/60"}`}
                       >
                         {project.visible !== false ? (
                           <Eye size={14} />
@@ -229,25 +229,25 @@ export default function ProjectsTab({
                         )}
                       </button>
                     </td>
-                    <td className="p-4 font-mono text-xs text-white/40">
+                    <td className="p-4 font-sans text-xs text-gray-500">
                       {project.id}
                     </td>
-                    <td className="p-4 font-bold text-white group-hover:text-neon-cyan transition-colors">
+                    <td className="p-4 font-bold text-gray-800 group-hover:text-rose-500 transition-colors">
                       {project.name}
                     </td>
                     <td className="p-4">
-                      <span className="text-[10px] font-mono border border-electric-purple/30 bg-electric-purple/10 text-electric-purple px-2 py-0.5 rounded">
+                      <span className="text-[10px] font-sans border border-electric-purple/30 bg-electric-purple/10 text-green-600 px-2 py-0.5 rounded">
                         {project.category || "AUTO"}
                       </span>
                     </td>
                     <td className="p-4">
                       <span
-                        className={`text-[10px] font-orbitron border px-2 py-0.5 rounded ${getStatusColor(project.status)}`}
+                        className={`text-[10px] font-serif border px-2 py-0.5 rounded ${getStatusColor(project.status)}`}
                       >
                         {project.status}
                       </span>
                     </td>
-                    <td className="p-4 text-xs text-white/60 truncate max-w-[150px]">
+                    <td className="p-4 text-xs text-gray-800/60 truncate max-w-[150px]">
                       {project.tech.slice(0, 3).join(", ")}
                       {project.tech.length > 3 &&
                         ` +${project.tech.length - 3}`}
@@ -256,13 +256,13 @@ export default function ProjectsTab({
                       <div className="flex justify-end gap-2">
                         <button
                           onClick={() => handleEdit(project)}
-                          className="p-1.5 rounded bg-black/40 border border-white/5 text-white/60 hover:text-white hover:border-white/20 transition-all"
+                          className="p-1.5 rounded bg-white/30 border border-white/40 text-gray-800/60 hover:text-gray-800 hover:border-white/20 transition-all"
                         >
                           <Edit2 size={14} />
                         </button>
                         <button
                           onClick={() => handleDelete(project.id)}
-                          className="p-1.5 rounded bg-black/40 border border-white/5 text-red-400/70 hover:text-red-400 hover:border-red-400/30 hover:bg-red-400/10 transition-all"
+                          className="p-1.5 rounded bg-white/30 border border-white/40 text-red-400/70 hover:text-red-400 hover:border-red-400/30 hover:bg-red-400/10 transition-all"
                         >
                           <Trash2 size={14} />
                         </button>
@@ -304,7 +304,7 @@ export default function ProjectsTab({
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-mono text-white/50 mb-1">
+                <label className="block text-xs font-sans text-gray-600 mb-1">
                   Project ID
                 </label>
                 <input
@@ -313,11 +313,11 @@ export default function ProjectsTab({
                   onChange={(e) =>
                     setEditingProject({ ...editingProject, id: e.target.value })
                   }
-                  className="w-full bg-black/50 border border-white/10 rounded p-2.5 text-sm text-white focus:outline-none focus:border-neon-cyan/50"
+                  className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
                 />
               </div>
               <div>
-                <label className="block text-xs font-mono text-white/50 mb-1">
+                <label className="block text-xs font-sans text-gray-600 mb-1">
                   Project Name
                 </label>
                 <input
@@ -329,13 +329,13 @@ export default function ProjectsTab({
                       name: e.target.value,
                     })
                   }
-                  className="w-full bg-black/50 border border-white/10 rounded p-2.5 text-sm text-white focus:outline-none focus:border-neon-cyan/50"
+                  className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-white/50 mb-1">
+              <label className="block text-xs font-sans text-gray-600 mb-1">
                 Description
               </label>
               <textarea
@@ -347,12 +347,12 @@ export default function ProjectsTab({
                     description: e.target.value,
                   })
                 }
-                className="w-full bg-black/50 border border-white/10 rounded p-2.5 text-sm text-white focus:outline-none focus:border-neon-cyan/50 resize-none"
+                className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400 resize-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-white/50 mb-1">
+              <label className="block text-xs font-sans text-gray-600 mb-1">
                 Important Details / Technical Specs
               </label>
               <textarea
@@ -365,12 +365,12 @@ export default function ProjectsTab({
                   })
                 }
                 placeholder="Optional deep dive details..."
-                className="w-full bg-black/50 border border-white/10 rounded p-2.5 text-sm text-white focus:outline-none focus:border-neon-cyan/50 resize-none"
+                className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400 resize-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-white/50 mb-1">
+              <label className="block text-xs font-sans text-gray-600 mb-1">
                 Project Image URL (Optional)
               </label>
               <input
@@ -383,13 +383,13 @@ export default function ProjectsTab({
                     imageUrl: e.target.value,
                   })
                 }
-                className="w-full bg-black/50 border border-white/10 rounded p-2.5 text-sm text-white focus:outline-none focus:border-neon-cyan/50"
+                className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-mono text-white/50 mb-1">
+                <label className="block text-xs font-sans text-gray-600 mb-1">
                   Category
                 </label>
                 <select
@@ -400,7 +400,7 @@ export default function ProjectsTab({
                       category: e.target.value || undefined,
                     })
                   }
-                  className="w-full bg-black/50 border border-white/10 rounded p-2.5 text-sm text-white focus:outline-none focus:border-neon-cyan/50 appearance-none"
+                  className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400 appearance-none"
                 >
                   <option value="">Auto (Infer from Tech)</option>
                   <option value="WEB">WEB</option>
@@ -410,7 +410,7 @@ export default function ProjectsTab({
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-mono text-white/50 mb-1">
+                <label className="block text-xs font-sans text-gray-600 mb-1">
                   Status
                 </label>
                 <input
@@ -422,13 +422,13 @@ export default function ProjectsTab({
                       status: e.target.value,
                     })
                   }
-                  className="w-full bg-black/50 border border-white/10 rounded p-2.5 text-sm text-white focus:outline-none focus:border-neon-cyan/50"
+                  className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-white/50 mb-1">
+              <label className="block text-xs font-sans text-gray-600 mb-1">
                 Tech Stack (comma separated)
               </label>
               <input
@@ -444,13 +444,13 @@ export default function ProjectsTab({
                     tech: e.target.value as any,
                   })
                 }
-                className="w-full bg-black/50 border border-white/10 rounded p-2.5 text-sm text-white focus:outline-none focus:border-neon-cyan/50"
+                className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-mono text-white/50 mb-1">
+                <label className="block text-xs font-sans text-gray-600 mb-1">
                   GitHub Link
                 </label>
                 <input
@@ -465,11 +465,11 @@ export default function ProjectsTab({
                       },
                     })
                   }
-                  className="w-full bg-black/50 border border-white/10 rounded p-2.5 text-sm text-white focus:outline-none focus:border-neon-cyan/50"
+                  className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
                 />
               </div>
               <div>
-                <label className="block text-xs font-mono text-white/50 mb-1">
+                <label className="block text-xs font-sans text-gray-600 mb-1">
                   Live Link
                 </label>
                 <input
@@ -481,21 +481,21 @@ export default function ProjectsTab({
                       links: { ...editingProject.links, live: e.target.value },
                     })
                   }
-                  className="w-full bg-black/50 border border-white/10 rounded p-2.5 text-sm text-white focus:outline-none focus:border-neon-cyan/50"
+                  className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
                 />
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 pt-4 mt-6 border-t border-white/10">
+            <div className="flex justify-end gap-3 pt-4 mt-6 border-t border-white/60">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 rounded text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors"
+                className="px-4 py-2 rounded text-sm text-gray-700 hover:text-gray-800 hover:bg-white/5 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveProject}
-                className="px-6 py-2 rounded text-sm font-bold bg-neon-cyan/20 text-neon-cyan border border-neon-cyan/50 hover:bg-neon-cyan/30 transition-all shadow-[0_0_10px_rgba(0,245,255,0.1)]"
+                className="px-6 py-2 rounded text-sm font-bold bg-neon-cyan/20 text-rose-500 border border-rose-400 hover:bg-neon-cyan/30 transition-all shadow-[0_0_10px_rgba(0,245,255,0.1)]"
               >
                 Apply Changes
               </button>

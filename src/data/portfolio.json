@@ -93,6 +93,236 @@
       ],
       "status": "LIVE",
       "visible": true
+    },
+    {
+      "id": "AI-ECOMMER",
+      "name": "ai-ecommerce_nodejs",
+      "description": "No description provided.",
+      "tech": [
+        "JavaScript"
+      ],
+      "category": "WEB",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/ai-ecommerce_nodejs",
+        "live": "#"
+      },
+      "visible": true
+    },
+    {
+      "id": "BILLINTSYS",
+      "name": "BillintSystem",
+      "description": "No description provided.",
+      "tech": [],
+      "category": "EXP",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/BillintSystem",
+        "live": "#"
+      },
+      "visible": true
+    },
+    {
+      "id": "DAILY_CODE",
+      "name": "Daily_Code",
+      "description": "No description provided.",
+      "tech": [],
+      "category": "EXP",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/Daily_Code",
+        "live": "#"
+      },
+      "visible": true
+    },
+    {
+      "id": "REACTPROJE",
+      "name": "ReactProject1",
+      "description": "No description provided.",
+      "tech": [],
+      "category": "EXP",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/ReactProject1",
+        "live": "#"
+      },
+      "visible": true
+    },
+    {
+      "id": "AI-ECOMMER",
+      "name": "ai-ecommerce",
+      "description": "No description provided.",
+      "tech": [
+        "JavaScript"
+      ],
+      "category": "WEB",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/ai-ecommerce",
+        "live": "#"
+      },
+      "visible": true
+    },
+    {
+      "id": "PROJECT1",
+      "name": "Project1",
+      "description": "No description provided.",
+      "tech": [
+        "HTML"
+      ],
+      "category": "AI",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/Project1",
+        "live": "#"
+      },
+      "visible": false
+    },
+    {
+      "id": "PROJECT5",
+      "name": "Project5",
+      "description": "No description provided.",
+      "tech": [
+        "HTML"
+      ],
+      "category": "AI",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/Project5",
+        "live": "#"
+      },
+      "visible": false
+    },
+    {
+      "id": "PROJECT4",
+      "name": "project4",
+      "description": "No description provided.",
+      "tech": [],
+      "category": "EXP",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/project4",
+        "live": "#"
+      },
+      "visible": false
+    },
+    {
+      "id": "PROJECT3",
+      "name": "project3",
+      "description": "No description provided.",
+      "tech": [
+        "HTML"
+      ],
+      "category": "AI",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/project3",
+        "live": "#"
+      },
+      "visible": false
+    },
+    {
+      "id": "PROJECT2",
+      "name": "Project2",
+      "description": "No description provided.",
+      "tech": [
+        "HTML"
+      ],
+      "category": "AI",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/Project2",
+        "live": "#"
+      },
+      "visible": false
+    },
+    {
+      "id": "FRONTEND_P",
+      "name": "Frontend_Project",
+      "description": "No description provided.",
+      "tech": [],
+      "category": "EXP",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/Frontend_Project",
+        "live": "#"
+      },
+      "visible": false
+    },
+    {
+      "id": "VIVA",
+      "name": "viva",
+      "description": "No description provided.",
+      "tech": [
+        "HTML"
+      ],
+      "category": "AI",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/viva",
+        "live": "#"
+      },
+      "visible": false
+    },
+    {
+      "id": "MINI_PROJE",
+      "name": "mini_project",
+      "description": "development journey",
+      "tech": [
+        "HTML"
+      ],
+      "category": "AI",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/mini_project",
+        "live": "#"
+      },
+      "visible": false
+    },
+    {
+      "id": "FLUTTER_FI",
+      "name": "flutter_firebase_connect",
+      "description": "No description provided.",
+      "tech": [
+        "C++"
+      ],
+      "category": "EXP",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/flutter_firebase_connect",
+        "live": "#"
+      },
+      "visible": false
+    },
+    {
+      "id": "JOVAC_PROJ",
+      "name": "jovac_project",
+      "description": "No description provided.",
+      "tech": [
+        "Dart"
+      ],
+      "category": "EXP",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/jovac_project",
+        "live": "#"
+      },
+      "visible": false
+    },
+    {
+      "id": "FLUTTERASS",
+      "name": "flutterassignment",
+      "description": "No description provided.",
+      "tech": [
+        "C++"
+      ],
+      "category": "EXP",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/flutterassignment",
+        "live": "#"
+      },
+      "visible": false
     }
   ],
   "education": [

@@ -102,19 +102,13 @@ export default function AdminShell({ initialData }: AdminShellProps) {
   };
 
   return (
-    <div className="flex h-screen bg-[#050505] text-white overflow-hidden selection:bg-neon-cyan/30">
+    <div className="flex h-screen text-gray-800 overflow-hidden" style={{
+      backgroundImage: "url('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=1920&q=80')",
+      backgroundSize: "cover",
+      backgroundPosition: "center"
+    }}>
       {/* Background Effects */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-electric-purple/5 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-neon-cyan/5 rounded-full blur-[100px]" />
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at center, #ffffff 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
+      <div className="fixed inset-0 pointer-events-none z-0 bg-white/40 backdrop-blur-sm">
       </div>
 
       <Sidebar

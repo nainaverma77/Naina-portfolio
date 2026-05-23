@@ -37,31 +37,31 @@ export default function Sidebar({
   setIsCollapsed,
 }: SidebarProps) {
   const navItems = [
-    { id: "overview", label: "Dashboard", icon: LayoutDashboard },
-    { id: "hero", label: "Hero Section", icon: Rocket },
-    { id: "about", label: "Identity", icon: User },
-    { id: "skills", label: "Skills Core", icon: Code2 },
-    { id: "education", label: "Academic Records", icon: BookOpen },
-    { id: "projects", label: "Mission Log", icon: LayoutDashboard },
-    { id: "socials", label: "Comm Links", icon: Globe },
-    { id: "messages", label: "Secure Inbox", icon: Mail },
-    { id: "settings", label: "System Config", icon: Settings },
+    { id: "overview", label: "Garden Overview", icon: LayoutDashboard },
+    { id: "hero", label: "Garden Entrance", icon: Rocket },
+    { id: "about", label: "Gardener Profile", icon: User },
+    { id: "skills", label: "Core Cultivation", icon: Code2 },
+    { id: "education", label: "Growth Records", icon: BookOpen },
+    { id: "projects", label: "Harvested Projects", icon: LayoutDashboard },
+    { id: "socials", label: "Botanical Links", icon: Globe },
+    { id: "messages", label: "Messages", icon: Mail },
+    { id: "settings", label: "Greenhouse Config", icon: Settings },
   ] as const;
 
   return (
     <div
-      className={`relative transition-all duration-300 h-full bg-[#050505] border-r border-white/5 flex flex-col z-20 ${isCollapsed ? "w-20" : "w-72"}`}
+      className={`relative transition-all duration-300 h-full bg-white/50 border-r border-white/40 flex flex-col z-20 ${isCollapsed ? "w-20" : "w-72"}`}
     >
       {/* Brand */}
-      <div className="h-16 flex items-center justify-between px-6 border-b border-white/5">
+      <div className="h-16 flex items-center justify-between px-6 border-b border-white/40">
         {!isCollapsed && (
-          <h1 className="font-orbitron font-bold text-white tracking-widest text-lg">
-            SYS<span className="text-neon-cyan">OP</span>
+          <h1 className="font-serif font-bold text-gray-800 tracking-widest text-lg">
+            NAINA'S <span className="text-rose-500">GARDEN</span>
           </h1>
         )}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="text-white/40 hover:text-white transition-colors"
+          className="text-gray-500 hover:text-gray-800 transition-colors"
         >
           {isCollapsed ? (
             <ChevronRight size={20} className="mx-auto" />
@@ -82,8 +82,8 @@ export default function Sidebar({
               className={`w-full flex items-center gap-3 px-3 py-3 rounded-md transition-all duration-300 font-inter text-sm
                 ${
                   isActive
-                    ? "bg-neon-cyan/10 text-neon-cyan shadow-[inset_2px_0_0_0_#00F5FF]"
-                    : "text-white/50 hover:bg-white/5 hover:text-white/80"
+                    ? "bg-rose-100 text-rose-500 shadow-[inset_4px_0_0_0_#F43F5E]"
+                    : "text-gray-600 hover:bg-white/50 hover:text-gray-800"
                 }
                 ${isCollapsed ? "justify-center" : ""}
               `}
@@ -91,7 +91,7 @@ export default function Sidebar({
             >
               <item.icon
                 size={18}
-                className={isActive ? "drop-shadow-[0_0_5px_#00F5FF]" : ""}
+                className={isActive ? "text-rose-500" : ""}
               />
               {!isCollapsed && (
                 <span className="tracking-wide">{item.label}</span>
@@ -102,7 +102,7 @@ export default function Sidebar({
       </nav>
 
       {/* Bottom Actions */}
-      <div className="p-4 border-t border-white/5">
+      <div className="p-4 border-t border-white/40">
         <button
           onClick={async () => {
             const { logout } = await import("@/app/actions");

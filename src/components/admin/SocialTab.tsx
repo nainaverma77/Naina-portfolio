@@ -36,24 +36,24 @@ export default function SocialTab({ data, setData }: SocialTabProps) {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h2 className="text-xl font-orbitron font-bold text-white tracking-widest uppercase">
+          <h2 className="text-xl font-serif font-bold text-gray-800 tracking-widest uppercase">
             Comm Links
           </h2>
-          <p className="text-white/40 text-sm font-mono">
+          <p className="text-gray-500 text-sm font-sans">
             Manage social and external transmissions
           </p>
         </div>
         <button
           onClick={handleAdd}
-          className="flex items-center gap-1 text-sm bg-neon-cyan/10 hover:bg-neon-cyan/20 border border-neon-cyan/30 text-neon-cyan px-3 py-1.5 rounded transition-all"
+          className="flex items-center gap-1 text-sm bg-neon-cyan/10 hover:bg-neon-cyan/20 border border-neon-cyan/30 text-rose-500 px-3 py-1.5 rounded transition-all"
         >
           <Plus size={16} /> Add Link
         </button>
       </div>
 
-      <div className="bg-[#0B1220]/50 backdrop-blur border border-white/10 rounded-xl p-6">
+      <div className="bg-white/40 backdrop-blur border border-white/60 rounded-xl p-6">
         {data.socials.length === 0 ? (
-          <div className="text-center py-12 text-white/40 font-mono text-sm">
+          <div className="text-center py-12 text-gray-500 font-sans text-sm">
             NO_LINKS_CONFIGURED
           </div>
         ) : (
@@ -67,9 +67,9 @@ export default function SocialTab({ data, setData }: SocialTabProps) {
               <Reorder.Item
                 key={social.id}
                 value={social}
-                className="flex items-center gap-3 bg-black/40 border border-white/5 rounded-lg p-3 group hover:border-white/20 transition-colors"
+                className="flex items-center gap-3 bg-white/30 border border-white/40 rounded-lg p-3 group hover:border-white/20 transition-colors"
               >
-                <div className="cursor-grab active:cursor-grabbing text-white/20 hover:text-white/50 p-2">
+                <div className="cursor-grab active:cursor-grabbing text-gray-800/20 hover:text-gray-600 p-2">
                   <GripVertical size={16} />
                 </div>
 
@@ -82,7 +82,7 @@ export default function SocialTab({ data, setData }: SocialTabProps) {
                         handleUpdate(social.id, "platform", e.target.value)
                       }
                       placeholder="Platform (e.g. GitHub)"
-                      className="w-full bg-black/50 border border-white/10 rounded p-2 text-sm text-white focus:outline-none focus:border-neon-cyan/50"
+                      className="w-full bg-white/40 border border-white/60 rounded p-2 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
                     />
                   </div>
 
@@ -94,7 +94,7 @@ export default function SocialTab({ data, setData }: SocialTabProps) {
                         handleUpdate(social.id, "url", e.target.value)
                       }
                       placeholder="https://..."
-                      className="w-full bg-black/50 border border-white/10 rounded p-2 text-sm text-white focus:outline-none focus:border-neon-cyan/50 font-mono"
+                      className="w-full bg-white/40 border border-white/60 rounded p-2 text-sm text-gray-800 focus:outline-none focus:border-rose-400 font-sans"
                     />
                   </div>
 
@@ -106,7 +106,7 @@ export default function SocialTab({ data, setData }: SocialTabProps) {
                       className={`flex-1 md:flex-none flex justify-center p-2 rounded text-xs font-bold transition-all ${
                         social.enabled
                           ? "bg-green-500/20 text-green-400 border border-green-500/30 hover:bg-green-500/30"
-                          : "bg-white/10 text-white/30 border border-white/10 hover:bg-white/20"
+                          : "bg-white/10 text-gray-400 border border-white/60 hover:bg-white/20"
                       }`}
                       title={social.enabled ? "Disable" : "Enable"}
                     >
@@ -114,7 +114,7 @@ export default function SocialTab({ data, setData }: SocialTabProps) {
                     </button>
                     <button
                       onClick={() => handleDelete(social.id)}
-                      className="p-2 rounded bg-black/40 border border-white/5 text-red-400/70 hover:text-red-400 hover:border-red-400/30 hover:bg-red-400/10 transition-all"
+                      className="p-2 rounded bg-white/30 border border-white/40 text-red-400/70 hover:text-red-400 hover:border-red-400/30 hover:bg-red-400/10 transition-all"
                     >
                       <Trash2 size={16} />
                     </button>

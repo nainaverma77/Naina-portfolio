@@ -8,13 +8,13 @@ export default function OverviewTab({ data }: { data: PortfolioData }) {
       label: "Active Projects",
       value: data.projects?.length || 0,
       icon: Database,
-      color: "text-neon-cyan",
+      color: "text-rose-500",
     },
     {
       label: "Core Skills",
       value: data.skills?.length || 0,
       icon: Code2,
-      color: "text-electric-purple",
+      color: "text-green-600",
     },
     {
       label: "Comm Links",
@@ -26,7 +26,7 @@ export default function OverviewTab({ data }: { data: PortfolioData }) {
       label: "System Status",
       value: "ONLINE",
       icon: Activity,
-      color: "text-white",
+      color: "text-gray-800",
     },
   ];
 
@@ -34,10 +34,10 @@ export default function OverviewTab({ data }: { data: PortfolioData }) {
     <div className="space-y-8 animate-in fade-in duration-500">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-orbitron font-bold text-white mb-2 uppercase tracking-widest drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+        <h2 className="text-2xl font-serif font-bold text-gray-800 mb-2 uppercase tracking-widest drop-shadow-sm">
           System Overview
         </h2>
-        <p className="text-white/40 text-sm font-mono tracking-wider">
+        <p className="text-gray-500 text-sm font-sans tracking-wider">
           PRIMARY DASHBOARD / ANALYTICS
         </p>
       </div>
@@ -50,21 +50,21 @@ export default function OverviewTab({ data }: { data: PortfolioData }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
             key={i}
-            className="bg-[#0B1220]/50 backdrop-blur border border-white/10 rounded-xl p-6 relative overflow-hidden group hover:border-neon-cyan/50 transition-colors"
+            className="bg-white/40 backdrop-blur border border-white/60 rounded-xl p-6 relative overflow-hidden group hover:border-rose-400 transition-colors"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-white/5 to-transparent rounded-bl-full" />
             <div className="flex justify-between items-start relative z-10">
               <div>
-                <p className="text-white/40 text-xs font-orbitron tracking-widest uppercase mb-2">
+                <p className="text-gray-500 text-xs font-serif tracking-widest uppercase mb-2">
                   {stat.label}
                 </p>
                 <h3
-                  className={`text-3xl font-bold font-mono ${stat.color} drop-shadow-[0_0_10px_currentColor]`}
+                  className={`text-3xl font-bold font-sans ${stat.color} drop-shadow-sm`}
                 >
                   {stat.value}
                 </h3>
               </div>
-              <div className="p-3 bg-black/40 rounded-lg border border-white/5">
+              <div className="p-3 bg-white/30 rounded-lg border border-white/40">
                 <stat.icon size={20} className={stat.color} />
               </div>
             </div>
@@ -77,16 +77,16 @@ export default function OverviewTab({ data }: { data: PortfolioData }) {
       {/* Mock Analytics & Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Chart Area */}
-        <div className="lg:col-span-2 bg-[#0B1220]/50 backdrop-blur border border-white/10 rounded-xl p-6 relative">
-          <h3 className="text-sm font-orbitron font-bold text-white/70 uppercase tracking-widest mb-6 flex items-center gap-2">
-            <Activity size={16} className="text-neon-cyan" /> Network Traffic
+        <div className="lg:col-span-2 bg-white/40 backdrop-blur border border-white/60 rounded-xl p-6 relative">
+          <h3 className="text-sm font-serif font-bold text-gray-700 uppercase tracking-widest mb-6 flex items-center gap-2">
+            <Activity size={16} className="text-rose-500" /> Network Traffic
           </h3>
           <div className="h-64 w-full flex items-end justify-between gap-2 px-2">
             {[30, 45, 25, 60, 40, 80, 55, 90, 75, 45, 60, 85].map(
               (height, i) => (
                 <div key={i} className="w-full relative group">
                   <div
-                    className="w-full bg-gradient-to-t from-neon-cyan/20 to-neon-cyan/5 border-t border-neon-cyan/50 rounded-t-sm transition-all duration-300 group-hover:from-neon-cyan/40 group-hover:to-neon-cyan/10 group-hover:shadow-[0_0_15px_rgba(0,245,255,0.3)]"
+                    className="w-full bg-gradient-to-t from-neon-cyan/20 to-neon-cyan/5 border-t border-rose-400 rounded-t-sm transition-all duration-300 group-hover:from-neon-cyan/40 group-hover:to-neon-cyan/10 group-hover:shadow-[0_0_15px_rgba(0,245,255,0.3)]"
                     style={{ height: `${height}%` }}
                   />
                 </div>
@@ -105,9 +105,9 @@ export default function OverviewTab({ data }: { data: PortfolioData }) {
         </div>
 
         {/* Activity Feed */}
-        <div className="bg-[#0B1220]/50 backdrop-blur border border-white/10 rounded-xl p-6">
-          <h3 className="text-sm font-orbitron font-bold text-white/70 uppercase tracking-widest mb-6 flex items-center gap-2">
-            <Users size={16} className="text-electric-purple" /> Recent Access
+        <div className="bg-white/40 backdrop-blur border border-white/60 rounded-xl p-6">
+          <h3 className="text-sm font-serif font-bold text-gray-700 uppercase tracking-widest mb-6 flex items-center gap-2">
+            <Users size={16} className="text-green-600" /> Recent Access
             Logs
           </h3>
           <div className="space-y-4">
@@ -131,15 +131,15 @@ export default function OverviewTab({ data }: { data: PortfolioData }) {
             ].map((log, i) => (
               <div
                 key={i}
-                className="flex flex-col border-b border-white/5 pb-3 last:border-0"
+                className="flex flex-col border-b border-white/40 pb-3 last:border-0"
               >
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-xs font-mono text-neon-cyan">
+                  <span className="text-xs font-sans text-rose-500">
                     {log.ip}
                   </span>
-                  <span className="text-[10px] text-white/30">{log.time}</span>
+                  <span className="text-[10px] text-gray-400">{log.time}</span>
                 </div>
-                <span className="text-[11px] font-orbitron tracking-wider text-white/60">
+                <span className="text-[11px] font-serif tracking-wider text-gray-800/60">
                   {log.action}
                 </span>
               </div>
