@@ -46,21 +46,28 @@ export default function SkillsSection() {
                 {skill.name}
               </h3>
               <div style={{
-                background: 'var(--color-bg-secondary)',
+                background: 'rgba(44, 48, 46, 0.15)',
                 borderRadius: '9999px',
                 height: '8px',
                 width: '100%',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.15)'
               }}>
                 <motion.div
-                  initial={{ width: 0 }}
+                  initial={{ width: 0, backgroundPosition: '200% center' }}
                   whileInView={{ width: `${skill.level}%` }}
+                  animate={{ backgroundPosition: ['200% center', '-200% center'] }}
                   viewport={{ once: true }}
-                  transition={{ duration: 1, delay: 0.3 + index * 0.1 }}
+                  transition={{ 
+                    width: { duration: 1.2, delay: 0.2 + index * 0.1, ease: 'easeOut' },
+                    backgroundPosition: { duration: 3, repeat: Infinity, ease: 'linear' }
+                  }}
                   style={{
                     height: '100%',
-                    background: 'linear-gradient(90deg, var(--color-primary), var(--color-secondary))',
-                    borderRadius: '9999px'
+                    background: 'linear-gradient(90deg, var(--color-rose-gold), var(--color-medium-green), var(--color-rose-gold))',
+                    backgroundSize: '200% auto',
+                    borderRadius: '9999px',
+                    boxShadow: '0 0 10px rgba(184, 138, 114, 0.4)'
                   }}
                 />
               </div>

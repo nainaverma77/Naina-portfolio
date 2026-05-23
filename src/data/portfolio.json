@@ -11,14 +11,39 @@
     "location": "Digital Greenhouse",
     "specialization": "Frontend & UI Engineering",
     "bio": "Hello! I am a passionate developer who treats code like a digital garden—carefully planting seeds of logic, nurturing them with beautiful design, and watching them bloom into seamless user experiences. With a deep love for front-end architecture and interactive interfaces, I specialize in crafting applications that are not only highly functional but aesthetically enchanting.",
-    "avatarUrl": ""
+    "avatarUrl": "https://i.vgy.me/7wOc0D.png"
   },
   "skills": [
-    { "name": "React.js", "level": 90, "category": "Frontend", "visible": true },
-    { "name": "Next.js", "level": 85, "category": "Frontend", "visible": true },
-    { "name": "Node.js", "level": 80, "category": "Backend", "visible": true },
-    { "name": "TypeScript", "level": 85, "category": "Languages", "visible": true },
-    { "name": "CSS/Framer Motion", "level": 95, "category": "Design", "visible": true }
+    {
+      "name": "React.js",
+      "level": 90,
+      "category": "Frontend",
+      "visible": true
+    },
+    {
+      "name": "Next.js",
+      "level": 85,
+      "category": "Frontend",
+      "visible": true
+    },
+    {
+      "name": "Node.js",
+      "level": 80,
+      "category": "Backend",
+      "visible": true
+    },
+    {
+      "name": "TypeScript",
+      "level": 85,
+      "category": "Languages",
+      "visible": true
+    },
+    {
+      "name": "CSS/Framer Motion",
+      "level": 95,
+      "category": "Design",
+      "visible": true
+    }
   ],
   "projects": [
     {
@@ -29,7 +54,12 @@
         "live": "https://floral-boutique-demo.vercel.app",
         "github": "https://github.com/naina/floral-boutique"
       },
-      "tech": ["Next.js", "React", "Node.js", "Stripe"],
+      "tech": [
+        "Next.js",
+        "React",
+        "Node.js",
+        "Stripe"
+      ],
       "status": "COMPLETED",
       "visible": true
     },
@@ -41,7 +71,12 @@
         "live": "https://garden-planner-app.vercel.app",
         "github": "https://github.com/naina/garden-planner"
       },
-      "tech": ["React", "Framer Motion", "MongoDB", "Express"],
+      "tech": [
+        "React",
+        "Framer Motion",
+        "MongoDB",
+        "Express"
+      ],
       "status": "LIVE",
       "visible": true
     }
@@ -67,8 +102,18 @@
   "experience": [],
   "testimonials": [],
   "socials": [
-    { "id": "s1", "platform": "GitHub", "url": "https://github.com/naina", "enabled": true },
-    { "id": "s2", "platform": "LinkedIn", "url": "https://linkedin.com/in/naina", "enabled": true }
+    {
+      "id": "s1",
+      "platform": "GitHub",
+      "url": "https://github.com/naina",
+      "enabled": true
+    },
+    {
+      "id": "s2",
+      "platform": "LinkedIn",
+      "url": "https://linkedin.com/in/naina",
+      "enabled": true
+    }
   ],
   "settings": {
     "theme": "floral",
@@ -76,5 +121,10 @@
     "seoTitle": "Naina | Floral Portfolio",
     "seoDescription": "A beautiful, premium developer portfolio blooming with creativity.",
     "resumeUrl": "/resume.pdf"
+  },
+  "stats": {
+    "repos": 16,
+    "commits": 122,
+    "prs": 1
   }
 }

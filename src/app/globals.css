@@ -40,9 +40,14 @@
     --color-secondary: #B5D2DE;
     --color-accent: #C7B5DE;
     
-    --color-text-primary: #1A1A1C;
+    --color-text-primary: #2C302E; /* deep-charcoal */
     --color-text-secondary: #6A6B70; 
     --color-text-muted: #9A9B9E;
+    
+    --color-rose-gold: #B88A72; /* subtle-rose-gold */
+    --color-muted-rose-gold: #C08D73; /* muted-rose-gold */
+    --color-muted-green: #748B6F; /* muted-green */
+    --color-medium-green: #618055; /* medium-green */
 
     /* Glassmorphism Tokens */
     --glass-bg: rgba(255, 255, 255, 0.25);

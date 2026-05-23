@@ -25,19 +25,19 @@ export default function Home() {
   return (
     <div>
       {/* NAVBAR */}
-      <nav style={{
-        position: 'absolute', top: 0, left: 0, right: 0, padding: '2rem 4rem',
-        display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', zIndex: 100
+      <nav className="fixed top-0 left-0 right-0 z-[100] flex flex-col md:flex-row justify-between items-center px-6 md:px-16 py-4 md:py-6" style={{
+        background: 'rgba(255, 255, 255, 0.3)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.4)', gap: '1rem'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '1.25rem', letterSpacing: '0.1em', fontFamily: 'var(--font-heading)' }}>
-          <span className="text-gradient">❁</span> {siteConfig.logoText}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '1.25rem', letterSpacing: '0.1em', fontFamily: 'var(--font-heading)', color: 'var(--color-rose-gold)' }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+          {siteConfig.logoText}
         </div>
-        <div style={{ display: 'flex', gap: '2rem', fontSize: '0.875rem', fontWeight: 600, letterSpacing: '0.1em' }}>
+        <div className="flex flex-wrap justify-center gap-4 md:gap-8" style={{ fontSize: '0.875rem', fontWeight: 600, letterSpacing: '0.1em' }}>
           {siteConfig.navLinks.map((link, index) => (
-            <a key={index} href={link.href} style={link.label === 'HOME' ? { color: 'var(--color-primary)', borderBottom: '2px solid var(--color-primary)' } : {}}>{link.label}</a>
+            <a key={index} href={link.href} className="hover:opacity-80 transition-opacity" style={link.label === 'HOME' ? { color: 'var(--color-muted-green)', borderBottom: '2px solid var(--color-muted-green)' } : { color: 'var(--color-muted-green)' }}>{link.label}</a>
           ))}
         </div>
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
+        <div className="hidden md:flex gap-4 justify-end">
           <a href={portfolioData.socials.find(s => s.platform.toLowerCase() === 'github')?.url || '#'} target="_blank" rel="noreferrer" className="glass-pill" style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', cursor: 'pointer', color: 'var(--color-text-primary)' }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
           </a>
@@ -106,7 +106,7 @@ export default function Home() {
                   filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.2))'
                 }}
               >
-                🐝
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--color-rose-gold)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
               </motion.div>
             ) : (
               <motion.div
@@ -123,24 +123,24 @@ export default function Home() {
                   filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.2))'
                 }}
               >
-                🐝
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--color-rose-gold)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
               </motion.div>
             )}
             {portfolioData.hero.heading}
           </h1>
-          <h1 className="text-gradient" style={{ fontSize: '4.5rem', lineHeight: 1.1, margin: 0, marginBottom: '2rem' }}>
+          <h1 style={{ color: 'var(--color-muted-rose-gold)', fontSize: '4.5rem', lineHeight: 1.1, margin: 0, marginBottom: '2rem' }}>
             {portfolioData.hero.subtitle}
           </h1>
 
           {/* Subtext */}
-          <div style={{ fontSize: '1rem', fontWeight: 600, letterSpacing: '0.1em', color: 'var(--color-text-secondary)', marginBottom: '3rem' }}>
+          <div style={{ fontSize: '1rem', fontWeight: 600, letterSpacing: '0.1em', color: 'var(--color-medium-green)', marginBottom: '3rem' }}>
             {portfolioData.hero.subtext}
           </div>
 
           {/* Action Buttons */}
           <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '2rem', zIndex: 10 }}>
             <a href={siteConfig.hero.primaryButton.href} className="glass-pill" style={{ padding: '1rem 2.5rem', fontSize: '0.875rem', fontWeight: 700, letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span style={{ color: 'var(--color-primary)' }}>❀</span> {siteConfig.hero.primaryButton.label}
+              <span style={{ color: 'var(--color-rose-gold)' }}>❀</span> {siteConfig.hero.primaryButton.label}
             </a>
             <a href={siteConfig.hero.secondaryButton.href} className="glass-pill" style={{ padding: '1rem 2.5rem', fontSize: '0.875rem', fontWeight: 700, letterSpacing: '0.1em' }}>
               {siteConfig.hero.secondaryButton.label}
