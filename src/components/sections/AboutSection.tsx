@@ -40,8 +40,10 @@ export default function AboutSection() {
             style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}
           >
             <div className="glass-panel" style={{ 
-              width: '300px', 
-              height: '300px', 
+              width: '100%', 
+              maxWidth: '420px', 
+              aspectRatio: '1 / 1',
+              margin: '0 auto',
               borderRadius: '50% 50% 50% 10%', 
               overflow: 'hidden',
               display: 'flex',

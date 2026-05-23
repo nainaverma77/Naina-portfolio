@@ -47,7 +47,7 @@ export async function fetchGithubRepos(username: string): Promise<Project[]> {
     return data.map((repo: any) => {
       const tech = repo.language ? [repo.language] : [];
       return {
-        id: repo.name.toUpperCase().substring(0, 10), // Generate a short ID
+        id: `REPO-${repo.id}`, // Generate a guaranteed unique ID based on GitHub's internal ID
         name: repo.name,
         description: repo.description || "No description provided.",
         tech: tech,

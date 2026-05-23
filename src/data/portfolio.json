@@ -8,7 +8,7 @@
     "name": "Naina Verma",
     "role": "Developer",
     "status": "Available",
-    "location": "Digital Greenhouse",
+    "location": "Gorakhpur",
     "specialization": "Frontend & UI Engineering",
     "bio": "Hello! I am a passionate developer who treats code like a digital garden—carefully planting seeds of logic, nurturing them with beautiful design, and watching them bloom into seamless user experiences. With a deep love for front-end architecture and interactive interfaces, I specialize in crafting applications that are not only highly functional but aesthetically enchanting.",
     "avatarUrl": "https://i.vgy.me/7wOc0D.png",
@@ -107,7 +107,8 @@
         "github": "https://github.com/nainaverma77/ai-ecommerce_nodejs",
         "live": "#"
       },
-      "visible": true
+      "visible": true,
+      "imageUrl": "https://i.vgy.me/BVnCtZ.png"
     },
     {
       "id": "BILLINTSYS",
@@ -149,8 +150,8 @@
       "visible": true
     },
     {
-      "id": "AI-ECOMMER",
-      "name": "ai-ecommerce",
+      "id": "AI-ECOMMER_DUP",
+      "name": "ai-ecommerce_nodejs",
       "description": "No description provided.",
       "tech": [
         "JavaScript"
@@ -158,10 +159,11 @@
       "category": "WEB",
       "status": "GITHUB SYNC",
       "links": {
-        "github": "https://github.com/nainaverma77/ai-ecommerce",
+        "github": "https://github.com/nainaverma77/ai-ecommerce_nodejs",
         "live": "#"
       },
-      "visible": true
+      "visible": true,
+      "imageUrl": "https://i.vgy.me/BVnCtZ.png"
     },
     {
       "id": "PROJECT1",

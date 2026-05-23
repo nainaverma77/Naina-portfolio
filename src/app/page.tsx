@@ -13,13 +13,29 @@ import { motion } from 'framer-motion';
 
 export default function Home() {
   const [beeLanded, setBeeLanded] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     // Wait 4 seconds for the bee to fly around before it officially 'lands'
     const timer = setTimeout(() => {
       setBeeLanded(true);
     }, 4000);
-    return () => clearTimeout(timer);
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id || 'home');
+        }
+      });
+    }, { rootMargin: '-30% 0px -70% 0px' });
+
+    const sections = document.querySelectorAll('section, #home');
+    sections.forEach((section) => observer.observe(section));
+
+    return () => {
+      clearTimeout(timer);
+      sections.forEach((section) => observer.unobserve(section));
+    };
   }, []);
 
   return (
@@ -33,9 +49,24 @@ export default function Home() {
           {siteConfig.logoText}
         </div>
         <div className="flex flex-wrap justify-center gap-4 md:gap-8" style={{ fontSize: '0.875rem', fontWeight: 600, letterSpacing: '0.1em' }}>
-          {siteConfig.navLinks.map((link, index) => (
-            <a key={index} href={link.href} className="hover:opacity-80 transition-opacity" style={link.label === 'HOME' ? { color: 'var(--color-muted-green)', borderBottom: '2px solid var(--color-muted-green)' } : { color: 'var(--color-muted-green)' }}>{link.label}</a>
-          ))}
+          {siteConfig.navLinks.map((link, index) => {
+            const targetId = link.href === '#' ? 'home' : link.href.replace('#', '');
+            const isActive = activeSection === targetId;
+            return (
+              <a 
+                key={index} 
+                href={link.href} 
+                className="hover:opacity-80 transition-all" 
+                style={{ 
+                  color: 'var(--color-muted-green)', 
+                  borderBottom: isActive ? '2px solid var(--color-muted-green)' : '2px solid transparent',
+                  paddingBottom: '0.25rem'
+                }}
+              >
+                {link.label}
+              </a>
+            );
+          })}
         </div>
         <div className="hidden md:flex gap-4 justify-end">
           <a href={portfolioData.socials.find(s => s.platform.toLowerCase() === 'github')?.url || '#'} target="_blank" rel="noreferrer" className="glass-pill" style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', cursor: 'pointer', color: 'var(--color-text-primary)' }}>
@@ -51,7 +82,7 @@ export default function Home() {
       </nav>
 
       {/* HERO SECTION */}
-      <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center relative" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', animation: 'fadeInUp 1s ease-out' }}>
+      <div id="home" className="min-h-screen flex flex-col items-center justify-center p-8 text-center relative" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', animation: 'fadeInUp 1s ease-out' }}>
 
 
         {/* Glassmorphism Wrapper */}
