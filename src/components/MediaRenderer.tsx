@@ -54,14 +54,15 @@ export default function MediaRenderer({
   const driveMatch = url.match(driveRegex);
 
   if (driveMatch && driveMatch[1]) {
+    // Render Google Drive images using the uc endpoint
     return (
-      <iframe
+      <img
+        src={`https://drive.google.com/uc?export=view&id=${driveMatch[1]}`}
+        alt={alt}
         className={`w-full h-full object-cover ${className}`}
-        src={`https://drive.google.com/file/d/${driveMatch[1]}/preview`}
-        title={alt}
-        frameBorder="0"
-        allow="autoplay; fullscreen; picture-in-picture"
-        allowFullScreen
+        onError={(e) => {
+          (e.target as HTMLImageElement).style.opacity = "0.5";
+        }}
       />
     );
   }

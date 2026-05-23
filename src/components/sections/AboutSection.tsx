@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import portfolioData from '@/data/portfolio.json';
 import siteConfig from '@/data/site_config.json';
 import { User, MapPin, Briefcase, Sparkles } from 'lucide-react';
+import MediaRenderer from '@/components/MediaRenderer';
 
 export default function AboutSection() {
   const { about } = portfolioData;
@@ -53,7 +54,7 @@ export default function AboutSection() {
               boxShadow: '0 15px 35px rgba(226, 194, 216, 0.3)'
             }}>
               {about.avatarUrl ? (
-                <img src={about.avatarUrl} alt={about.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <MediaRenderer url={about.avatarUrl} alt={about.name} className="w-full h-full object-cover" />
               ) : (
                 <div style={{ fontSize: '5rem', color: 'var(--color-primary)' }}>❁</div>
               )}

@@ -121,7 +121,9 @@
         "github": "https://github.com/nainaverma77/BillintSystem",
         "live": "#"
       },
-      "visible": true
+      "visible": true,
+      "imageUrl": "https://i.vgy.me/mZNhqX.jpg",
+      "importantDetails": "testing"
     },
     {
       "id": "DAILY_CODE",

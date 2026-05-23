@@ -8,6 +8,7 @@ import SkillsSection from '@/components/sections/SkillsSection';
 import EducationSection from '@/components/sections/EducationSection';
 import ProjectsSection from '@/components/sections/ProjectsSection';
 import ConnectForm from '@/components/sections/ConnectForm';
+import Footer from '@/components/ui/Footer';
 import { Download } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -188,6 +189,7 @@ export default function Home() {
       <EducationSection />
       <ProjectsSection />
       <ConnectForm />
+      <Footer />
 
       {/* Custom Keyframes for the server-rendered Hero */}
       <style dangerouslySetInnerHTML={{

@@ -6,6 +6,7 @@ import { ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
 import siteConfig from '@/data/site_config.json';
 import ProjectModal from '@/components/ui/ProjectModal';
+import MediaRenderer from '@/components/MediaRenderer';
 
 export default function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<typeof portfolioData.projects[0] | null>(null);
@@ -87,21 +88,26 @@ export default function ProjectsSection() {
                 }}
                 onClick={() => setSelectedProject(project)}
               >
-                {/* Fake Image Placeholder - using gradient */}
-                <div style={{
-                  height: '200px',
-                  width: '100%',
-                  background: 'linear-gradient(135deg, var(--color-primary-light), var(--color-secondary))',
-                  position: 'relative',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'rgba(255,255,255,0.7)',
-                  fontSize: '3rem',
-                  fontFamily: 'var(--font-heading)'
-                }}>
-                  {project.name.charAt(0)}
-                </div>
+                {project.imageUrl ? (
+                  <div style={{ height: '200px', width: '100%', overflow: 'hidden' }}>
+                    <MediaRenderer url={project.imageUrl} alt={project.name} className="w-full h-full object-cover" />
+                  </div>
+                ) : (
+                  <div style={{
+                    height: '200px',
+                    width: '100%',
+                    background: 'linear-gradient(135deg, var(--color-primary-light), var(--color-secondary))',
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'rgba(255,255,255,0.7)',
+                    fontSize: '3rem',
+                    fontFamily: 'var(--font-heading)'
+                  }}>
+                    {project.name.charAt(0)}
+                  </div>
+                )}
 
                 <div style={{ padding: '2rem' }}>
                   <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: 'var(--color-text-primary)' }}>
