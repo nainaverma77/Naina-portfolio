@@ -91,17 +91,24 @@ export default function ProjectsTab({
       tech:
         typeof editingProject.tech === "string"
           ? (editingProject.tech as string)
-              .split(",")
-              .map((t) => t.trim())
-              .filter(Boolean)
+            .split(",")
+            .map((t) => t.trim())
+            .filter(Boolean)
           : editingProject.tech,
+      gallery:
+        typeof editingProject.gallery === "string"
+          ? (editingProject.gallery as string)
+            .split(",")
+            .map((g) => g.trim())
+            .filter(Boolean)
+          : editingProject.gallery || [],
     };
 
     const isExisting = data.projects.some((p) => p.id === cleanedProject.id);
     const newProjects = isExisting
       ? data.projects.map((p) =>
-          p.id === cleanedProject.id ? cleanedProject : p,
-        )
+        p.id === cleanedProject.id ? cleanedProject : p,
+      )
       : [cleanedProject, ...data.projects];
 
     setData({ ...data, projects: newProjects });
@@ -406,6 +413,28 @@ export default function ProjectsTab({
                   })
                 }
                 className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-sans text-gray-600 mb-1">
+                Gallery Images (comma separated URLs)
+              </label>
+              <textarea
+                rows={2}
+                placeholder="https://image1.jpg, https://image2.jpg..."
+                value={
+                  typeof editingProject.gallery === "string"
+                    ? editingProject.gallery
+                    : (editingProject.gallery || []).join(", ")
+                }
+                onChange={(e) =>
+                  setEditingProject({
+                    ...editingProject,
+                    gallery: e.target.value as any,
+                  })
+                }
+                className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400 resize-none"
               />
             </div>
 

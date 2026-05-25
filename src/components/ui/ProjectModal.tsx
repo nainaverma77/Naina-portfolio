@@ -11,6 +11,49 @@ import { createPortal } from 'react-dom';
 import { Project } from '@/types/portfolio';
 import SourceViewerModal from './SourceViewerModal';
 
+const ProjectGallery = ({ images, projectName }: { images: string[], projectName: string }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  if (!images.length) return null;
+
+  return (
+    <div style={{ width: '100%', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', position: 'relative', height: '400px', flexShrink: 0, backgroundColor: 'rgba(0,0,0,0.02)' }}>
+      <AnimatePresence initial={false}>
+        <motion.img
+          key={currentIndex}
+          src={images[currentIndex]}
+          alt={`${projectName} preview ${currentIndex + 1}`}
+          initial={{ x: '100%', opacity: 1 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: '-100%', opacity: 1 }}
+          transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }}
+        />
+      </AnimatePresence>
+      {images.length > 1 && (
+        <div style={{ position: 'absolute', bottom: '1rem', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '0.5rem', zIndex: 10 }}>
+          {images.map((_, idx) => (
+            <div key={idx} style={{
+              width: '8px', height: '8px', borderRadius: '50%',
+              background: idx === currentIndex ? 'var(--color-primary)' : 'rgba(255,255,255,0.8)',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+              transition: 'background 0.3s ease'
+            }} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 interface ProjectModalProps {
   project: Project | null;
   isOpen: boolean;
@@ -205,8 +248,13 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               const hasReadme = readme && !readme.includes('No README content found.') && !readme.includes('Failed to load README.');
               const showFallback = !hasImportantDetails && !hasReadme && !isLoading;
 
+              const allImages = [project.imageUrl, ...(project.gallery || [])].filter(Boolean);
+
               return (
                 <>
+                  {allImages.length > 0 && (
+                    <ProjectGallery images={allImages as string[]} projectName={project.name} />
+                  )}
                   {hasImportantDetails && (
                     <div style={{
                       background: 'rgba(226, 194, 216, 0.15)',

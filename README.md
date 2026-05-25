@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ✿ Naina's Digital Garden - Developer Portfolio ✿
 
-## Getting Started
+Welcome to **Naina's Digital Garden**, a premium, highly-interactive, and aesthetic developer portfolio. Designed with a soft "floral" theme, it blends a beautiful glassmorphism UI with powerful administrative capabilities and seamless Github syncing.
 
-First, run the development server:
+## 🌟 Key Features
 
+- **Floral & Glassmorphism UI**: Beautiful petal animations, soft color palettes (rose gold, neon cyan, soft pinks), and smooth transitions using Framer Motion.
+- **Dynamic Admin Dashboard**: Manage everything without touching code! Access the secure `/admin` route to add/edit projects, sync GitHub repositories, update your skills, and manage education details.
+- **Infinite Image Gallery**: Showcase your UI! Projects can feature a seamless, auto-playing image slideshow directly inside the beautifully crafted Project Details modal.
+- **GitHub Sync**: Automatically pull the latest README.md files for your projects and sync their metadata directly from GitHub.
+- **Project Pinning & Lockdown**: Pin your most important projects to the top, and conditionally hide source code access for private client work.
+- **LeetCode Integration**: Automatically fetch and display your live LeetCode stats (like total problems solved).
+- **Fully Responsive**: Crafted with Tailwind CSS to ensure a pixel-perfect experience across desktop, tablet, and mobile devices.
+
+## 🛠 Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org/) (React)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Markdown Rendering**: `react-markdown` with `remark-gfm` for beautiful GitHub README display.
+
+## 🚀 Getting Started
+
+First, install the dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then, run the development server:
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the portfolio in action.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Admin Access
+Navigate to `/admin` in your browser. The default login is configured via environment variables.
+Ensure you have an `.env.local` file at the root of the project:
+```env
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=your_secure_password
+GITHUB_TOKEN=your_github_personal_access_token (optional, for higher rate limits)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎨 Customization
+Most data (Skills, Projects, Bio, etc.) is persistently stored and read from `src/data/portfolio.json`. You can safely modify this from the Admin Panel, or edit the JSON manually.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*"Great things are not done by impulse, but by a series of small things brought together." - Vincent van Gogh*

@@ -12,6 +12,7 @@ export interface Project {
   visible?: boolean;
   category?: string;
   imageUrl?: string;
+  gallery?: string[];
   pinned?: boolean;
   hideCode?: boolean;
 }

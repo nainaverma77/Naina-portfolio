@@ -342,7 +342,13 @@
         "live": "https://www.nainaverma.co.in/"
       },
       "visible": true,
-      "pinned": true
+      "pinned": true,
+      "hideCode": false,
+      "imageUrl": "https://i.vgy.me/rpDw11.png",
+      "gallery": [
+        "https://i.vgy.me/BPKHmu.png",
+        "https://i.vgy.me/AMB8LN.png"
+      ]
     },
     {
       "id": "REPO-1155933443",
