@@ -11,6 +11,7 @@ const EducationSection = dynamic(() => import('@/components/sections/EducationSe
 const ProjectsSection = dynamic(() => import('@/components/sections/ProjectsSection'), { ssr: true });
 const ConnectForm = dynamic(() => import('@/components/sections/ConnectForm'), { ssr: false });
 const Footer = dynamic(() => import('@/components/ui/Footer'), { ssr: true });
+const VineScrollIndicator = dynamic(() => import('@/components/ui/VineScrollIndicator'), { ssr: false });
 import { Download } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -44,10 +45,9 @@ export default function Home() {
 
   return (
     <div>
+      <VineScrollIndicator />
       {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-[100] flex flex-col md:flex-row justify-between items-center px-4 md:px-16 py-3 md:py-6 gap-3 md:gap-0" style={{
-        background: 'rgba(255, 255, 255, 0.3)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.4)'
-      }}>
+      <nav className="navbar fixed top-0 left-0 right-0 z-[100] flex flex-col md:flex-row justify-between items-center px-4 md:px-16 py-3 md:py-6 gap-3 md:gap-0">
         <div className="flex items-center justify-between w-full md:w-auto">
           <div className="flex items-center gap-2 font-extrabold text-lg md:text-xl tracking-widest" style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-rose-gold)' }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
@@ -99,7 +99,7 @@ export default function Home() {
       </nav>
 
       {/* HERO SECTION */}
-      <div id="home" className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 text-center relative" style={{ minHeight: '100vh', animation: 'fadeInUp 1s ease-out' }}>
+      <div id="home" className="min-h-screen flex flex-col items-center justify-center px-4 pb-4 pt-28 sm:px-8 sm:pb-8 sm:pt-32 text-center relative" style={{ minHeight: '100vh', animation: 'fadeInUp 1s ease-out' }}>
 
         {/* Glassmorphism Wrapper */}
         <div className="flex flex-col items-center px-6 py-8 md:px-24 md:py-16 rounded-[2rem] md:rounded-[32px] border border-white/40 shadow-[0_8px_32px_0_rgba(226,194,216,0.2)] w-full max-w-5xl" style={{
