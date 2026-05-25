@@ -1,7 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
+import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
 import {
   getPortfolioData,
   savePortfolioData,
@@ -13,29 +15,149 @@ import { PortfolioData, Message } from "@/types/portfolio";
 import { fetchGithubRepos } from "@/lib/github";
 
 const AUTH_COOKIE_NAME = "anikesh_os_admin_session";
-const AUTH_COOKIE_VALUE = "authenticated_token_v1";
 
 export async function checkAuth() {
   const cookieStore = await cookies();
   const session = cookieStore.get(AUTH_COOKIE_NAME);
-  return session?.value === AUTH_COOKIE_VALUE;
+  if (!session) return false;
+  
+  try {
+    jwt.verify(session.value, process.env.JWT_SECRET || 'fallback_secret');
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
+
+let currentOtp: string | null = null;
+let otpExpiry: number = 0;
 
 export async function verifyLogin(username: string, pass: string) {
   const validUser = process.env.ADMIN_USERNAME || "admin";
   const validPass = process.env.ADMIN_PASSWORD || "password";
 
-  if (username === validUser && pass === validPass) {
-    const cookieStore = await cookies();
-    cookieStore.set(AUTH_COOKIE_NAME, AUTH_COOKIE_VALUE, {
+  if (username !== validUser || pass !== validPass) {
+    return { success: false, error: "Invalid credentials" };
+  }
+
+  const cookieStore = await cookies();
+  let deviceId = cookieStore.get("device_id")?.value;
+  
+  if (!deviceId) {
+    deviceId = Math.random().toString(36).substring(2, 15);
+    cookieStore.set("device_id", deviceId, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      maxAge: 60 * 60 * 24, // 1 day
+      maxAge: 60 * 60 * 24 * 365 * 5, // 5 years
       path: "/",
     });
+  }
+
+  const headersList = await headers();
+  const ip = headersList.get("x-forwarded-for") || "127.0.0.1";
+  const browser = headersList.get("user-agent") || "Unknown Browser";
+
+  const data = getPortfolioData();
+  if (!data.devices) data.devices = [];
+  let existingDevice = data.devices.find(d => d.id === deviceId);
+  
+  if (existingDevice?.isTrusted) {
+    // Trusted device skips OTP
+    const token = jwt.sign({ admin: true }, process.env.JWT_SECRET || 'fallback_secret', { expiresIn: '30m' });
+    cookieStore.set(AUTH_COOKIE_NAME, token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 30 * 60,
+      path: "/",
+    });
+    existingDevice.lastLogin = new Date().toISOString();
+    existingDevice.ip = ip;
+    savePortfolioData(data);
+    return { success: true };
+  } else {
+    // Generate OTP
+    currentOtp = Math.floor(100000 + Math.random() * 900000).toString();
+    otpExpiry = Date.now() + 5 * 60 * 1000;
+    
+    // Send Email
+    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+      try {
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+          }
+        });
+        await transporter.sendMail({
+          from: process.env.EMAIL_USER,
+          to: process.env.OTP_RECEIVER_EMAIL || process.env.EMAIL_USER,
+          subject: 'Admin Login OTP - Portfolio',
+          text: `Your OTP for admin login is: ${currentOtp}\n\nDevice: ${browser}\nIP: ${ip}`,
+        });
+      } catch (err) {
+        console.error("Failed to send OTP email:", err);
+      }
+    } else {
+      console.log(`\n🔐 ADMIN LOGIN OTP (Fallback): ${currentOtp}\n`);
+    }
+    
+    if (!existingDevice) {
+      data.devices.push({
+        id: deviceId,
+        ip,
+        browser,
+        lastLogin: new Date().toISOString(),
+        isTrusted: false
+      });
+      savePortfolioData(data);
+    }
+    
+    return { success: true, requiresOtp: true };
+  }
+}
+
+export async function verifyLoginOtp(otp: string) {
+  if (currentOtp && otp === currentOtp && Date.now() < otpExpiry) {
+    const cookieStore = await cookies();
+    const token = jwt.sign({ admin: true }, process.env.JWT_SECRET || 'fallback_secret', { expiresIn: '30m' });
+    
+    cookieStore.set(AUTH_COOKIE_NAME, token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 30 * 60, // 30 minutes
+      path: "/",
+    });
+    currentOtp = null;
+    
+    const deviceId = cookieStore.get("device_id")?.value;
+    if (deviceId) {
+      const data = getPortfolioData();
+      const existingDevice = data.devices?.find(d => d.id === deviceId);
+      if (existingDevice) {
+        existingDevice.lastLogin = new Date().toISOString();
+        savePortfolioData(data);
+      }
+    }
+    
     return { success: true };
   }
-  return { success: false, error: "Invalid credentials" };
+  return { success: false, error: "Invalid or expired OTP" };
+}
+
+export async function toggleDeviceTrust(deviceId: string, isTrusted: boolean) {
+  const isAuth = await checkAuth();
+  if (!isAuth) throw new Error("Unauthorized");
+  
+  const data = getPortfolioData();
+  const device = data.devices?.find(d => d.id === deviceId);
+  if (device) {
+    device.isTrusted = isTrusted;
+    savePortfolioData(data);
+    revalidatePath("/", "layout");
+    return { success: true };
+  }
+  return { success: false };
 }
 
 export async function logout() {

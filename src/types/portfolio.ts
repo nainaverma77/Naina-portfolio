@@ -103,6 +103,7 @@ export interface PortfolioData {
     username: string;
     solvedCount: number;
   };
+  devices?: Device[];
 }
 
 export interface Message {
@@ -111,4 +112,12 @@ export interface Message {
   email: string;
   message: string;
   timestamp: string;
+}
+
+export interface Device {
+  id: string;
+  ip: string;
+  browser: string;
+  lastLogin: string;
+  isTrusted: boolean;
 }

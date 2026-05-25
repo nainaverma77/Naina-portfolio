@@ -10,6 +10,7 @@ import {
   ChevronRight,
   Mail,
   BookOpen,
+  Shield,
 } from "lucide-react";
 
 export type TabType =
@@ -21,7 +22,8 @@ export type TabType =
   | "projects"
   | "socials"
   | "messages"
-  | "settings";
+  | "settings"
+  | "access";
 
 interface SidebarProps {
   activeTab: TabType;
@@ -46,6 +48,7 @@ export default function Sidebar({
     { id: "socials", label: "Botanical Links", icon: Globe },
     { id: "messages", label: "Messages", icon: Mail },
     { id: "settings", label: "Greenhouse Config", icon: Settings },
+    { id: "access", label: "Access Control", icon: Shield },
   ] as const;
 
   return (

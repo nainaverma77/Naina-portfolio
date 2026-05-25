@@ -14,6 +14,7 @@ import SocialTab from "./SocialTab";
 import SettingsTab from "./SettingsTab";
 import MessagesTab from "./MessagesTab";
 import EducationTab from "./EducationTab";
+import AccessControlTab from "./AccessControlTab";
 
 interface AdminShellProps {
   initialData: PortfolioData;
@@ -96,6 +97,8 @@ export default function AdminShell({ initialData }: AdminShellProps) {
         return <MessagesTab />;
       case "settings":
         return <SettingsTab data={data} setData={setData} />;
+      case "access":
+        return <AccessControlTab data={data} setData={setData} />;
       default:
         return <OverviewTab data={data} />;
     }

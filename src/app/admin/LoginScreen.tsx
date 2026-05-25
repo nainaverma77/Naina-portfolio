@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { verifyLogin } from "@/app/actions";
-import { Lock, User } from "lucide-react";
+import { verifyLogin, verifyLoginOtp } from "@/app/actions";
+import { Lock, User, KeyRound } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function LoginScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [otp, setOtp] = useState("");
+  const [showOtp, setShowOtp] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -17,13 +19,24 @@ export default function LoginScreen() {
     setIsLoading(true);
     setError("");
 
-    const result = await verifyLogin(username, password);
-    if (result.success) {
-      // Re-run the server component to load the dashboard
-      router.refresh();
+    if (!showOtp) {
+      const result = await verifyLogin(username, password);
+      if (result.success && result.requiresOtp) {
+        setShowOtp(true);
+        setIsLoading(false);
+      } else {
+        setError(result.error || "Login failed");
+        setIsLoading(false);
+      }
     } else {
-      setError(result.error || "Login failed");
-      setIsLoading(false);
+      const result = await verifyLoginOtp(otp);
+      if (result.success) {
+        // Re-run the server component to load the dashboard
+        router.refresh();
+      } else {
+        setError(result.error || "Invalid OTP");
+        setIsLoading(false);
+      }
     }
   };
 
@@ -50,45 +63,70 @@ export default function LoginScreen() {
         )}
 
         <form onSubmit={handleLogin} className="space-y-6 relative z-10">
-          <div>
-            <label className="block text-xs mb-2 uppercase tracking-wider" style={{ color: "var(--color-text-secondary)", fontFamily: "var(--font-body)" }}>
-              Username
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-                <User size={16} />
+          {!showOtp ? (
+            <>
+              <div>
+                <label className="block text-xs mb-2 uppercase tracking-wider" style={{ color: "var(--color-text-secondary)", fontFamily: "var(--font-body)" }}>
+                  Username
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                    <User size={16} />
+                  </div>
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="w-full bg-white/50 border border-white/60 rounded-xl py-2.5 pl-10 pr-3 focus:border-[var(--color-primary)] outline-none transition-colors backdrop-blur-sm shadow-sm"
+                    style={{ color: "var(--color-text-primary)", fontFamily: "var(--font-body)" }}
+                    placeholder="Enter Username"
+                    required
+                  />
+                </div>
               </div>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full bg-white/50 border border-white/60 rounded-xl py-2.5 pl-10 pr-3 focus:border-[var(--color-primary)] outline-none transition-colors backdrop-blur-sm shadow-sm"
-                style={{ color: "var(--color-text-primary)", fontFamily: "var(--font-body)" }}
-                placeholder="Enter Username"
-                required
-              />
-            </div>
-          </div>
 
-          <div>
-            <label className="block text-xs mb-2 uppercase tracking-wider" style={{ color: "var(--color-text-secondary)", fontFamily: "var(--font-body)" }}>
-              Password
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-                <Lock size={16} />
+              <div>
+                <label className="block text-xs mb-2 uppercase tracking-wider" style={{ color: "var(--color-text-secondary)", fontFamily: "var(--font-body)" }}>
+                  Password
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                    <Lock size={16} />
+                  </div>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full bg-white/50 border border-white/60 rounded-xl py-2.5 pl-10 pr-3 focus:border-[var(--color-primary)] outline-none transition-colors backdrop-blur-sm shadow-sm"
+                    style={{ color: "var(--color-text-primary)", fontFamily: "var(--font-body)" }}
+                    placeholder="••••••••"
+                    required
+                  />
+                </div>
               </div>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-white/50 border border-white/60 rounded-xl py-2.5 pl-10 pr-3 focus:border-[var(--color-primary)] outline-none transition-colors backdrop-blur-sm shadow-sm"
-                style={{ color: "var(--color-text-primary)", fontFamily: "var(--font-body)" }}
-                placeholder="••••••••"
-                required
-              />
+            </>
+          ) : (
+            <div>
+              <label className="block text-xs mb-2 uppercase tracking-wider text-rose-500" style={{ fontFamily: "var(--font-body)" }}>
+                Enter OTP (Sent to Email)
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                  <KeyRound size={16} />
+                </div>
+                <input
+                  type="text"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  className="w-full bg-white/50 border border-white/60 rounded-xl py-2.5 pl-10 pr-3 focus:border-[var(--color-primary)] outline-none transition-colors backdrop-blur-sm shadow-sm text-center tracking-widest font-bold"
+                  style={{ color: "var(--color-text-primary)", fontFamily: "var(--font-body)" }}
+                  placeholder="000000"
+                  maxLength={6}
+                  required
+                />
+              </div>
             </div>
-          </div>
+          )}
 
           <button
             type="submit"
@@ -96,7 +134,7 @@ export default function LoginScreen() {
             className="w-full glass-pill py-3 mt-4 text-sm font-semibold uppercase tracking-wider disabled:opacity-50 hover:opacity-90"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            {isLoading ? "Authenticating..." : "Login"}
+            {isLoading ? "Authenticating..." : (showOtp ? "Verify OTP" : "Login")}
           </button>
         </form>
       </div>
