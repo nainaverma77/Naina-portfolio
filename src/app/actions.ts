@@ -61,60 +61,76 @@ export async function verifyLogin(username: string, pass: string) {
   if (!data.devices) data.devices = [];
   let existingDevice = data.devices.find(d => d.id === deviceId);
   
-  if (existingDevice?.isTrusted) {
-    // Trusted device skips OTP
-    const token = jwt.sign({ admin: true }, process.env.JWT_SECRET || 'fallback_secret', { expiresIn: '30m' });
-    cookieStore.set(AUTH_COOKIE_NAME, token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 30 * 60,
-      path: "/",
-    });
+  // Always generate OTP
+  currentOtp = Math.floor(100000 + Math.random() * 900000).toString();
+  otpExpiry = Date.now() + 5 * 60 * 1000;
+  
+  // Send Email
+  if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+    try {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS
+        }
+      });
+      const htmlEmail = `
+<div style="font-family: 'Inter', Helvetica, Arial, sans-serif; background-color: #fff0f5; padding: 40px 20px; color: #333;">
+  <div style="max-width: 500px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(244, 63, 94, 0.1); border: 1px solid #ffe4e6;">
+    <div style="background-color: #fb7185; padding: 24px; text-align: center;">
+      <h2 style="color: #ffffff; margin: 0; font-size: 20px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">Security Verification</h2>
+    </div>
+    
+    <div style="padding: 32px 24px;">
+      <p style="margin: 0 0 16px; font-size: 15px; color: #4b5563; line-height: 1.6;">Hello,</p>
+      <p style="margin: 0 0 24px; font-size: 15px; color: #4b5563; line-height: 1.6;">A login attempt was made to your Admin Dashboard. Use the following securely generated OTP to grant access:</p>
+      
+      <div style="text-align: center; margin: 32px 0;">
+        <span style="display: inline-block; background-color: #fff1f2; color: #e11d48; border: 2px dashed #fda4af; font-size: 32px; font-weight: 700; letter-spacing: 6px; padding: 12px 32px; border-radius: 8px;">${currentOtp}</span>
+      </div>
+      
+      <p style="margin: 0 0 8px; font-size: 13px; color: #6b7280; font-weight: 600; text-transform: uppercase;">Request Details</p>
+      <div style="background-color: #f9fafb; border-radius: 8px; padding: 16px; border: 1px solid #e5e7eb;">
+        <p style="margin: 0 0 8px; font-size: 13px; color: #4b5563;"><strong>IP Address:</strong> <span style="font-family: monospace; color: #fb7185;">${ip}</span></p>
+        <p style="margin: 0; font-size: 13px; color: #4b5563;"><strong>Browser/OS:</strong> ${browser}</p>
+      </div>
+      
+      <p style="margin: 24px 0 0; font-size: 12px; color: #9ca3af; text-align: center;">If this was not you, please ignore this email. Your system is safe.</p>
+    </div>
+  </div>
+</div>
+      `;
+
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: process.env.OTP_RECEIVER_EMAIL || process.env.EMAIL_USER,
+        subject: `[${currentOtp}] Admin Login OTP - Portfolio`,
+        html: htmlEmail,
+      });
+    } catch (err) {
+      console.error("Failed to send OTP email:", err);
+    }
+  } else {
+    console.log(`\n🔐 ADMIN LOGIN OTP (Fallback): ${currentOtp}\n`);
+  }
+  
+  if (existingDevice) {
     existingDevice.lastLogin = new Date().toISOString();
     existingDevice.ip = ip;
-    savePortfolioData(data);
-    return { success: true };
+    existingDevice.browser = browser;
   } else {
-    // Generate OTP
-    currentOtp = Math.floor(100000 + Math.random() * 900000).toString();
-    otpExpiry = Date.now() + 5 * 60 * 1000;
-    
-    // Send Email
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-      try {
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
-          }
-        });
-        await transporter.sendMail({
-          from: process.env.EMAIL_USER,
-          to: process.env.OTP_RECEIVER_EMAIL || process.env.EMAIL_USER,
-          subject: 'Admin Login OTP - Portfolio',
-          text: `Your OTP for admin login is: ${currentOtp}\n\nDevice: ${browser}\nIP: ${ip}`,
-        });
-      } catch (err) {
-        console.error("Failed to send OTP email:", err);
-      }
-    } else {
-      console.log(`\n🔐 ADMIN LOGIN OTP (Fallback): ${currentOtp}\n`);
-    }
-    
-    if (!existingDevice) {
-      data.devices.push({
-        id: deviceId,
-        ip,
-        browser,
-        lastLogin: new Date().toISOString(),
-        isTrusted: false
-      });
-      savePortfolioData(data);
-    }
-    
-    return { success: true, requiresOtp: true };
+    data.devices.push({
+      id: deviceId,
+      ip,
+      browser,
+      lastLogin: new Date().toISOString(),
+      isTrusted: false
+    });
   }
+  savePortfolioData(data);
+  
+  return { success: true, requiresOtp: true };
 }
 
 export async function verifyLoginOtp(otp: string) {
@@ -145,20 +161,7 @@ export async function verifyLoginOtp(otp: string) {
   return { success: false, error: "Invalid or expired OTP" };
 }
 
-export async function toggleDeviceTrust(deviceId: string, isTrusted: boolean) {
-  const isAuth = await checkAuth();
-  if (!isAuth) throw new Error("Unauthorized");
-  
-  const data = getPortfolioData();
-  const device = data.devices?.find(d => d.id === deviceId);
-  if (device) {
-    device.isTrusted = isTrusted;
-    savePortfolioData(data);
-    revalidatePath("/", "layout");
-    return { success: true };
-  }
-  return { success: false };
-}
+
 
 export async function logout() {
   const cookieStore = await cookies();

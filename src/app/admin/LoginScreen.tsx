@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { verifyLogin, verifyLoginOtp } from "@/app/actions";
 import { Lock, User, KeyRound } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -12,7 +12,34 @@ export default function LoginScreen() {
   const [showOtp, setShowOtp] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [resendTimer, setResendTimer] = useState(0);
   const router = useRouter();
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (showOtp && resendTimer > 0) {
+      interval = setInterval(() => {
+        setResendTimer((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [showOtp, resendTimer]);
+
+  const handleResendOtp = async () => {
+    if (resendTimer > 0) return;
+    setError("");
+    setIsLoading(true);
+    const result = await verifyLogin(username, password);
+    if (result.success && result.requiresOtp) {
+      setResendTimer(30);
+      setIsLoading(false);
+      setError("OTP resent successfully!");
+      setTimeout(() => setError(""), 3000);
+    } else {
+      setError(result.error || "Failed to resend OTP");
+      setIsLoading(false);
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,6 +50,7 @@ export default function LoginScreen() {
       const result = await verifyLogin(username, password);
       if (result.success && result.requiresOtp) {
         setShowOtp(true);
+        setResendTimer(30);
         setIsLoading(false);
       } else {
         setError(result.error || "Login failed");
@@ -136,6 +164,19 @@ export default function LoginScreen() {
           >
             {isLoading ? "Authenticating..." : (showOtp ? "Verify OTP" : "Login")}
           </button>
+
+          {showOtp && (
+            <div className="text-center mt-4">
+              <button
+                type="button"
+                onClick={handleResendOtp}
+                disabled={resendTimer > 0 || isLoading}
+                className="text-xs font-sans text-rose-500 hover:text-rose-600 disabled:text-gray-400 disabled:cursor-not-allowed transition-colors font-medium"
+              >
+                {resendTimer > 0 ? `Resend OTP in ${resendTimer}s` : "Didn't receive code? Resend OTP"}
+              </button>
+            </div>
+          )}
         </form>
       </div>
     </div>
