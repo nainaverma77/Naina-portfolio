@@ -335,7 +335,7 @@ export default function ProjectsTab({
                   onChange={(e) =>
                     setEditingProject({ ...editingProject, id: e.target.value })
                   }
-                  className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
+                  className="w-full bg-white/80 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
                 />
               </div>
               <div>
@@ -351,7 +351,7 @@ export default function ProjectsTab({
                       name: e.target.value,
                     })
                   }
-                  className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
+                  className="w-full bg-white/80 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
                 />
               </div>
             </div>
@@ -369,7 +369,7 @@ export default function ProjectsTab({
                     description: e.target.value,
                   })
                 }
-                className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400 resize-none"
+                className="w-full bg-white/80 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400 resize-none"
               />
             </div>
 
@@ -422,7 +422,7 @@ export default function ProjectsTab({
                       category: e.target.value || undefined,
                     })
                   }
-                  className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400 appearance-none"
+                  className="w-full bg-white/80 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400 appearance-none"
                 >
                   <option value="">Auto (Infer from Tech)</option>
                   <option value="WEB">WEB</option>
@@ -444,7 +444,7 @@ export default function ProjectsTab({
                       status: e.target.value,
                     })
                   }
-                  className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
+                  className="w-full bg-white/80 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
                 />
               </div>
             </div>
@@ -487,7 +487,7 @@ export default function ProjectsTab({
                       },
                     })
                   }
-                  className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
+                  className="w-full bg-white/80 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
                 />
               </div>
               <div>
@@ -503,24 +503,28 @@ export default function ProjectsTab({
                       links: { ...editingProject.links, live: e.target.value },
                     })
                   }
-                  className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
+                  className="w-full bg-white/80 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4 pt-2">
               <label className="flex items-center gap-3 cursor-pointer p-3 bg-white/30 border border-white/40 rounded hover:bg-white/40 transition-colors">
-                <input
-                  type="checkbox"
-                  checked={editingProject.pinned || false}
-                  onChange={(e) =>
-                    setEditingProject({
-                      ...editingProject,
-                      pinned: e.target.checked,
-                    })
-                  }
-                  className="accent-neon-cyan w-4 h-4 cursor-pointer"
-                />
+                <div className="relative">
+                  <input
+                    type="checkbox"
+                    className="sr-only"
+                    checked={editingProject.pinned || false}
+                    onChange={(e) =>
+                      setEditingProject({
+                        ...editingProject,
+                        pinned: e.target.checked,
+                      })
+                    }
+                  />
+                  <div className={`block w-10 h-6 rounded-full transition-colors ${editingProject.pinned ? 'bg-rose-400' : 'bg-gray-300'}`}></div>
+                  <div className={`absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${editingProject.pinned ? 'transform translate-x-4' : ''}`}></div>
+                </div>
                 <div>
                   <span className="block text-sm font-sans text-gray-800">
                     Pin Project
@@ -532,17 +536,21 @@ export default function ProjectsTab({
               </label>
 
               <label className="flex items-center gap-3 cursor-pointer p-3 bg-white/30 border border-white/40 rounded hover:bg-white/40 transition-colors">
-                <input
-                  type="checkbox"
-                  checked={editingProject.hideCode || false}
-                  onChange={(e) =>
-                    setEditingProject({
-                      ...editingProject,
-                      hideCode: e.target.checked,
-                    })
-                  }
-                  className="accent-neon-cyan w-4 h-4 cursor-pointer"
-                />
+                <div className="relative">
+                  <input
+                    type="checkbox"
+                    className="sr-only"
+                    checked={editingProject.hideCode || false}
+                    onChange={(e) =>
+                      setEditingProject({
+                        ...editingProject,
+                        hideCode: e.target.checked,
+                      })
+                    }
+                  />
+                  <div className={`block w-10 h-6 rounded-full transition-colors ${editingProject.hideCode ? 'bg-rose-400' : 'bg-gray-300'}`}></div>
+                  <div className={`absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${editingProject.hideCode ? 'transform translate-x-4' : ''}`}></div>
+                </div>
                 <div>
                   <span className="block text-sm font-sans text-gray-800">
                     Hide Source Code
