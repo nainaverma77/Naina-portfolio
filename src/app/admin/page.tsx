@@ -12,6 +12,6 @@ export default async function AdminPage() {
     return <LoginScreen />;
   }
 
-  const initialData = getPortfolioData();
+  const initialData = await getPortfolioData();
   return <AdminShell initialData={initialData} />;
 }

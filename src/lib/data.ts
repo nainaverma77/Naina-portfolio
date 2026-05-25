@@ -1,44 +1,35 @@
 import fs from "fs";
 import path from "path";
 import { PortfolioData, Message } from "@/types/portfolio";
+import { connectToDatabase } from "./mongoose";
+import { PortfolioModel } from "@/models/Portfolio";
+import { MessageModel } from "@/models/Message";
 
 const dataFilePath = path.join(process.cwd(), "src", "data", "portfolio.json");
-const messagesFilePath = path.join(
-  process.cwd(),
-  "src",
-  "data",
-  "messages.json",
-);
 
-export function getPortfolioData(): PortfolioData {
+export async function getPortfolioData(): Promise<PortfolioData> {
   try {
+    await connectToDatabase();
+    
+    // Check if data exists in DB
+    const dbDoc = await PortfolioModel.findOne();
+    
+    if (dbDoc && dbDoc.data) {
+      return dbDoc.data as PortfolioData;
+    }
+    
+    // If not in DB, seed from portfolio.json
+    console.log("Seeding MongoDB with local portfolio.json...");
     const fileContents = fs.readFileSync(dataFilePath, "utf8");
     const parsedData = JSON.parse(fileContents);
-
+    
     // Migration logic for old data format
     if (!parsedData.socials) {
       if (parsedData.contact) {
         parsedData.socials = [
-          {
-            id: "s1",
-            platform: "GitHub",
-            url: parsedData.contact.github || "",
-            enabled: true,
-          },
-          {
-            id: "s2",
-            platform: "LinkedIn",
-            url: parsedData.contact.linkedin || "",
-            enabled: true,
-          },
-          {
-            id: "s3",
-            platform: "Email",
-            url: parsedData.contact.email
-              ? `mailto:${parsedData.contact.email}`
-              : "",
-            enabled: true,
-          },
+          { id: "s1", platform: "GitHub", url: parsedData.contact.github || "", enabled: true },
+          { id: "s2", platform: "LinkedIn", url: parsedData.contact.linkedin || "", enabled: true },
+          { id: "s3", platform: "Email", url: parsedData.contact.email ? `mailto:${parsedData.contact.email}` : "", enabled: true },
         ];
       } else {
         parsedData.socials = [];
@@ -59,84 +50,70 @@ export function getPortfolioData(): PortfolioData {
     parsedData.experience = parsedData.experience || [];
     parsedData.education = parsedData.education || [];
     parsedData.testimonials = parsedData.testimonials || [];
-    parsedData.hero = parsedData.hero || { heading: "", subtitle: "" };
-    parsedData.stats = parsedData.stats || { repos: 16, commits: 122, prs: 1 };
-    parsedData.leetcode = parsedData.leetcode || { enabled: false, username: "", solvedCount: 0 };
-    parsedData.about = parsedData.about || {
-      name: "",
-      role: "",
-      status: "",
-      location: "",
-      specialization: "",
-      bio: "",
-      avatarUrl: "",
-    };
+    parsedData.hero = parsedData.hero || { heading: "Hi, I'm Anikesh", subtitle: "Full Stack Developer" };
+    parsedData.about = parsedData.about || { name: "Anikesh", role: "Developer", status: "Available", location: "Earth", specialization: "Web", bio: "Hello" };
 
-    return parsedData;
+    // Save initial seed to DB
+    const newDoc = new PortfolioModel({ data: parsedData });
+    await newDoc.save();
+    
+    return parsedData as PortfolioData;
   } catch (error) {
     console.error("Error reading portfolio data:", error);
-    // Return empty fallback
-    return {
-      hero: { heading: "", subtitle: "" },
-      about: {
-        name: "",
-        role: "",
-        status: "",
-        location: "",
-        specialization: "",
-        bio: "",
-        avatarUrl: "",
-      },
-      skills: [],
-      projects: [],
-      socials: [],
-      experience: [],
-      education: [],
-      testimonials: [],
-      settings: {
-        theme: "cyberpunk",
-        animationsEnabled: true,
-        seoTitle: "ANIKESH.OS | Developer Portfolio",
-        seoDescription: "Cyberpunk Developer Portfolio",
-      },
-      stats: { repos: 16, commits: 122, prs: 1 },
-      leetcode: { enabled: false, username: "", solvedCount: 0 },
-    };
+    // Fallback to local file if DB fails
+    return JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
   }
 }
 
-export function savePortfolioData(data: PortfolioData): boolean {
+export async function savePortfolioData(data: PortfolioData): Promise<boolean> {
   try {
-    fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), "utf8");
+    await connectToDatabase();
+    
+    // Backup to local JSON for dev tracking
+    if (process.env.NODE_ENV !== "production") {
+      fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), "utf8");
+    }
+
+    // Upsert to DB
+    const doc = await PortfolioModel.findOne();
+    if (doc) {
+      doc.data = data;
+      // Tell mongoose it's modified since it's a Mixed type
+      doc.markModified('data');
+      await doc.save();
+    } else {
+      const newDoc = new PortfolioModel({ data });
+      await newDoc.save();
+    }
     return true;
   } catch (error) {
-    console.error("Error writing portfolio data:", error);
+    console.error("Error saving portfolio data:", error);
     return false;
   }
 }
 
-export function getMessages(): Message[] {
+export async function getMessages(): Promise<Message[]> {
   try {
-    if (!fs.existsSync(messagesFilePath)) {
-      return [];
-    }
-    const fileContents = fs.readFileSync(messagesFilePath, "utf8");
-    return JSON.parse(fileContents) || [];
+    await connectToDatabase();
+    const messages = await MessageModel.find().sort({ createdAt: -1 });
+    return messages.map(msg => ({
+      id: msg.id,
+      name: msg.name,
+      email: msg.email,
+      message: msg.message,
+      timestamp: msg.timestamp
+    }));
   } catch (error) {
     console.error("Error reading messages data:", error);
     return [];
   }
 }
 
-export function saveMessage(message: Message): boolean {
+export async function saveMessage(message: Message): Promise<boolean> {
   try {
-    const messages = getMessages();
-    messages.push(message);
-    fs.writeFileSync(
-      messagesFilePath,
-      JSON.stringify(messages, null, 2),
-      "utf8",
-    );
+    await connectToDatabase();
+    const newMsg = new MessageModel(message);
+    await newMsg.save();
     return true;
   } catch (error) {
     console.error("Error saving message:", error);
@@ -144,17 +121,11 @@ export function saveMessage(message: Message): boolean {
   }
 }
 
-export function deleteMessage(id: string): boolean {
+export async function deleteMessage(id: string): Promise<boolean> {
   try {
-    const messages = getMessages();
-    const updatedMessages = messages.filter((msg) => msg.id !== id);
-    if (messages.length === updatedMessages.length) return false;
-    fs.writeFileSync(
-      messagesFilePath,
-      JSON.stringify(updatedMessages, null, 2),
-      "utf8",
-    );
-    return true;
+    await connectToDatabase();
+    const result = await MessageModel.deleteOne({ id });
+    return result.deletedCount > 0;
   } catch (error) {
     console.error("Error deleting message:", error);
     return false;

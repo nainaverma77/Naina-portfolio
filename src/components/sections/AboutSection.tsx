@@ -2,12 +2,13 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import portfolioData from '@/data/portfolio.json';
+import { usePortfolio } from '@/components/ui/PortfolioProvider';
 import siteConfig from '@/data/site_config.json';
 import { User, MapPin, Briefcase, Sparkles, Code2 } from 'lucide-react';
 import MediaRenderer from '@/components/MediaRenderer';
 
 export default function AboutSection() {
+  const portfolioData = usePortfolio();
   const { about } = portfolioData;
 
   return (

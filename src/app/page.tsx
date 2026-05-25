@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import portfolioData from '@/data/portfolio.json';
+import { usePortfolio } from '@/components/ui/PortfolioProvider';
 import siteConfig from '@/data/site_config.json';
 
 import AboutSection from '@/components/sections/AboutSection';
@@ -13,6 +13,7 @@ import { Download } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function Home() {
+  const portfolioData = usePortfolio();
   const [beeLanded, setBeeLanded] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 

@@ -2,30 +2,36 @@ import type { Metadata } from "next";
 import "./globals.css";
 import PetalsBackground from "@/components/ui/PetalsBackground";
 import LoadingScreen from "@/components/ui/LoadingScreen";
+import { getPortfolioData } from "@/lib/data";
+import { PortfolioProvider } from "@/components/ui/PortfolioProvider";
 
-import portfolioData from "@/data/portfolio.json";
+export async function generateMetadata(): Promise<Metadata> {
+  const portfolioData = await getPortfolioData();
+  return {
+    title: portfolioData.settings?.seoTitle || "Naina | Floral Portfolio",
+    description: portfolioData.settings?.seoDescription || "A beautiful, premium developer portfolio blooming with creativity.",
+  };
+}
 
-export const metadata: Metadata = {
-  title: portfolioData.settings?.seoTitle || "Naina | Floral Portfolio",
-  description: portfolioData.settings?.seoDescription || "A beautiful, premium developer portfolio blooming with creativity.",
-};
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const portfolioData = await getPortfolioData();
   return (
     <html lang="en">
       <body className="bg-gradient-floral">
-        <LoadingScreen />
-        <div className="animated-bg" />
-        <div className="min-h-screen relative overflow-hidden">
-          <PetalsBackground />
-          <main className="relative z-10">
-            {children}
-          </main>
-        </div>
+        <PortfolioProvider data={portfolioData}>
+          <LoadingScreen />
+          <div className="animated-bg" />
+          <div className="min-h-screen relative overflow-hidden">
+            <PetalsBackground />
+            <main className="relative z-10">
+              {children}
+            </main>
+          </div>
+        </PortfolioProvider>
       </body>
     </html>
   );

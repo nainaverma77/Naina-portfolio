@@ -2,10 +2,11 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import portfolioData from '@/data/portfolio.json';
+import { usePortfolio } from '@/components/ui/PortfolioProvider';
 import siteConfig from '@/data/site_config.json';
 
 export default function SkillsSection() {
+  const portfolioData = usePortfolio();
   return (
     <section id="skills" style={{ padding: '6rem 2rem', position: 'relative', zIndex: 10 }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>

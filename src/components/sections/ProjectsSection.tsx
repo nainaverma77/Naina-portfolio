@@ -3,13 +3,14 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
-import portfolioData from '@/data/portfolio.json';
+import { usePortfolio } from '@/components/ui/PortfolioProvider';
 import siteConfig from '@/data/site_config.json';
 import ProjectModal from '@/components/ui/ProjectModal';
 import MediaRenderer from '@/components/MediaRenderer';
 import { Project } from '@/types/portfolio';
 
 export default function ProjectsSection() {
+  const portfolioData = usePortfolio();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 

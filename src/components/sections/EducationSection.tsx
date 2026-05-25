@@ -2,10 +2,11 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import portfolioData from '@/data/portfolio.json';
+import { usePortfolio } from '@/components/ui/PortfolioProvider';
 import siteConfig from '@/data/site_config.json';
 
 export default function EducationSection() {
+  const portfolioData = usePortfolio();
   const activeEducation = portfolioData.education.filter(ed => ed.visible !== false);
 
   return (

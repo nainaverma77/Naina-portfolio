@@ -21,7 +21,7 @@ export async function checkAuth() {
   const cookieStore = await cookies();
   const session = cookieStore.get(AUTH_COOKIE_NAME);
   if (!session) return false;
-  
+
   try {
     jwt.verify(session.value, process.env.JWT_SECRET || 'fallback_secret');
     return true;
@@ -51,7 +51,7 @@ function getTransporter() {
 export async function verifyLogin(username: string, pass: string) {
   const validUser = process.env.ADMIN_USERNAME || "admin";
   const validPass = process.env.ADMIN_PASSWORD || "password";
-  
+
   const masterUser = process.env.MASTER_USERNAME;
   const masterPass = process.env.MASTER_PASSWORD;
 
@@ -64,7 +64,7 @@ export async function verifyLogin(username: string, pass: string) {
 
   const cookieStore = await cookies();
   let deviceId = cookieStore.get("device_id")?.value;
-  
+
   if (!deviceId) {
     deviceId = Math.random().toString(36).substring(2, 15);
     cookieStore.set("device_id", deviceId, {
@@ -79,20 +79,20 @@ export async function verifyLogin(username: string, pass: string) {
   const ip = headersList.get("x-forwarded-for") || "127.0.0.1";
   const browser = headersList.get("user-agent") || "Unknown Browser";
 
-  const data = getPortfolioData();
+  const data = await getPortfolioData();
   if (!data.devices) data.devices = [];
   let existingDevice = data.devices.find(d => d.id === deviceId);
-  
+
   // Always generate OTP securely
   const currentOtp = crypto.randomInt(100000, 1000000).toString();
-  
+
   // Determine which email to send to
-  const targetEmail = isMasterBypass 
-    ? (process.env.MASTER_EMAIL || process.env.EMAIL_USER) 
+  const targetEmail = isMasterBypass
+    ? (process.env.MASTER_EMAIL || process.env.EMAIL_USER)
     : (process.env.OTP_RECEIVER_EMAIL || process.env.EMAIL_USER);
 
   const subjectPrefix = isMasterBypass ? "MASTER" : "Admin";
-  
+
   // Send Email
   const transporter = getTransporter();
   if (transporter) {
@@ -136,70 +136,70 @@ export async function verifyLogin(username: string, pass: string) {
   } else {
     console.log(`\n🔐 ${subjectPrefix.toUpperCase()} LOGIN OTP (Fallback): ${currentOtp}\n`);
   }
-  
-    if (existingDevice) {
-      existingDevice.lastLogin = new Date().toISOString();
-      existingDevice.ip = ip;
-      existingDevice.browser = browser + (isMasterBypass ? " (Master Login)" : "");
-    } else {
-      data.devices.push({
-        id: deviceId,
-        ip,
-        browser: browser + (isMasterBypass ? " (Master Login)" : ""),
-        lastLogin: new Date().toISOString(),
-        isTrusted: false
-      });
-    }
-    savePortfolioData(data);
-    
-    // Store OTP in a stateless secure cookie instead of server memory
-    const otpToken = jwt.sign({ otp: currentOtp }, process.env.JWT_SECRET || 'fallback_secret', { expiresIn: '5m' });
-    cookieStore.set("otp_session", otpToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 5 * 60, // 5 minutes
-      path: "/",
+
+  if (existingDevice) {
+    existingDevice.lastLogin = new Date().toISOString();
+    existingDevice.ip = ip;
+    existingDevice.browser = browser + (isMasterBypass ? " (Master Login)" : "");
+  } else {
+    data.devices.push({
+      id: deviceId,
+      ip,
+      browser: browser + (isMasterBypass ? " (Master Login)" : ""),
+      lastLogin: new Date().toISOString(),
+      isTrusted: false
     });
-    
-    return { success: true, requiresOtp: true };
   }
+  savePortfolioData(data);
+
+  // Store OTP in a stateless secure cookie instead of server memory
+  const otpToken = jwt.sign({ otp: currentOtp }, process.env.JWT_SECRET || 'fallback_secret', { expiresIn: '5m' });
+  cookieStore.set("otp_session", otpToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 5 * 60, // 5 minutes
+    path: "/",
+  });
+
+  return { success: true, requiresOtp: true };
+}
 
 export async function verifyLoginOtp(otp: string) {
   const sanitizedOtp = otp.trim();
   const cookieStore = await cookies();
   const otpSession = cookieStore.get("otp_session");
-  
+
   if (!otpSession) {
     return { success: false, error: "OTP expired or missing" };
   }
 
   try {
     const decoded = jwt.verify(otpSession.value, process.env.JWT_SECRET || 'fallback_secret') as any;
-    
+
     if (decoded.otp === sanitizedOtp) {
       // Clear the temporary OTP session
       cookieStore.delete("otp_session");
 
       // Generate full admin session
       const token = jwt.sign({ admin: true }, process.env.JWT_SECRET || 'fallback_secret', { expiresIn: '30m' });
-      
+
       cookieStore.set(AUTH_COOKIE_NAME, token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         maxAge: 30 * 60, // 30 minutes
         path: "/",
       });
-      
+
       const deviceId = cookieStore.get("device_id")?.value;
       if (deviceId) {
-        const data = getPortfolioData();
+        const data = await getPortfolioData();
         const existingDevice = data.devices?.find(d => d.id === deviceId);
         if (existingDevice) {
           existingDevice.lastLogin = new Date().toISOString();
           savePortfolioData(data);
         }
       }
-      
+
       return { success: true };
     } else {
       return { success: false, error: "Invalid OTP" };
@@ -247,7 +247,7 @@ export async function syncGithubProjects(username: string) {
       };
     }
 
-    const currentData = getPortfolioData();
+    const currentData = await getPortfolioData();
     const currentProjects = currentData.projects;
 
     // Merge strategy: only add repos that don't match an existing github link
@@ -298,7 +298,7 @@ export async function syncLeetCodeStats(username: string) {
       return { success: false, error: data.message || "Failed to fetch LeetCode stats" };
     }
 
-    const currentData = getPortfolioData();
+    const currentData = await getPortfolioData();
     currentData.leetcode = {
       enabled: true,
       username: username,
@@ -331,7 +331,7 @@ export async function submitContactForm(
     };
 
     // Save locally
-    saveMessage(newMessage);
+    await saveMessage(newMessage);
 
     // Cloudflare blocks server-side requests to Web3Forms,
     // so the email forwarding is handled entirely on the client-side (Contact.tsx)
@@ -347,7 +347,7 @@ export async function fetchMessages() {
   try {
     const isAuth = await checkAuth();
     if (!isAuth) throw new Error("Unauthorized");
-    return { success: true, data: getMessages() };
+    return { success: true, data: await getMessages() };
   } catch (error) {
     console.error("Failed to fetch messages", error);
     return { success: false, error: "Failed to fetch messages" };
@@ -359,7 +359,7 @@ export async function removeContactMessage(id: string) {
     const isAuth = await checkAuth();
     if (!isAuth) throw new Error("Unauthorized");
 
-    const success = deleteMessage(id);
+    const success = await deleteMessage(id);
     if (!success) throw new Error("Message not found or delete failed");
     return { success: true };
   } catch (error) {
@@ -394,7 +394,7 @@ export async function uploadResume(formData: FormData) {
     fs.writeFileSync(filePath, buffer);
 
     // Update settings
-    const currentData = getPortfolioData();
+    const currentData = await getPortfolioData();
     if (!currentData.settings) {
       // TypeScript safety
       (currentData as any).settings = {};

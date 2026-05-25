@@ -1,7 +1,10 @@
+"use client";
+
 import React from 'react';
-import portfolioData from '@/data/portfolio.json';
+import { usePortfolio } from '@/components/ui/PortfolioProvider';
 
 export default function Footer() {
+  const portfolioData = usePortfolio();
   return (
     <footer style={{
       padding: '0.5rem 2rem',
