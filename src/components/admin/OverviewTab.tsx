@@ -68,8 +68,8 @@ export default function OverviewTab({ data }: { data: PortfolioData }) {
                 <stat.icon size={20} className={stat.color} />
               </div>
             </div>
-            {/* Hover Glow */}
-            <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-neon-cyan/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+        {/* Hover Glow */}
+            <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-pink-400/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
           </motion.div>
         ))}
       </div>
@@ -86,7 +86,7 @@ export default function OverviewTab({ data }: { data: PortfolioData }) {
               (height, i) => (
                 <div key={i} className="w-full relative group">
                   <div
-                    className="w-full bg-gradient-to-t from-neon-cyan/20 to-neon-cyan/5 border-t border-rose-400 rounded-t-sm transition-all duration-300 group-hover:from-neon-cyan/40 group-hover:to-neon-cyan/10 group-hover:shadow-[0_0_15px_rgba(0,245,255,0.3)]"
+                    className="w-full bg-gradient-to-t from-pink-400/20 to-pink-400/5 border-t border-rose-400 rounded-t-sm transition-all duration-300 group-hover:from-pink-400/40 group-hover:to-pink-400/10 group-hover:shadow-[0_0_15px_rgba(244,114,182,0.3)]"
                     style={{ height: `${height}%` }}
                   />
                 </div>

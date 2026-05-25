@@ -29,40 +29,41 @@ export default function LoginScreen() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh]">
-      <div className="w-full max-w-md bg-gray-900 border border-gray-800 p-8 rounded-lg shadow-[0_0_30px_rgba(0,0,0,0.5)] relative overflow-hidden">
+      <div className="w-full max-w-md glass-panel p-8 relative overflow-hidden">
         {/* Decorative elements */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-neon-cyan via-electric-purple to-neon-cyan" />
-        <div className="absolute -top-10 -right-10 w-32 h-32 bg-neon-cyan/5 blur-3xl rounded-full pointer-events-none" />
+        <div className="absolute -top-10 -right-10 w-32 h-32 bg-[var(--color-primary)]/20 blur-3xl rounded-full pointer-events-none" />
+        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-[var(--color-secondary)]/20 blur-3xl rounded-full pointer-events-none" />
 
         <div className="text-center mb-8 relative z-10">
-          <h2 className="text-2xl font-bold font-orbitron text-white mb-2 uppercase tracking-widest">
-            System Override
+          <h2 className="text-3xl font-bold mb-2 text-gradient" style={{ fontFamily: "var(--font-heading)" }}>
+            Admin Access
           </h2>
-          <p className="text-gray-400 text-sm font-mono tracking-widest">
-            AUTHENTICATION REQUIRED
+          <p className="text-sm tracking-widest uppercase" style={{ color: "var(--color-text-muted)", fontFamily: "var(--font-body)" }}>
+            Secure Authentication
           </p>
         </div>
 
         {error && (
-          <div className="mb-6 p-3 bg-red-900/20 border border-red-500/50 text-red-400 text-sm text-center rounded font-mono">
+          <div className="mb-6 p-3 bg-red-50 border border-red-200 text-red-600 text-sm text-center rounded-lg backdrop-blur-sm" style={{ fontFamily: "var(--font-body)" }}>
             {error}
           </div>
         )}
 
         <form onSubmit={handleLogin} className="space-y-6 relative z-10">
           <div>
-            <label className="block text-xs font-mono text-gray-400 mb-2 uppercase tracking-wider">
-              Operator ID
+            <label className="block text-xs mb-2 uppercase tracking-wider" style={{ color: "var(--color-text-secondary)", fontFamily: "var(--font-body)" }}>
+              Username
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
                 <User size={16} />
               </div>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full bg-gray-950 border border-gray-800 rounded py-2.5 pl-10 pr-3 text-white focus:border-neon-cyan outline-none font-mono"
+                className="w-full bg-white/50 border border-white/60 rounded-xl py-2.5 pl-10 pr-3 focus:border-[var(--color-primary)] outline-none transition-colors backdrop-blur-sm shadow-sm"
+                style={{ color: "var(--color-text-primary)", fontFamily: "var(--font-body)" }}
                 placeholder="Enter Username"
                 required
               />
@@ -70,18 +71,19 @@ export default function LoginScreen() {
           </div>
 
           <div>
-            <label className="block text-xs font-mono text-gray-400 mb-2 uppercase tracking-wider">
-              Access Code
+            <label className="block text-xs mb-2 uppercase tracking-wider" style={{ color: "var(--color-text-secondary)", fontFamily: "var(--font-body)" }}>
+              Password
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
                 <Lock size={16} />
               </div>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-gray-950 border border-gray-800 rounded py-2.5 pl-10 pr-3 text-white focus:border-neon-cyan outline-none font-mono"
+                className="w-full bg-white/50 border border-white/60 rounded-xl py-2.5 pl-10 pr-3 focus:border-[var(--color-primary)] outline-none transition-colors backdrop-blur-sm shadow-sm"
+                style={{ color: "var(--color-text-primary)", fontFamily: "var(--font-body)" }}
                 placeholder="••••••••"
                 required
               />
@@ -91,9 +93,10 @@ export default function LoginScreen() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-neon-cyan/10 border border-neon-cyan text-neon-cyan hover:bg-neon-cyan/20 py-3 rounded font-bold tracking-widest transition-all disabled:opacity-50 uppercase font-orbitron mt-4 shadow-[0_0_15px_rgba(0,245,255,0.15)]"
+            className="w-full glass-pill py-3 mt-4 text-sm font-semibold uppercase tracking-wider disabled:opacity-50 hover:opacity-90"
+            style={{ fontFamily: "var(--font-body)" }}
           >
-            {isLoading ? "Authenticating..." : "Initialize Access"}
+            {isLoading ? "Authenticating..." : "Login"}
           </button>
         </form>
       </div>
