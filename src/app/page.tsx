@@ -12,6 +12,7 @@ const ProjectsSection = dynamic(() => import('@/components/sections/ProjectsSect
 const ConnectForm = dynamic(() => import('@/components/sections/ConnectForm'), { ssr: false });
 const Footer = dynamic(() => import('@/components/ui/Footer'), { ssr: true });
 const VineScrollIndicator = dynamic(() => import('@/components/ui/VineScrollIndicator'), { ssr: false });
+const CursorTrail = dynamic(() => import('@/components/ui/CursorTrail'), { ssr: false });
 import { Download } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -45,6 +46,7 @@ export default function Home() {
 
   return (
     <div>
+      <CursorTrail />
       <VineScrollIndicator />
       {/* NAVBAR */}
       <nav className="navbar fixed top-0 left-0 right-0 z-[100] flex flex-col md:flex-row justify-between items-center px-4 md:px-16 py-3 md:py-6 gap-3 md:gap-0">
