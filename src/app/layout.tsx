@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import PetalsBackground from "@/components/ui/PetalsBackground";
-import LoadingScreen from "@/components/ui/LoadingScreen";
+import dynamic from 'next/dynamic';
+
+const PetalsBackground = dynamic(() => import('@/components/ui/PetalsBackground'));
+const LoadingScreen = dynamic(() => import('@/components/ui/LoadingScreen'));
 import { getPortfolioData } from "@/lib/data";
 import { PortfolioProvider } from "@/components/ui/PortfolioProvider";
 

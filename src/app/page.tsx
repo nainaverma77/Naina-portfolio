@@ -3,12 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { usePortfolio } from '@/components/ui/PortfolioProvider';
 import siteConfig from '@/data/site_config.json';
 
-import AboutSection from '@/components/sections/AboutSection';
-import SkillsSection from '@/components/sections/SkillsSection';
-import EducationSection from '@/components/sections/EducationSection';
-import ProjectsSection from '@/components/sections/ProjectsSection';
-import ConnectForm from '@/components/sections/ConnectForm';
-import Footer from '@/components/ui/Footer';
+import dynamic from 'next/dynamic';
+
+const AboutSection = dynamic(() => import('@/components/sections/AboutSection'), { ssr: true });
+const SkillsSection = dynamic(() => import('@/components/sections/SkillsSection'), { ssr: true });
+const EducationSection = dynamic(() => import('@/components/sections/EducationSection'), { ssr: true });
+const ProjectsSection = dynamic(() => import('@/components/sections/ProjectsSection'), { ssr: true });
+const ConnectForm = dynamic(() => import('@/components/sections/ConnectForm'), { ssr: false });
+const Footer = dynamic(() => import('@/components/ui/Footer'), { ssr: true });
 import { Download } from 'lucide-react';
 import { motion } from 'framer-motion';
 
