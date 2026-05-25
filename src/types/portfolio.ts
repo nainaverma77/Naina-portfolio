@@ -12,6 +12,8 @@ export interface Project {
   visible?: boolean;
   category?: string;
   imageUrl?: string;
+  pinned?: boolean;
+  hideCode?: boolean;
 }
 
 export interface SocialLink {

@@ -8,6 +8,7 @@ import {
   Eye,
   EyeOff,
   RefreshCw,
+  Pin,
 } from "lucide-react";
 import Pagination from "./Pagination";
 import Modal from "./Modal";
@@ -43,11 +44,16 @@ export default function ProjectsTab({
 
   // Filtering
   const filteredProjects = useMemo(() => {
-    return data.projects.filter(
+    const filtered = data.projects.filter(
       (p) =>
         p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         p.tech.join(" ").toLowerCase().includes(searchTerm.toLowerCase()),
     );
+    return filtered.sort((a, b) => {
+      if (a.pinned && !b.pinned) return -1;
+      if (!a.pinned && b.pinned) return 1;
+      return 0;
+    });
   }, [data.projects, searchTerm]);
 
   // Pagination
@@ -111,6 +117,15 @@ export default function ProjectsTab({
       ...data,
       projects: data.projects.map((p) =>
         p.id === id ? { ...p, visible: p.visible === false ? true : false } : p,
+      ),
+    });
+  };
+
+  const togglePin = (id: string) => {
+    setData({
+      ...data,
+      projects: data.projects.map((p) =>
+        p.id === id ? { ...p, pinned: !p.pinned } : p,
       ),
     });
   };
@@ -254,6 +269,13 @@ export default function ProjectsTab({
                     </td>
                     <td className="p-4 text-right">
                       <div className="flex justify-end gap-2">
+                        <button
+                          onClick={() => togglePin(project.id)}
+                          className={`p-1.5 rounded transition-all ${project.pinned ? "bg-neon-cyan/20 text-rose-500 border border-neon-cyan/30" : "bg-white/30 border border-white/40 text-gray-800/60 hover:text-gray-800 hover:border-white/20"}`}
+                          title={project.pinned ? "Unpin Project" : "Pin Project"}
+                        >
+                          <Pin size={14} className={project.pinned ? "fill-rose-500" : ""} />
+                        </button>
                         <button
                           onClick={() => handleEdit(project)}
                           className="p-1.5 rounded bg-white/30 border border-white/40 text-gray-800/60 hover:text-gray-800 hover:border-white/20 transition-all"
@@ -484,6 +506,52 @@ export default function ProjectsTab({
                   className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
                 />
               </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 pt-2">
+              <label className="flex items-center gap-3 cursor-pointer p-3 bg-white/30 border border-white/40 rounded hover:bg-white/40 transition-colors">
+                <input
+                  type="checkbox"
+                  checked={editingProject.pinned || false}
+                  onChange={(e) =>
+                    setEditingProject({
+                      ...editingProject,
+                      pinned: e.target.checked,
+                    })
+                  }
+                  className="accent-neon-cyan w-4 h-4 cursor-pointer"
+                />
+                <div>
+                  <span className="block text-sm font-sans text-gray-800">
+                    Pin Project
+                  </span>
+                  <span className="block text-[10px] text-gray-500">
+                    Show first in public view
+                  </span>
+                </div>
+              </label>
+
+              <label className="flex items-center gap-3 cursor-pointer p-3 bg-white/30 border border-white/40 rounded hover:bg-white/40 transition-colors">
+                <input
+                  type="checkbox"
+                  checked={editingProject.hideCode || false}
+                  onChange={(e) =>
+                    setEditingProject({
+                      ...editingProject,
+                      hideCode: e.target.checked,
+                    })
+                  }
+                  className="accent-neon-cyan w-4 h-4 cursor-pointer"
+                />
+                <div>
+                  <span className="block text-sm font-sans text-gray-800">
+                    Hide Source Code
+                  </span>
+                  <span className="block text-[10px] text-gray-500">
+                    Disable GitHub and code links
+                  </span>
+                </div>
+              </label>
             </div>
 
             <div className="flex justify-end gap-3 pt-4 mt-6 border-t border-white/60">
