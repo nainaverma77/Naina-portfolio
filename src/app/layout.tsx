@@ -6,6 +6,7 @@ const PetalsBackground = dynamic(() => import('@/components/ui/PetalsBackground'
 const LoadingScreen = dynamic(() => import('@/components/ui/LoadingScreen'));
 import { getPortfolioData } from "@/lib/data";
 import { PortfolioProvider } from "@/components/ui/PortfolioProvider";
+import Signature from "@/components/ui/Signature";
 
 export async function generateMetadata(): Promise<Metadata> {
   const portfolioData = await getPortfolioData();
@@ -24,6 +25,8 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="bg-gradient-floral">
+        <Signature />
+        {/* Designed and Built by Anikesh07 */}
         <PortfolioProvider data={portfolioData}>
           <LoadingScreen />
           <div className="animated-bg" />
