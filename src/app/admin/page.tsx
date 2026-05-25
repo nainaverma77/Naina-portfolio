@@ -1,5 +1,5 @@
 import { getPortfolioData } from "@/lib/data";
-import AdminDashboard from "./AdminDashboard";
+import AdminShell from "@/components/admin/AdminShell";
 import LoginScreen from "./LoginScreen";
 import { checkAuth } from "@/app/actions";
 
@@ -13,5 +13,5 @@ export default async function AdminPage() {
   }
 
   const initialData = getPortfolioData();
-  return <AdminDashboard initialData={initialData} />;
+  return <AdminShell initialData={initialData} />;
 }

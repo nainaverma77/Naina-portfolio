@@ -332,9 +332,9 @@
   "education": [
     {
       "id": "1",
-      "degree": "B.S. in Computer Science",
-      "institution": "University of Technology",
-      "timeline": "2021 - 2025",
+      "degree": "B.Tech in Computer Science",
+      "institution": "GLA University",
+      "timeline": "2023-2027",
       "summary": "Graduated with honors. Focused on full-stack web development and user interface design.",
       "visible": true
     },
