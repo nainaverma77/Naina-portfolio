@@ -25,10 +25,6 @@
   },
   "skills": [
     {
-      "name": "test",
-      "level": 77
-    },
-    {
       "name": "React.js",
       "level": 90,
       "category": "Frontend",
@@ -71,7 +67,7 @@
       "visible": true
     },
     {
-      "name": "Java (Basic)",
+      "name": "Java",
       "level": 70,
       "category": "Languages",
       "visible": true
@@ -453,25 +449,25 @@
       "id": "s1",
       "platform": "GitHub",
       "url": "https://github.com/nainaverma77",
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "s2",
       "platform": "LinkedIn",
       "url": "https://linkedin.com/in/naina-verma",
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "s3",
       "platform": "Email",
-      "url": "mailto:naina.verma_cs23@gla.ac.in",
-      "enabled": true
+      "url": "nainaverma71515@gmail.com",
+      "enabled": false
     },
     {
       "id": "s4",
       "platform": "Phone",
-      "url": "tel:+918896256080",
-      "enabled": true
+      "url": "91 8896256080",
+      "enabled": false
     }
   ],
   "settings": {
@@ -496,8 +492,8 @@
     {
       "id": "fmba279amb5",
       "ip": "::1",
-      "browser": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Mobile Safari/537.36",
-      "lastLogin": "2026-05-25T07:29:01.832Z",
+      "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 (Master Login)",
+      "lastLogin": "2026-05-25T12:49:03.798Z",
       "isTrusted": false
     }
   ]

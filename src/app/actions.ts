@@ -37,14 +37,24 @@ export async function checkAuth() {
 
 let cachedTransporter: nodemailer.Transporter | null = null;
 
+function getEmailPassword() {
+  const password = process.env.EMAIL_PASS;
+  if (!password) return undefined;
+
+  // Gmail app passwords are shown grouped with spaces, but SMTP auth expects
+  // the compact value.
+  return password.replace(/\s+/g, "");
+}
+
 function getTransporter() {
   if (cachedTransporter) return cachedTransporter;
-  if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+  const emailPassword = getEmailPassword();
+  if (process.env.EMAIL_USER && emailPassword) {
     cachedTransporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+        pass: emailPassword
       }
     });
     return cachedTransporter;
