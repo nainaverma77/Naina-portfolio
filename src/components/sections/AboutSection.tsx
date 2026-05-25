@@ -96,7 +96,7 @@ export default function AboutSection() {
             style={{ padding: '3rem' }}
           >
             <h3 style={{ fontSize: '2rem', color: 'var(--color-text-primary)', marginBottom: '0.5rem' }}>
-              Hi, I'm <span className="text-gradient">{about.name}</span>
+              Hi, I&apos;m <span className="text-gradient">{about.name}</span>
             </h3>
             <h4 style={{ fontSize: '1.25rem', color: 'var(--color-primary)', marginBottom: '1.5rem', fontWeight: 500 }}>
               {about.role}
@@ -150,7 +150,7 @@ export default function AboutSection() {
             gap: '2rem', 
             marginTop: '4rem' 
           }}>
-            {about.summaryCards.map((card: any, idx: number) => (
+            {about.summaryCards.map((card: { title: string; description: string }, idx: number) => (
               <motion.div 
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}

@@ -1,5 +1,14 @@
 import { Project } from "@/types/portfolio";
 
+interface GitHubRepo {
+  id: number;
+  name: string;
+  description: string | null;
+  language: string | null;
+  html_url: string;
+  homepage: string | null;
+}
+
 export async function fetchGithubRepos(username: string): Promise<Project[]> {
   try {
     const headers: Record<string, string> = {};
@@ -50,7 +59,7 @@ export async function fetchGithubRepos(username: string): Promise<Project[]> {
       return "EXP";
     };
 
-    return data.map((repo: any) => {
+    return data.map((repo: GitHubRepo) => {
       const tech = repo.language ? [repo.language] : [];
       return {
         id: `REPO-${repo.id}`, // Generate a guaranteed unique ID based on GitHub's internal ID

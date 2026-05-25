@@ -5,6 +5,8 @@ import { cookies, headers } from "next/headers";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
+import fs from "fs";
+import path from "path";
 import {
   getPortfolioData,
   savePortfolioData,
@@ -87,7 +89,7 @@ export async function verifyLogin(username: string, pass: string) {
 
   const data = await getPortfolioData();
   if (!data.devices) data.devices = [];
-  let existingDevice = data.devices.find(d => d.id === deviceId);
+  const existingDevice = data.devices.find(d => d.id === deviceId);
 
   // Always generate OTP securely
   const currentOtp = crypto.randomInt(100000, 1000000).toString();
@@ -182,7 +184,7 @@ export async function verifyLoginOtp(otp: string) {
   }
 
   try {
-    const decoded = jwt.verify(otpSession.value, process.env.JWT_SECRET || 'fallback_secret') as any;
+    const decoded = jwt.verify(otpSession.value, process.env.JWT_SECRET || 'fallback_secret') as { otp: string };
 
     if (decoded.otp === sanitizedOtp) {
       // Clear the temporary OTP session
@@ -389,8 +391,6 @@ export async function uploadResume(formData: FormData) {
     const buffer = Buffer.from(arrayBuffer);
 
     // Save to public directory
-    const fs = require("fs");
-    const path = require("path");
     const publicPath = path.join(process.cwd(), "public");
 
     // Create public dir if it doesn't exist
@@ -404,8 +404,12 @@ export async function uploadResume(formData: FormData) {
     // Update settings
     const currentData = await getPortfolioData();
     if (!currentData.settings) {
-      // TypeScript safety
-      (currentData as any).settings = {};
+      currentData.settings = {
+        theme: "cyberpunk",
+        animationsEnabled: true,
+        seoTitle: "",
+        seoDescription: "",
+      };
     }
     currentData.settings.resumeUrl = "/resume.pdf";
     savePortfolioData(currentData);

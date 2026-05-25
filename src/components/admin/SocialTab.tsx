@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { PortfolioData, SocialLink } from "@/types/portfolio";
 import { Plus, Trash2, GripVertical, Check, X } from "lucide-react";
-import { motion, Reorder } from "framer-motion";
+import { Reorder } from "framer-motion";
 
 interface SocialTabProps {
   data: PortfolioData;
@@ -23,7 +22,7 @@ export default function SocialTab({ data, setData }: SocialTabProps) {
     setData({ ...data, socials: data.socials.filter((s) => s.id !== id) });
   };
 
-  const handleUpdate = (id: string, field: keyof SocialLink, value: any) => {
+  const handleUpdate = (id: string, field: keyof SocialLink, value: string | boolean) => {
     setData({
       ...data,
       socials: data.socials.map((s) =>

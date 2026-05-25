@@ -436,7 +436,7 @@ export default function ProjectsTab({
                 onChange={(e) =>
                   setEditingProject({
                     ...editingProject,
-                    gallery: e.target.value as any,
+                    gallery: e.target.value as unknown as string[],
                   })
                 }
                 className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400 resize-none"
@@ -497,7 +497,7 @@ export default function ProjectsTab({
                 onChange={(e) =>
                   setEditingProject({
                     ...editingProject,
-                    tech: e.target.value as any,
+                    tech: e.target.value as unknown as string[],
                   })
                 }
                 className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"

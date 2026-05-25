@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Mail,
   Download,
@@ -24,7 +24,7 @@ export default function MessagesTab() {
   const [messageToDelete, setMessageToDelete] = useState<string | null>(null);
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
 
-  const loadMessages = async () => {
+  const loadMessages = useCallback(async () => {
     setLoading(true);
     setError("");
     try {
@@ -44,11 +44,14 @@ export default function MessagesTab() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    loadMessages();
-  }, []);
+    const timer = setTimeout(() => {
+      loadMessages();
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [loadMessages]);
 
   const handleDeleteClick = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();

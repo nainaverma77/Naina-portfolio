@@ -59,7 +59,7 @@ export default function Sidebar({
       <div className="h-16 flex items-center justify-between px-6 border-b border-white/40">
         {!isCollapsed && (
           <h1 className="font-serif font-bold text-gray-800 tracking-widest text-lg">
-            NAINA'S <span className="text-rose-500">GARDEN</span>
+            NAINA&apos;S <span className="text-rose-500">GARDEN</span>
           </h1>
         )}
         <button

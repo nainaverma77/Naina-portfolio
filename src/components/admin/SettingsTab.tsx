@@ -1,5 +1,5 @@
 import { PortfolioData } from "@/types/portfolio";
-import { Settings, Shield, Globe, Monitor, AlertTriangle } from "lucide-react";
+import { Shield, Globe, Monitor, AlertTriangle } from "lucide-react";
 import { useState } from "react";
 import Modal from "./Modal";
 
@@ -446,7 +446,7 @@ export default function SettingsTab({ data, setData }: SettingsTabProps) {
           <div className="space-y-4">
             <div>
               <label className="block text-xs font-sans text-gray-600 mb-2">
-                Type <span className="text-red-400 font-bold">"I want to reset this"</span> to confirm:
+                Type <span className="text-red-400 font-bold">&quot;I want to reset this&quot;</span> to confirm:
               </label>
               <input
                 type="text"
