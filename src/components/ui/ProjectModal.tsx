@@ -7,6 +7,7 @@ import { X, ExternalLink, Loader2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
+import { createPortal } from 'react-dom';
 import { Project } from '@/types/portfolio';
 import SourceViewerModal from './SourceViewerModal';
 
@@ -21,6 +22,11 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<'important' | 'readme'>('important');
   const [isSourceViewerOpen, setIsSourceViewerOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (isOpen && project?.links?.github) {
@@ -49,14 +55,14 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
     return () => { document.body.style.overflow = 'unset'; };
   }, [isOpen]);
 
-  if (!isOpen || !project) return null;
+  if (!isOpen || !project || !mounted) return null;
 
-  return (
+  return createPortal(
     <AnimatePresence>
       <div style={{
         position: 'fixed',
         inset: 0,
-        zIndex: 9990,
+        zIndex: 99999, // Super high z-index to stay above everything
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -250,6 +256,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
           />
         )}
       </div>
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

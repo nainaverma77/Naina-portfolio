@@ -327,6 +327,36 @@
         "live": "#"
       },
       "visible": false
+    },
+    {
+      "id": "REPO-1246818893",
+      "name": "Naina-portfolio",
+      "description": "No description provided.",
+      "tech": [
+        "TypeScript"
+      ],
+      "category": "WEB",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/Naina-portfolio",
+        "live": "https://www.nainaverma.co.in/"
+      },
+      "visible": true
+    },
+    {
+      "id": "REPO-1155933443",
+      "name": "ai-ecommerce",
+      "description": "No description provided.",
+      "tech": [
+        "JavaScript"
+      ],
+      "category": "WEB",
+      "status": "GITHUB SYNC",
+      "links": {
+        "github": "https://github.com/nainaverma77/ai-ecommerce",
+        "live": "#"
+      },
+      "visible": false
     }
   ],
   "education": [
@@ -375,5 +405,10 @@
     "repos": 16,
     "commits": 122,
     "prs": 1
+  },
+  "leetcode": {
+    "enabled": false,
+    "username": "",
+    "solvedCount": 0
   }
 }

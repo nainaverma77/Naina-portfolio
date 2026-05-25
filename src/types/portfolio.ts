@@ -95,6 +95,11 @@ export interface PortfolioData {
     commits: number;
     prs: number;
   };
+  leetcode?: {
+    enabled: boolean;
+    username: string;
+    solvedCount: number;
+  };
 }
 
 export interface Message {

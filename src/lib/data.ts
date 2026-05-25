@@ -61,6 +61,7 @@ export function getPortfolioData(): PortfolioData {
     parsedData.testimonials = parsedData.testimonials || [];
     parsedData.hero = parsedData.hero || { heading: "", subtitle: "" };
     parsedData.stats = parsedData.stats || { repos: 16, commits: 122, prs: 1 };
+    parsedData.leetcode = parsedData.leetcode || { enabled: false, username: "", solvedCount: 0 };
     parsedData.about = parsedData.about || {
       name: "",
       role: "",
@@ -99,6 +100,7 @@ export function getPortfolioData(): PortfolioData {
         seoDescription: "Cyberpunk Developer Portfolio",
       },
       stats: { repos: 16, commits: 122, prs: 1 },
+      leetcode: { enabled: false, username: "", solvedCount: 0 },
     };
   }
 }

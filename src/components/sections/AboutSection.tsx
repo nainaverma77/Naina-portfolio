@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import portfolioData from '@/data/portfolio.json';
 import siteConfig from '@/data/site_config.json';
-import { User, MapPin, Briefcase, Sparkles } from 'lucide-react';
+import { User, MapPin, Briefcase, Sparkles, Code2 } from 'lucide-react';
 import MediaRenderer from '@/components/MediaRenderer';
 
 export default function AboutSection() {
@@ -125,6 +125,18 @@ export default function AboutSection() {
                   <div style={{ color: 'var(--color-text-primary)', fontWeight: 500 }}>{about.specialization || 'Full Stack Development'}</div>
                 </div>
               </div>
+              
+              {portfolioData.leetcode?.enabled && portfolioData.leetcode?.solvedCount > 0 && (
+                <a href={`https://leetcode.com/${portfolioData.leetcode.username}`} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '1rem', textDecoration: 'none', transition: 'opacity 0.2s' }} className="hover:opacity-80">
+                  <div style={{ padding: '0.5rem', background: 'rgba(255, 161, 22, 0.15)', borderRadius: '8px', color: '#ffa116' }}>
+                    <Code2 size={20} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--color-text-muted)', fontWeight: 600 }}>LeetCode / DSA</div>
+                    <div style={{ color: 'var(--color-text-primary)', fontWeight: 500 }}>{portfolioData.leetcode.solvedCount}+ Questions Solved</div>
+                  </div>
+                </a>
+              )}
             </div>
           </motion.div>
         </div>

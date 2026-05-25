@@ -256,6 +256,85 @@ export default function SettingsTab({ data, setData }: SettingsTabProps) {
           </div>
         </div>
 
+        {/* LeetCode Integration */}
+        <div className="md:col-span-2 bg-white/40 backdrop-blur border border-white/60 rounded-xl p-6">
+          <h3 className="text-sm font-serif font-bold text-gray-700 uppercase tracking-widest mb-6 flex items-center gap-2">
+            <Globe size={16} className="text-rose-500" /> LeetCode Integration
+          </h3>
+          <p className="text-sm text-gray-800/60 font-sans mb-4">
+            Enter a LeetCode username to automatically fetch your solved questions count. You can also disable this section entirely.
+          </p>
+          <div className="flex flex-col gap-4">
+            <label className="flex items-center gap-3 cursor-pointer p-3 bg-white/30 border border-white/40 rounded hover:bg-white/40 transition-colors w-fit">
+              <input
+                type="checkbox"
+                checked={data.leetcode?.enabled || false}
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    leetcode: {
+                      ...(data.leetcode || { username: "", solvedCount: 0, enabled: false }),
+                      enabled: e.target.checked,
+                    },
+                  })
+                }
+                className="accent-neon-cyan w-4 h-4 cursor-pointer"
+              />
+              <span className="block text-sm font-sans text-gray-800">
+                Show LeetCode Stats on Portfolio
+              </span>
+            </label>
+
+            <div className="flex flex-col md:flex-row gap-4 items-end">
+              <div className="w-full md:w-1/2">
+                <label className="block text-xs font-sans text-gray-600 mb-1">
+                  LeetCode Username
+                </label>
+                <input
+                  type="text"
+                  value={data.leetcode?.username || ""}
+                  onChange={(e) =>
+                    setData({
+                      ...data,
+                      leetcode: {
+                        ...(data.leetcode || { username: "", solvedCount: 0, enabled: false }),
+                        username: e.target.value,
+                      },
+                    })
+                  }
+                  placeholder="e.g. nainaverma"
+                  className="w-full bg-white/40 border border-white/60 rounded p-2.5 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
+                />
+              </div>
+              <button
+                onClick={async () => {
+                  if (!data.leetcode?.username) {
+                    showModal("Error", "Please enter a LeetCode username first.");
+                    return;
+                  }
+                  const { syncLeetCodeStats } = await import("@/app/actions");
+                  const res = await syncLeetCodeStats(data.leetcode.username);
+                  if (res.success && res.data) {
+                    setData(res.data);
+                    showModal("Sync Complete", res.message || "Successfully fetched LeetCode stats.");
+                  } else {
+                    showModal("Sync Error", res.error || "Failed to sync.");
+                  }
+                }}
+                className="px-6 py-2.5 bg-neon-cyan/10 text-rose-500 border border-neon-cyan/30 rounded-md hover:bg-neon-cyan/20 transition-colors font-sans text-sm w-fit shadow-sm"
+              >
+                Sync LeetCode Stats
+              </button>
+            </div>
+            
+            {data.leetcode?.solvedCount !== undefined && (
+              <div className="text-sm font-sans text-gray-800 mt-2">
+                Currently showing: <span className="font-bold text-rose-500">{data.leetcode.solvedCount}</span> questions solved.
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* System Analytics Stats */}
         <div className="md:col-span-2 bg-white/40 backdrop-blur border border-white/60 rounded-xl p-6">
           <h3 className="text-sm font-serif font-bold text-gray-700 uppercase tracking-widest mb-6 flex items-center gap-2">

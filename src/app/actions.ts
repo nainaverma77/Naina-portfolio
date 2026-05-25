@@ -109,6 +109,44 @@ export async function syncGithubProjects(username: string) {
   }
 }
 
+export async function syncLeetCodeStats(username: string) {
+  try {
+    const isAuth = await checkAuth();
+    if (!isAuth) throw new Error("Unauthorized");
+
+    if (!username) {
+      return { success: false, error: "LeetCode username is required" };
+    }
+
+    const response = await fetch(`https://leetcode-stats-api.herokuapp.com/${username}`);
+    const data = await response.json();
+
+    if (data.status === "error" || !data.totalSolved) {
+      return { success: false, error: data.message || "Failed to fetch LeetCode stats" };
+    }
+
+    const currentData = getPortfolioData();
+    currentData.leetcode = {
+      enabled: true,
+      username: username,
+      solvedCount: data.totalSolved,
+    };
+
+    const success = savePortfolioData(currentData);
+    if (!success) throw new Error("Failed to save LeetCode stats");
+
+    revalidatePath("/", "layout");
+    return {
+      success: true,
+      message: `Successfully synced LeetCode. Solved: ${data.totalSolved}`,
+      data: currentData,
+    };
+  } catch (error) {
+    console.error("Failed to sync LeetCode", error);
+    return { success: false, error: "Failed to sync LeetCode" };
+  }
+}
+
 export async function submitContactForm(
   data: Omit<Message, "id" | "timestamp">,
 ) {
