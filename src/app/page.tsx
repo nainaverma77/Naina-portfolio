@@ -291,7 +291,7 @@ export default function Home() {
         <div id="home" className="flex flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12 text-center relative" style={{ minHeight: 'calc(100vh - 90px)', animation: 'fadeInUp 1s ease-out' }}>
 
           {/* Glassmorphism Wrapper */}
-          <div className="relative flex flex-col items-center px-6 py-12 md:px-24 md:py-20 rounded-[2rem] md:rounded-[32px] border border-white/40 shadow-[0_8px_32px_0_rgba(226,194,216,0.2)] w-full max-w-5xl overflow-hidden" style={{
+          <div className="relative flex flex-col items-center px-6 py-12 md:px-24 md:py-20 rounded-[2rem] md:rounded-[32px] border border-white/40 shadow-[0_8px_32px_0_rgba(226,194,216,0.2)] w-full max-w-5xl" style={{
             background: 'rgba(255, 255, 255, 0.15)',
             backdropFilter: 'blur(2px)',
             WebkitBackdropFilter: 'blur(12px)',
@@ -299,10 +299,12 @@ export default function Home() {
           }}>
             
             {/* Soft Glowing Ambient Orbs Behind Text */}
-            <div className="absolute top-[-20%] left-[-10%] w-96 h-96 rounded-full bg-[var(--color-rose-gold)] opacity-20 blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-[-20%] right-[-10%] w-96 h-96 rounded-full bg-[var(--color-secondary)] opacity-20 blur-[100px] pointer-events-none" />
+            <div className="absolute inset-0 overflow-hidden rounded-[inherit] pointer-events-none">
+              <div className="absolute top-[-20%] left-[-10%] w-96 h-96 rounded-full bg-[var(--color-rose-gold)] opacity-20 blur-[100px]" />
+              <div className="absolute bottom-[-20%] right-[-10%] w-96 h-96 rounded-full bg-[var(--color-secondary)] opacity-20 blur-[100px]" />
+            </div>
             {/* Main Text */}
-            <h1 className="relative text-4xl sm:text-6xl lg:text-[7rem] leading-[1.1] m-0 pt-8 pb-2 font-normal inline-block whitespace-nowrap" style={{
+            <h1 className="relative text-3xl min-[400px]:text-4xl sm:text-6xl lg:text-[7rem] leading-[1.1] m-0 pt-8 pb-2 font-normal inline-block whitespace-nowrap" style={{
               color: 'var(--color-text-primary)',
               textShadow: '0 4px 25px rgba(226, 194, 216, 0.6)'
             }}>

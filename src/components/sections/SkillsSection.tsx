@@ -6,7 +6,7 @@ import { usePortfolio } from '@/components/ui/PortfolioProvider';
 import siteConfig from '@/data/site_config.json';
 
 // --- GLASS POT COMPONENT ---
-const SkillPot = ({ skill, index, registerPot }: { skill: { name: string; level: number; category: string }; index: number, registerPot: (el: HTMLDivElement | null) => void }) => {
+const SkillPot = ({ skill, index, registerPot }: { skill: { name: string; level: number; category?: string }; index: number, registerPot: (el: HTMLDivElement | null) => void }) => {
   // Convert 0-100 to y-coordinate for SVG water level. 120 is empty, 25 is full.
   const waterY = 120 - (skill.level * 0.95);
   const fishY = waterY + (110 - waterY) / 2; // middle of the water depth
@@ -155,7 +155,7 @@ export default function SkillsSection() {
 
         {/* Pots Grid */}
         <div className="flex flex-wrap justify-center gap-6 md:gap-12 pb-8">
-          {portfolioData.skills.map((skill: { name: string; level: number; category: string }, index: number) => (
+          {portfolioData.skills.map((skill: { name: string; level: number; category?: string }, index: number) => (
             <SkillPot key={index} skill={skill} index={index} registerPot={registerPot} />
           ))}
         </div>
