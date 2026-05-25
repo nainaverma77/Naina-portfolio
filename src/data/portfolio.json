@@ -444,22 +444,6 @@
       "timeline": "July 2024",
       "summary": "Successfully completed course on Smart English Basics for Professionals.",
       "visible": true
-    },
-    {
-      "id": "edu_xii",
-      "degree": "Intermediate (Class XII)",
-      "institution": "Springer Loretto Girls' School, Gorakhpur",
-      "timeline": "May 2022",
-      "summary": "Completed with 68%.",
-      "visible": true
-    },
-    {
-      "id": "edu_x",
-      "degree": "High School (Class X)",
-      "institution": "Springer Loretto Girls' School, Gorakhpur",
-      "timeline": "May 2020",
-      "summary": "Completed with 78.6%.",
-      "visible": true
     }
   ],
   "experience": [],
@@ -480,7 +464,7 @@
     {
       "id": "s3",
       "platform": "Email",
-      "url": "mailto:nainaverma6080@gmail.com",
+      "url": "mailto:naina.verma_cs23@gla.ac.in",
       "enabled": true
     },
     {

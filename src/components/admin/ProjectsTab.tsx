@@ -254,8 +254,13 @@ export default function ProjectsTab({
                     <td className="p-4 font-sans text-xs text-gray-500">
                       {project.id}
                     </td>
-                    <td className="p-4 font-bold text-gray-800 group-hover:text-rose-500 transition-colors">
-                      {project.name}
+                    <td className="p-4">
+                      <button 
+                        onClick={() => handleEdit(project)}
+                        className="font-bold text-gray-800 group-hover:text-rose-500 transition-colors text-left focus:outline-none"
+                      >
+                        {project.name}
+                      </button>
                     </td>
                     <td className="p-4">
                       <span className="text-[10px] font-sans border border-electric-purple/30 bg-electric-purple/10 text-green-600 px-2 py-0.5 rounded">
