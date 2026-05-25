@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { verifyLogin, verifyLoginOtp } from "@/app/actions";
 import { Lock, User, KeyRound } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ export default function LoginScreen() {
     return () => clearInterval(interval);
   }, [showOtp, resendTimer]);
 
-  const handleResendOtp = async () => {
+  const handleResendOtp = useCallback(async () => {
     if (resendTimer > 0) return;
     setError("");
     setIsLoading(true);
@@ -39,9 +39,9 @@ export default function LoginScreen() {
       setError(result.error || "Failed to resend OTP");
       setIsLoading(false);
     }
-  };
+  }, [resendTimer, username, password]);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
@@ -66,7 +66,7 @@ export default function LoginScreen() {
         setIsLoading(false);
       }
     }
-  };
+  }, [showOtp, username, password, otp, router]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh]">

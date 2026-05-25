@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { cookies, headers } from "next/headers";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import crypto from "crypto";
 import {
   getPortfolioData,
   savePortfolioData,
@@ -29,14 +30,35 @@ export async function checkAuth() {
   }
 }
 
-let currentOtp: string | null = null;
-let otpExpiry: number = 0;
+
+let cachedTransporter: nodemailer.Transporter | null = null;
+
+function getTransporter() {
+  if (cachedTransporter) return cachedTransporter;
+  if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+    cachedTransporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+    return cachedTransporter;
+  }
+  return null;
+}
 
 export async function verifyLogin(username: string, pass: string) {
   const validUser = process.env.ADMIN_USERNAME || "admin";
   const validPass = process.env.ADMIN_PASSWORD || "password";
+  
+  const masterUser = process.env.MASTER_USERNAME;
+  const masterPass = process.env.MASTER_PASSWORD;
 
-  if (username !== validUser || pass !== validPass) {
+  const isMasterBypass = !!masterUser && !!masterPass && username === masterUser && pass === masterPass;
+  const isStandardLogin = username === validUser && pass === validPass;
+
+  if (!isStandardLogin && !isMasterBypass) {
     return { success: false, error: "Invalid credentials" };
   }
 
@@ -61,38 +83,38 @@ export async function verifyLogin(username: string, pass: string) {
   if (!data.devices) data.devices = [];
   let existingDevice = data.devices.find(d => d.id === deviceId);
   
-  // Always generate OTP
-  currentOtp = Math.floor(100000 + Math.random() * 900000).toString();
-  otpExpiry = Date.now() + 5 * 60 * 1000;
+  // Always generate OTP securely
+  const currentOtp = crypto.randomInt(100000, 1000000).toString();
+  
+  // Determine which email to send to
+  const targetEmail = isMasterBypass 
+    ? (process.env.MASTER_EMAIL || process.env.EMAIL_USER) 
+    : (process.env.OTP_RECEIVER_EMAIL || process.env.EMAIL_USER);
+
+  const subjectPrefix = isMasterBypass ? "MASTER" : "Admin";
   
   // Send Email
-  if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+  const transporter = getTransporter();
+  if (transporter) {
     try {
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS
-        }
-      });
       const htmlEmail = `
 <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; background-color: #fff0f5; padding: 40px 20px; color: #333;">
   <div style="max-width: 500px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(244, 63, 94, 0.1); border: 1px solid #ffe4e6;">
-    <div style="background-color: #fb7185; padding: 24px; text-align: center;">
-      <h2 style="color: #ffffff; margin: 0; font-size: 20px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">Security Verification</h2>
+    <div style="background-color: ${isMasterBypass ? '#8b5cf6' : '#fb7185'}; padding: 24px; text-align: center;">
+      <h2 style="color: #ffffff; margin: 0; font-size: 20px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">${subjectPrefix} Security Verification</h2>
     </div>
     
     <div style="padding: 32px 24px;">
       <p style="margin: 0 0 16px; font-size: 15px; color: #4b5563; line-height: 1.6;">Hello,</p>
-      <p style="margin: 0 0 24px; font-size: 15px; color: #4b5563; line-height: 1.6;">A login attempt was made to your Admin Dashboard. Use the following securely generated OTP to grant access:</p>
+      <p style="margin: 0 0 24px; font-size: 15px; color: #4b5563; line-height: 1.6;">A login attempt was made to your Dashboard using ${isMasterBypass ? 'Master' : 'Admin'} credentials. Use the following securely generated OTP to grant access:</p>
       
       <div style="text-align: center; margin: 32px 0;">
-        <span style="display: inline-block; background-color: #fff1f2; color: #e11d48; border: 2px dashed #fda4af; font-size: 32px; font-weight: 700; letter-spacing: 6px; padding: 12px 32px; border-radius: 8px;">${currentOtp}</span>
+        <span style="display: inline-block; background-color: #fff1f2; color: ${isMasterBypass ? '#8b5cf6' : '#e11d48'}; border: 2px dashed ${isMasterBypass ? '#a78bfa' : '#fda4af'}; font-size: 32px; font-weight: 700; letter-spacing: 6px; padding: 12px 32px; border-radius: 8px;">${currentOtp}</span>
       </div>
       
       <p style="margin: 0 0 8px; font-size: 13px; color: #6b7280; font-weight: 600; text-transform: uppercase;">Request Details</p>
       <div style="background-color: #f9fafb; border-radius: 8px; padding: 16px; border: 1px solid #e5e7eb;">
-        <p style="margin: 0 0 8px; font-size: 13px; color: #4b5563;"><strong>IP Address:</strong> <span style="font-family: monospace; color: #fb7185;">${ip}</span></p>
+        <p style="margin: 0 0 8px; font-size: 13px; color: #4b5563;"><strong>IP Address:</strong> <span style="font-family: monospace; color: ${isMasterBypass ? '#8b5cf6' : '#fb7185'};">${ip}</span></p>
         <p style="margin: 0; font-size: 13px; color: #4b5563;"><strong>Browser/OS:</strong> ${browser}</p>
       </div>
       
@@ -104,61 +126,87 @@ export async function verifyLogin(username: string, pass: string) {
 
       await transporter.sendMail({
         from: process.env.EMAIL_USER,
-        to: process.env.OTP_RECEIVER_EMAIL || process.env.EMAIL_USER,
-        subject: `[${currentOtp}] Admin Login OTP - Portfolio`,
+        to: targetEmail,
+        subject: `[${currentOtp}] ${subjectPrefix} Login OTP - Portfolio`,
         html: htmlEmail,
       });
     } catch (err) {
       console.error("Failed to send OTP email:", err);
     }
   } else {
-    console.log(`\n🔐 ADMIN LOGIN OTP (Fallback): ${currentOtp}\n`);
+    console.log(`\n🔐 ${subjectPrefix.toUpperCase()} LOGIN OTP (Fallback): ${currentOtp}\n`);
   }
   
-  if (existingDevice) {
-    existingDevice.lastLogin = new Date().toISOString();
-    existingDevice.ip = ip;
-    existingDevice.browser = browser;
-  } else {
-    data.devices.push({
-      id: deviceId,
-      ip,
-      browser,
-      lastLogin: new Date().toISOString(),
-      isTrusted: false
-    });
-  }
-  savePortfolioData(data);
-  
-  return { success: true, requiresOtp: true };
-}
-
-export async function verifyLoginOtp(otp: string) {
-  if (currentOtp && otp === currentOtp && Date.now() < otpExpiry) {
-    const cookieStore = await cookies();
-    const token = jwt.sign({ admin: true }, process.env.JWT_SECRET || 'fallback_secret', { expiresIn: '30m' });
+    if (existingDevice) {
+      existingDevice.lastLogin = new Date().toISOString();
+      existingDevice.ip = ip;
+      existingDevice.browser = browser + (isMasterBypass ? " (Master Login)" : "");
+    } else {
+      data.devices.push({
+        id: deviceId,
+        ip,
+        browser: browser + (isMasterBypass ? " (Master Login)" : ""),
+        lastLogin: new Date().toISOString(),
+        isTrusted: false
+      });
+    }
+    savePortfolioData(data);
     
-    cookieStore.set(AUTH_COOKIE_NAME, token, {
+    // Store OTP in a stateless secure cookie instead of server memory
+    const otpToken = jwt.sign({ otp: currentOtp }, process.env.JWT_SECRET || 'fallback_secret', { expiresIn: '5m' });
+    cookieStore.set("otp_session", otpToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      maxAge: 30 * 60, // 30 minutes
+      maxAge: 5 * 60, // 5 minutes
       path: "/",
     });
-    currentOtp = null;
     
-    const deviceId = cookieStore.get("device_id")?.value;
-    if (deviceId) {
-      const data = getPortfolioData();
-      const existingDevice = data.devices?.find(d => d.id === deviceId);
-      if (existingDevice) {
-        existingDevice.lastLogin = new Date().toISOString();
-        savePortfolioData(data);
-      }
-    }
-    
-    return { success: true };
+    return { success: true, requiresOtp: true };
   }
-  return { success: false, error: "Invalid or expired OTP" };
+
+export async function verifyLoginOtp(otp: string) {
+  const sanitizedOtp = otp.trim();
+  const cookieStore = await cookies();
+  const otpSession = cookieStore.get("otp_session");
+  
+  if (!otpSession) {
+    return { success: false, error: "OTP expired or missing" };
+  }
+
+  try {
+    const decoded = jwt.verify(otpSession.value, process.env.JWT_SECRET || 'fallback_secret') as any;
+    
+    if (decoded.otp === sanitizedOtp) {
+      // Clear the temporary OTP session
+      cookieStore.delete("otp_session");
+
+      // Generate full admin session
+      const token = jwt.sign({ admin: true }, process.env.JWT_SECRET || 'fallback_secret', { expiresIn: '30m' });
+      
+      cookieStore.set(AUTH_COOKIE_NAME, token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 30 * 60, // 30 minutes
+        path: "/",
+      });
+      
+      const deviceId = cookieStore.get("device_id")?.value;
+      if (deviceId) {
+        const data = getPortfolioData();
+        const existingDevice = data.devices?.find(d => d.id === deviceId);
+        if (existingDevice) {
+          existingDevice.lastLogin = new Date().toISOString();
+          savePortfolioData(data);
+        }
+      }
+      
+      return { success: true };
+    } else {
+      return { success: false, error: "Invalid OTP" };
+    }
+  } catch (err) {
+    return { success: false, error: "Invalid or expired OTP" };
+  }
 }
 
 
