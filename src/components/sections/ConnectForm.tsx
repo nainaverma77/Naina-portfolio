@@ -17,7 +17,28 @@ export default function ConnectForm() {
     setStatus('submitting');
     
     try {
+      // 1. Save to Database (MongoDB)
       const res = await submitContactForm({ name, email, message });
+      
+      // 2. Send email via Web3Forms
+      const web3formsKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+      if (web3formsKey) {
+        await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            access_key: web3formsKey,
+            subject: `New Contact Message from ${name} (Portfolio)`,
+            name: name,
+            email: email,
+            message: message,
+          }),
+        });
+      }
+
       if (res.success) {
         setStatus('success');
         setName('');
