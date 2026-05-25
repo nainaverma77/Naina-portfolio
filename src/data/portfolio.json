@@ -87,40 +87,6 @@
   ],
   "projects": [
     {
-      "id": "1",
-      "name": "Floral Boutique E-commerce",
-      "description": "A fully functional e-commerce platform built for a boutique florist, featuring real-time inventory and a beautiful user interface.",
-      "links": {
-        "live": "https://floral-boutique-demo.vercel.app",
-        "github": "https://github.com/naina/floral-boutique"
-      },
-      "tech": [
-        "Next.js",
-        "React",
-        "Node.js",
-        "Stripe"
-      ],
-      "status": "COMPLETED",
-      "visible": true
-    },
-    {
-      "id": "2",
-      "name": "Garden Planner App",
-      "description": "An interactive web application that allows users to design and layout their own virtual gardens with drag-and-drop mechanics.",
-      "links": {
-        "live": "https://garden-planner-app.vercel.app",
-        "github": "https://github.com/naina/garden-planner"
-      },
-      "tech": [
-        "React",
-        "Framer Motion",
-        "MongoDB",
-        "Express"
-      ],
-      "status": "LIVE",
-      "visible": true
-    },
-    {
       "id": "AI-ECOMMER",
       "name": "ai-ecommerce_nodejs",
       "description": "No description provided.",
@@ -190,7 +156,7 @@
         "github": "https://github.com/nainaverma77/ai-ecommerce_nodejs",
         "live": "#"
       },
-      "visible": true,
+      "visible": false,
       "imageUrl": "https://i.vgy.me/BVnCtZ.png"
     },
     {
@@ -362,7 +328,7 @@
         "TypeScript"
       ],
       "category": "WEB",
-      "status": "GITHUB SYNC",
+      "status": "Live",
       "links": {
         "github": "https://github.com/nainaverma77/Naina-portfolio",
         "live": "https://www.nainaverma.co.in/"
@@ -389,7 +355,8 @@
         "github": "https://github.com/nainaverma77/ai-ecommerce",
         "live": "#"
       },
-      "visible": false
+      "visible": true,
+      "pinned": true
     }
   ],
   "education": [
@@ -484,7 +451,7 @@
     "prs": 1
   },
   "leetcode": {
-    "enabled": true,
+    "enabled": false,
     "username": "naina_verma7",
     "solvedCount": 177
   },

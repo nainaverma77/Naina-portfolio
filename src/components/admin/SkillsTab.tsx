@@ -252,7 +252,7 @@ export default function SkillsTab({ data, setData }: SkillsTabProps) {
               />
             </div>
             
-            <label className="flex items-center gap-3 cursor-pointer p-3 bg-white/30 border border-white/40 rounded hover:bg-white/40 transition-colors w-fit">
+            <label className={`flex items-center gap-3 cursor-pointer p-3 rounded transition-colors w-fit ${editingSkill.skill.visible !== false ? "bg-neon-cyan/10 border border-neon-cyan/40" : "bg-white/30 border border-white/40 hover:bg-white/40"}`}>
               <input
                 type="checkbox"
                 checked={editingSkill.skill.visible !== false}

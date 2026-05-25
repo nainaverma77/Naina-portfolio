@@ -105,7 +105,7 @@ export default function SettingsTab({ data, setData }: SettingsTabProps) {
               </select>
             </div>
 
-            <label className="flex items-center gap-3 cursor-pointer p-3 bg-white/30 border border-white/40 rounded hover:bg-white/40 transition-colors">
+            <label className={`flex items-center gap-3 cursor-pointer p-3 rounded transition-colors ${data.settings.animationsEnabled ? "bg-neon-cyan/10 border border-neon-cyan/40" : "bg-white/30 border border-white/40 hover:bg-white/40"}`}>
               <input
                 type="checkbox"
                 checked={data.settings.animationsEnabled}
@@ -265,7 +265,7 @@ export default function SettingsTab({ data, setData }: SettingsTabProps) {
             Enter a LeetCode username to automatically fetch your solved questions count. You can also disable this section entirely.
           </p>
           <div className="flex flex-col gap-4">
-            <label className="flex items-center gap-3 cursor-pointer p-3 bg-white/30 border border-white/40 rounded hover:bg-white/40 transition-colors w-fit">
+            <label className={`flex items-center gap-3 cursor-pointer p-3 rounded transition-colors w-fit ${data.leetcode?.enabled ? "bg-neon-cyan/10 border border-neon-cyan/40" : "bg-white/30 border border-white/40 hover:bg-white/40"}`}>
               <input
                 type="checkbox"
                 checked={data.leetcode?.enabled || false}

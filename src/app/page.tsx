@@ -45,14 +45,27 @@ export default function Home() {
   return (
     <div>
       {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-[100] flex flex-col md:flex-row justify-between items-center px-6 md:px-16 py-4 md:py-6" style={{
-        background: 'rgba(255, 255, 255, 0.3)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.4)', gap: '1rem'
+      <nav className="fixed top-0 left-0 right-0 z-[100] flex flex-col md:flex-row justify-between items-center px-4 md:px-16 py-3 md:py-6 gap-3 md:gap-0" style={{
+        background: 'rgba(255, 255, 255, 0.3)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.4)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '1.25rem', letterSpacing: '0.1em', fontFamily: 'var(--font-heading)', color: 'var(--color-rose-gold)' }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
-          {siteConfig.logoText}
+        <div className="flex items-center justify-between w-full md:w-auto">
+          <div className="flex items-center gap-2 font-extrabold text-lg md:text-xl tracking-widest" style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-rose-gold)' }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+            {siteConfig.logoText}
+          </div>
+          
+          {/* Mobile Only Action Icons - Moved to header for space saving */}
+          <div className="flex md:hidden gap-2">
+            <a href={portfolioData.socials.find(s => s.platform.toLowerCase() === 'github')?.url || '#'} target="_blank" rel="noreferrer" className="glass-pill flex items-center justify-center rounded-full w-8 h-8 text-[var(--color-text-primary)]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
+            </a>
+            <a href={portfolioData.socials.find(s => s.platform.toLowerCase() === 'linkedin')?.url || '#'} target="_blank" rel="noreferrer" className="glass-pill flex items-center justify-center rounded-full w-8 h-8 text-[var(--color-text-primary)]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
+            </a>
+          </div>
         </div>
-        <div className="flex flex-wrap justify-center gap-4 md:gap-8" style={{ fontSize: '0.875rem', fontWeight: 600, letterSpacing: '0.1em' }}>
+        
+        <div className="flex flex-wrap justify-center gap-3 md:gap-8 text-xs sm:text-sm font-semibold tracking-widest mt-2 md:mt-0">
           {siteConfig.navLinks.map((link, index) => {
             const targetId = link.href === '#' ? 'home' : link.href.replace('#', '');
             const isActive = activeSection === targetId;
@@ -86,43 +99,27 @@ export default function Home() {
       </nav>
 
       {/* HERO SECTION */}
-      <div id="home" className="min-h-screen flex flex-col items-center justify-center p-8 text-center relative" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', animation: 'fadeInUp 1s ease-out' }}>
-
+      <div id="home" className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 text-center relative" style={{ minHeight: '100vh', animation: 'fadeInUp 1s ease-out' }}>
 
         {/* Glassmorphism Wrapper */}
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          padding: '4rem 6rem',
-          borderRadius: '32px',
+        <div className="flex flex-col items-center px-6 py-8 md:px-24 md:py-16 rounded-[2rem] md:rounded-[32px] border border-white/40 shadow-[0_8px_32px_0_rgba(226,194,216,0.2)] w-full max-w-5xl" style={{
           background: 'rgba(255, 255, 255, 0.15)',
           backdropFilter: 'blur(2px)',
           WebkitBackdropFilter: 'blur(12px)',
-          boxShadow: '0 8px 32px 0 rgba(226, 194, 216, 0.2)',
-          border: '1px solid rgba(255, 255, 255, 0.4)',
           zIndex: 5
         }}>
           {/* Main Text */}
-          <h1 style={{
-            position: 'relative',
-            fontSize: '8rem',
-            lineHeight: 1.1,
-            margin: 0,
-            paddingTop: '2rem',
-            paddingBottom: '0.5rem',
+          <h1 className="relative text-5xl sm:text-7xl lg:text-[8rem] leading-[1.1] m-0 pt-8 pb-2 font-normal inline-block" style={{
             color: 'var(--color-text-primary)',
-            fontWeight: 400,
-            display: 'inline-block',
             textShadow: '0 4px 25px rgba(226, 194, 216, 0.6)'
           }}>
             {/* The sitting/flying bee */}
             {!beeLanded ? (
               <motion.div
-                initial={{ x: 500, y: -400, opacity: 0, rotate: -45 }}
+                initial={{ x: 300, y: -200, opacity: 0, rotate: -45 }}
                 animate={{
-                  x: [500, 200, -150, 50, 0],
-                  y: [-400, -100, -300, -100, 0],
+                  x: [300, 100, -100, 20, 0],
+                  y: [-200, -50, -150, -50, 0],
                   opacity: [0, 1, 1, 1, 1],
                   rotate: [-45, 30, -30, 20, 0]
                 }}
@@ -131,58 +128,41 @@ export default function Home() {
                   ease: "easeInOut",
                   times: [0, 0.3, 0.6, 0.85, 1]
                 }}
-                style={{
-                  position: 'absolute',
-                  top: '3rem',
-                  left: '-2.5rem',
-                  fontSize: '3.5rem',
-                  zIndex: 10,
-                  pointerEvents: 'none',
-                  filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.2))'
-                }}
+                className="absolute -top-4 md:top-12 -left-2 md:-left-10 text-4xl md:text-6xl z-10 pointer-events-none drop-shadow-md"
               >
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--color-rose-gold)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+                <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="var(--color-rose-gold)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
               </motion.div>
             ) : (
               <motion.div
                 initial={{ x: 0, y: 0, rotate: 0 }}
                 animate={{ y: [0, -8, 0], rotate: [0, 10, -5, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                style={{
-                  position: 'absolute',
-                  top: '3rem',
-                  left: '-2.5rem',
-                  fontSize: '3.5rem',
-                  zIndex: 10,
-                  pointerEvents: 'none',
-                  filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.2))'
-                }}
+                className="absolute -top-4 md:top-12 -left-2 md:-left-10 text-4xl md:text-6xl z-10 pointer-events-none drop-shadow-md"
               >
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--color-rose-gold)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+                <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="var(--color-rose-gold)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
               </motion.div>
             )}
             {portfolioData.hero.heading}
           </h1>
-          <h1 style={{ color: 'var(--color-muted-rose-gold)', fontSize: '4.5rem', lineHeight: 1.1, margin: 0, marginBottom: '2rem' }}>
+          <h2 className="text-3xl sm:text-5xl lg:text-[4.5rem] leading-[1.1] m-0 mb-6" style={{ color: 'var(--color-muted-rose-gold)' }}>
             {portfolioData.hero.subtitle}
-          </h1>
+          </h2>
 
           {/* Subtext */}
-          <div style={{ fontSize: '1rem', fontWeight: 600, letterSpacing: '0.1em', color: 'var(--color-medium-green)', marginBottom: '3rem' }}>
+          <div className="text-xs sm:text-sm md:text-base font-semibold tracking-widest mb-10" style={{ color: 'var(--color-medium-green)' }}>
             {portfolioData.hero.subtext}
           </div>
 
           {/* Action Buttons */}
-          <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '2rem', zIndex: 10 }}>
-            <a href={siteConfig.hero.primaryButton.href} className="glass-pill" style={{ padding: '1rem 2.5rem', fontSize: '0.875rem', fontWeight: 700, letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div className="flex flex-col sm:flex-row gap-4 mb-4 z-10 w-full sm:w-auto">
+            <a href={siteConfig.hero.primaryButton.href} className="glass-pill flex items-center justify-center gap-2 px-8 py-3 md:py-4 text-xs md:text-sm font-bold tracking-widest w-full sm:w-auto">
               <span style={{ color: 'var(--color-rose-gold)' }}>❀</span> {siteConfig.hero.primaryButton.label}
             </a>
-            <a href={siteConfig.hero.secondaryButton.href} className="glass-pill" style={{ padding: '1rem 2.5rem', fontSize: '0.875rem', fontWeight: 700, letterSpacing: '0.1em' }}>
+            <a href={siteConfig.hero.secondaryButton.href} className="glass-pill flex items-center justify-center px-8 py-3 md:py-4 text-xs md:text-sm font-bold tracking-widest w-full sm:w-auto">
               {siteConfig.hero.secondaryButton.label}
             </a>
           </div>
         </div>
-
 
       </div>
 

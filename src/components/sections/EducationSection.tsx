@@ -10,8 +10,8 @@ export default function EducationSection() {
   const activeEducation = portfolioData.education.filter(ed => ed.visible !== false);
 
   return (
-    <section id="education" style={{ padding: '6rem 2rem', position: 'relative', zIndex: 10 }}>
-      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+    <section id="education" className="px-4 py-16 md:px-8 md:py-24 relative z-10">
+      <div className="w-full max-w-3xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -54,8 +54,8 @@ export default function ConnectForm() {
   };
 
   return (
-    <section id="connect" style={{ padding: '6rem 2rem', position: 'relative', zIndex: 10 }}>
-      <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+    <section id="connect" className="px-4 py-16 md:px-8 md:py-24 relative z-10">
+      <div className="w-full max-w-2xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -75,8 +75,7 @@ export default function ConnectForm() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="glass-panel"
-          style={{ padding: '3rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
+          className="glass-panel p-6 md:p-12 flex flex-col gap-6"
         >
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-text-primary)', fontWeight: 500 }}>Name</label>

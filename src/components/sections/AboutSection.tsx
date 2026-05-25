@@ -12,8 +12,8 @@ export default function AboutSection() {
   const { about } = portfolioData;
 
   return (
-    <section id="about" style={{ padding: '6rem 2rem', position: 'relative', zIndex: 10 }}>
-      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+    <section id="about" className="px-4 py-16 md:px-8 md:py-24 relative z-10">
+      <div className="w-full max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -92,8 +92,7 @@ export default function AboutSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="glass-panel"
-            style={{ padding: '3rem' }}
+            className="glass-panel p-6 md:p-12"
           >
             <h3 style={{ fontSize: '2rem', color: 'var(--color-text-primary)', marginBottom: '0.5rem' }}>
               Hi, I&apos;m <span className="text-gradient">{about.name}</span>
