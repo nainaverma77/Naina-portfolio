@@ -22,7 +22,7 @@ export default async function RootLayout({
 }>) {
   const portfolioData = await getPortfolioData();
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="bg-gradient-floral">
         <PortfolioProvider data={portfolioData}>
           <LoadingScreen />

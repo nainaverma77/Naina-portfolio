@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { usePortfolio } from '@/components/ui/PortfolioProvider';
 import siteConfig from '@/data/site_config.json';
 
 // --- GLASS POT COMPONENT ---
-const SkillPot = ({ skill, index, registerPot }: { skill: any; index: number, registerPot: (el: HTMLDivElement | null) => void }) => {
+const SkillPot = ({ skill, index, registerPot }: { skill: { name: string; level: number; category: string }; index: number, registerPot: (el: HTMLDivElement | null) => void }) => {
   // Convert 0-100 to y-coordinate for SVG water level. 120 is empty, 25 is full.
   const waterY = 120 - (skill.level * 0.95);
   const fishY = waterY + (110 - waterY) / 2; // middle of the water depth
@@ -104,7 +104,7 @@ const SkillPot = ({ skill, index, registerPot }: { skill: any; index: number, re
 
         {/* Floating Percentage Text */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none mt-6">
-           <span className="font-extrabold text-2xl drop-shadow-md text-white/90">
+           <span className="font-extrabold text-2xl text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] px-2 py-0.5 bg-black/20 rounded-full backdrop-blur-[2px]">
              {skill.level}<span className="text-sm">%</span>
            </span>
         </div>
@@ -137,7 +137,7 @@ export default function SkillsSection() {
   };
 
   return (
-    <section id="skills" className="px-4 py-16 md:px-8 md:py-24 relative z-10" ref={sectionRef}>
+    <section id="skills" className="px-4 py-12 md:px-8 md:py-16 relative z-10 min-h-screen flex flex-col justify-center" ref={sectionRef}>
 
       <div className="w-full max-w-5xl mx-auto relative z-10">
         <motion.div
@@ -145,7 +145,7 @@ export default function SkillsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: 'center', marginBottom: '4rem' }}
+          style={{ textAlign: 'center', marginBottom: '2.5rem' }}
         >
           <h2 style={{ fontSize: '3rem', color: 'var(--color-text-primary)', marginBottom: '1rem' }} dangerouslySetInnerHTML={{ __html: siteConfig.sections.skills.title.replace(/ (.*?)$/, ' <span class="text-gradient">$1</span>') }} />
           <p style={{ color: 'var(--color-text-secondary)', fontSize: '1.125rem' }}>
@@ -155,7 +155,7 @@ export default function SkillsSection() {
 
         {/* Pots Grid */}
         <div className="flex flex-wrap justify-center gap-6 md:gap-12 pb-8">
-          {portfolioData.skills.map((skill: any, index: number) => (
+          {portfolioData.skills.map((skill: { name: string; level: number; category: string }, index: number) => (
             <SkillPot key={index} skill={skill} index={index} registerPot={registerPot} />
           ))}
         </div>

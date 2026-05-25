@@ -54,14 +54,14 @@ export default function ConnectForm() {
   };
 
   return (
-    <section id="connect" className="px-4 py-16 md:px-8 md:py-24 relative z-10">
+    <section id="connect" className="px-4 py-12 md:px-8 md:py-16 relative z-10 min-h-screen flex flex-col justify-center">
       <div className="w-full max-w-2xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: 'center', marginBottom: '3rem' }}
+          style={{ textAlign: 'center', marginBottom: '2rem' }}
         >
           <h2 style={{ fontSize: '3rem', color: 'var(--color-text-primary)', marginBottom: '1rem' }} dangerouslySetInnerHTML={{ __html: siteConfig.sections.contact.title.replace(/ (.*?)$/, ' <span class="text-gradient">$1</span>') }} />
           <p style={{ color: 'var(--color-text-secondary)', fontSize: '1.125rem' }}>
@@ -94,6 +94,7 @@ export default function ConnectForm() {
                 outline: 'none',
                 fontFamily: 'var(--font-body)',
                 color: 'var(--color-text-primary)',
+                fontSize: '16px',
                 transition: 'var(--transition-smooth)'
               }}
             />
@@ -115,6 +116,7 @@ export default function ConnectForm() {
                 outline: 'none',
                 fontFamily: 'var(--font-body)',
                 color: 'var(--color-text-primary)',
+                fontSize: '16px',
                 transition: 'var(--transition-smooth)'
               }}
             />
@@ -136,6 +138,7 @@ export default function ConnectForm() {
                 outline: 'none',
                 fontFamily: 'var(--font-body)',
                 color: 'var(--color-text-primary)',
+                fontSize: '16px',
                 resize: 'vertical',
                 transition: 'var(--transition-smooth)'
               }}

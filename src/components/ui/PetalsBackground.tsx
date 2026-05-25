@@ -11,9 +11,9 @@ export default function PetalsBackground() {
 
   useEffect(() => {
     if (pathname && pathname.startsWith('/admin')) return;
-    
-    // Generate droplets for the left side (0% to 20% width)
-    const leftDroplets = Array.from({ length: 25 }).map((_, i) => ({
+
+    // ALWAYS Generate droplets for the left side (0% to 20% width)
+    const leftDroplets = Array.from({ length: 12 }).map((_, i) => ({
       id: `drop-left-${i}`,
       left: `${Math.random() * 20}vw`,
       size: Math.random() * 10 + 8, // 8px to 18px
@@ -22,8 +22,8 @@ export default function PetalsBackground() {
       sway: Math.random() * 10 - 5
     }));
 
-    // Generate droplets for the right side (80% to 100% width)
-    const rightDroplets = Array.from({ length: 25 }).map((_, i) => ({
+    // ALWAYS Generate droplets for the right side (80% to 100% width)
+    const rightDroplets = Array.from({ length: 12 }).map((_, i) => ({
       id: `drop-right-${i}`,
       left: `${80 + Math.random() * 20}vw`,
       size: Math.random() * 10 + 8,
@@ -32,10 +32,11 @@ export default function PetalsBackground() {
       sway: Math.random() * 10 - 5
     }));
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDroplets([...leftDroplets, ...rightDroplets]);
 
-    // Generate Leaves for left side
-    const leftLeaves = Array.from({ length: 15 }).map((_, i) => ({
+    // ALWAYS Generate Leaves for left side
+    const leftLeaves = Array.from({ length: 8 }).map((_, i) => ({
       id: `leaf-left-${i}`,
       left: `${Math.random() * 20}vw`,
       size: Math.random() * 20 + 15, // 15px to 35px
@@ -45,8 +46,8 @@ export default function PetalsBackground() {
       sway: Math.random() * 20 - 10
     }));
 
-    // Generate Leaves for right side
-    const rightLeaves = Array.from({ length: 15 }).map((_, i) => ({
+    // ALWAYS Generate Leaves for right side
+    const rightLeaves = Array.from({ length: 8 }).map((_, i) => ({
       id: `leaf-right-${i}`,
       left: `${80 + Math.random() * 20}vw`,
       size: Math.random() * 20 + 15,
@@ -56,7 +57,9 @@ export default function PetalsBackground() {
       sway: Math.random() * 20 - 10
     }));
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLeaves([...leftLeaves, ...rightLeaves]);
+
   }, [pathname]);
 
   // --- INTERACTIVE WIND EFFECT ---
@@ -177,15 +180,11 @@ export default function PetalsBackground() {
             ease: "linear"
           }}
         >
-          {/* Inner element handles wind physics safely separated from Framer Motion */}
-          <div 
-            id={drop.id}
-            className="droplet wind-particle w-full h-full"
-          />
+          <div id={drop.id} className="droplet wind-particle w-full h-full" />
         </motion.div>
       ))}
 
-      {/* Falling Leaves */}
+      {/* Morning / Afternoon: Falling Leaves */}
       {leaves.map((leaf) => (
         <motion.div
           key={leaf.id}
@@ -209,11 +208,7 @@ export default function PetalsBackground() {
             ease: "linear"
           }}
         >
-          {/* Inner element handles wind physics safely separated from Framer Motion */}
-          <div 
-            id={leaf.id}
-            className="leaf wind-particle w-full h-full"
-          />
+          <div id={leaf.id} className="leaf wind-particle w-full h-full" />
         </motion.div>
       ))}
     </div>

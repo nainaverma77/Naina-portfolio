@@ -27,14 +27,14 @@ export default function ProjectsSection() {
   };
 
   return (
-    <section id="projects" className="px-4 py-16 md:px-8 md:py-24 relative z-10">
+    <section id="projects" className="px-4 py-12 md:px-8 md:py-16 relative z-10 min-h-screen flex flex-col justify-center">
       <div className="w-full max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12 md:mb-16"
+          className="text-center mb-8 md:mb-10"
         >
           <h2 style={{ fontSize: '3rem', color: 'var(--color-text-primary)', marginBottom: '1rem' }} dangerouslySetInnerHTML={{ __html: siteConfig.sections.projects.title.replace(/ (.*?)$/, ' <span class="text-gradient">$1</span>') }} />
           <p style={{ color: 'var(--color-text-secondary)', fontSize: '1.125rem' }}>
@@ -86,7 +86,7 @@ export default function ProjectsSection() {
                 whileHover={{ y: -10 }}
                 className="glass-panel w-[85vw] md:w-auto"
                 style={{
-                  minWidth: '280px',
+                  minWidth: 'min(280px, 85vw)',
                   maxWidth: '350px',
                   flex: '0 0 auto',
                   scrollSnapAlign: 'start',

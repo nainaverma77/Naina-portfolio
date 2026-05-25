@@ -5,7 +5,7 @@
     { "label": "ABOUT", "href": "#about" },
     { "label": "SKILLS", "href": "#skills" },
     { "label": "PROJECTS", "href": "#projects" },
-    { "label": "CONTACT", "href": "#contact" }
+    { "label": "CONNECT", "href": "#connect" }
   ],
   "socialLinks": {
     "github": "https://github.com",

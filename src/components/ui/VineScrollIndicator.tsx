@@ -24,7 +24,7 @@ export default function VineScrollIndicator() {
   const flowerPoints = [0.083, 0.249, 0.416, 0.583, 0.749, 0.916];
 
   return (
-    <div className="fixed left-2 lg:left-6 top-0 bottom-0 w-12 z-50 pointer-events-none hidden md:flex flex-col items-center">
+    <div className="fixed right-2 lg:right-6 top-0 bottom-0 w-12 z-50 pointer-events-none hidden md:flex flex-col items-center">
       
       {/* The Vine Path */}
       <svg 
