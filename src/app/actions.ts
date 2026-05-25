@@ -311,18 +311,18 @@ export async function syncLeetCodeStats(username: string) {
       return { success: false, error: "LeetCode username is required" };
     }
 
-    const response = await fetch(`https://leetcode-stats-api.herokuapp.com/${username}`);
+    const response = await fetch(`https://alfa-leetcode-api.onrender.com/${username}/solved`);
     const data = await response.json();
 
-    if (data.status === "error" || !data.totalSolved) {
-      return { success: false, error: data.message || "Failed to fetch LeetCode stats" };
+    if (data.errors || data.solvedProblem === undefined) {
+      return { success: false, error: data.errors?.[0]?.message || "Failed to fetch LeetCode stats" };
     }
 
     const currentData = await getPortfolioData();
     currentData.leetcode = {
       enabled: true,
       username: username,
-      solvedCount: data.totalSolved,
+      solvedCount: data.solvedProblem,
     };
 
     const success = savePortfolioData(currentData);
@@ -331,7 +331,7 @@ export async function syncLeetCodeStats(username: string) {
     revalidatePath("/", "layout");
     return {
       success: true,
-      message: `Successfully synced LeetCode. Solved: ${data.totalSolved}`,
+      message: `Successfully synced LeetCode. Solved: ${data.solvedProblem}`,
       data: currentData,
     };
   } catch (error) {
