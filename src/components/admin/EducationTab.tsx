@@ -82,7 +82,7 @@ export default function EducationTab({ data, setData }: EducationTabProps) {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-xl font-serif font-bold text-gray-800 tracking-widest uppercase flex items-center gap-2">
-            <BookOpen className="text-green-600" /> Academic Records
+            <BookOpen className="text-rose-500" /> Academic Records
           </h2>
           <p className="text-gray-500 text-sm font-sans">
             Manage education and certification history
@@ -91,7 +91,7 @@ export default function EducationTab({ data, setData }: EducationTabProps) {
 
         <button
           onClick={handleAdd}
-          className="flex items-center gap-2 px-4 py-2 bg-electric-purple/10 border border-electric-purple/30 text-green-600 rounded-md hover:bg-electric-purple/20 transition-colors shadow-[0_0_15px_rgba(160,32,240,0.1)] text-sm font-sans"
+          className="flex items-center gap-2 px-4 py-2 bg-neon-cyan/10 border border-neon-cyan/30 text-rose-500 rounded-md hover:bg-neon-cyan/20 transition-colors text-sm font-sans"
         >
           <Plus size={16} /> Add Record
         </button>
@@ -109,7 +109,7 @@ export default function EducationTab({ data, setData }: EducationTabProps) {
           data.education.map((ed) => (
             <div
               key={ed.id}
-              className={`bg-white/40 backdrop-blur border rounded-xl overflow-hidden transition-all ${ed.visible !== false ? "border-electric-purple/20" : "border-white/40 opacity-60"}`}
+              className={`bg-white/40 backdrop-blur border rounded-xl overflow-hidden transition-all ${ed.visible !== false ? "border-white/60" : "border-white/30 opacity-60"}`}
             >
               {editingId === ed.id ? (
                 <div className="p-6 space-y-4">
@@ -124,7 +124,7 @@ export default function EducationTab({ data, setData }: EducationTabProps) {
                         onChange={(e) =>
                           setEditForm({ ...editForm, degree: e.target.value })
                         }
-                        className="w-full bg-white/40 border border-white/60 rounded p-2 text-sm text-gray-800 focus:outline-none focus:border-electric-purple/50"
+                        className="w-full bg-white/80 border border-gray-300 shadow-sm rounded p-2 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
                       />
                     </div>
                     <div>
@@ -140,7 +140,7 @@ export default function EducationTab({ data, setData }: EducationTabProps) {
                             institution: e.target.value,
                           })
                         }
-                        className="w-full bg-white/40 border border-white/60 rounded p-2 text-sm text-gray-800 focus:outline-none focus:border-electric-purple/50"
+                        className="w-full bg-white/80 border border-gray-300 shadow-sm rounded p-2 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
                       />
                     </div>
                     <div className="md:col-span-2">
@@ -153,7 +153,7 @@ export default function EducationTab({ data, setData }: EducationTabProps) {
                         onChange={(e) =>
                           setEditForm({ ...editForm, timeline: e.target.value })
                         }
-                        className="w-full bg-white/40 border border-white/60 rounded p-2 text-sm text-gray-800 focus:outline-none focus:border-electric-purple/50"
+                        className="w-full bg-white/80 border border-gray-300 shadow-sm rounded p-2 text-sm text-gray-800 focus:outline-none focus:border-rose-400"
                       />
                     </div>
                     <div className="md:col-span-2">
@@ -166,7 +166,7 @@ export default function EducationTab({ data, setData }: EducationTabProps) {
                           setEditForm({ ...editForm, summary: e.target.value })
                         }
                         rows={3}
-                        className="w-full bg-white/40 border border-white/60 rounded p-2 text-sm text-gray-800 focus:outline-none focus:border-electric-purple/50 resize-none"
+                        className="w-full bg-white/80 border border-gray-300 shadow-sm rounded p-2 text-sm text-gray-800 focus:outline-none focus:border-rose-400 resize-none"
                       />
                     </div>
                   </div>
@@ -174,13 +174,13 @@ export default function EducationTab({ data, setData }: EducationTabProps) {
                   <div className="flex justify-end gap-3 pt-4 border-t border-white/60">
                     <button
                       onClick={handleCancel}
-                      className="flex items-center gap-2 px-3 py-1.5 text-xs font-sans text-gray-800/60 hover:text-gray-800 transition-colors"
+                      className="flex items-center gap-2 px-3 py-1.5 text-xs font-sans text-gray-500 hover:text-gray-800 transition-colors"
                     >
                       <X size={14} /> Cancel
                     </button>
                     <button
                       onClick={handleSave}
-                      className="flex items-center gap-2 px-3 py-1.5 text-xs font-sans bg-electric-purple text-gray-800 rounded hover:bg-electric-purple/80 transition-colors shadow-[0_0_10px_rgba(160,32,240,0.5)]"
+                      className="flex items-center gap-2 px-3 py-1.5 text-xs font-sans bg-white/60 border border-white/80 text-gray-800 rounded hover:bg-white transition-colors shadow-sm"
                     >
                       <Check size={14} /> Save
                     </button>
@@ -202,7 +202,7 @@ export default function EducationTab({ data, setData }: EducationTabProps) {
                       )}
                     </div>
                     <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 text-sm">
-                      <span className="flex items-center gap-1.5 text-green-600">
+                      <span className="flex items-center gap-1.5 text-rose-500 font-medium">
                         <GraduationCap size={14} /> {ed.institution}
                       </span>
                       <span className="flex items-center gap-1.5 text-gray-500 font-sans">

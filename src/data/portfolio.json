@@ -10,7 +10,7 @@
     "status": "Available",
     "location": "Gorakhpur",
     "specialization": "Frontend & UI Engineering",
-    "bio": "Hello! I am a passionate developer who treats code like a digital garden—carefully planting seeds of logic, nurturing them with beautiful design, and watching them bloom into seamless user experiences. With a deep love for front-end architecture and interactive interfaces, I specialize in crafting applications that are not only highly functional but aesthetically enchanting.",
+    "bio": "Hello! I am an enthusiastic Computer Science undergraduate with hands-on experience in front-end development. I treat code like a digital garden—carefully planting seeds of logic, nurturing them with beautiful design, and watching them bloom into seamless user experiences. Passionate about creating responsive user interfaces and solving real-world problems through clean and efficient code.",
     "avatarUrl": "https://i.vgy.me/dcWCsw.png",
     "summaryCards": [
       {
@@ -56,6 +56,36 @@
       "name": "CSS/Framer Motion",
       "level": 95,
       "category": "Design",
+      "visible": true
+    },
+    {
+      "name": "HTML5 / CSS3",
+      "level": 90,
+      "category": "Frontend",
+      "visible": true
+    },
+    {
+      "name": "C#",
+      "level": 80,
+      "category": "Languages",
+      "visible": true
+    },
+    {
+      "name": "Java (Basic)",
+      "level": 70,
+      "category": "Languages",
+      "visible": true
+    },
+    {
+      "name": "Git & GitHub",
+      "level": 85,
+      "category": "Tools",
+      "visible": true
+    },
+    {
+      "name": "Canva",
+      "level": 90,
+      "category": "Tools",
       "visible": true
     }
   ],
@@ -372,15 +402,63 @@
       "degree": "B.Tech in Computer Science",
       "institution": "GLA University",
       "timeline": "2023-2027",
-      "summary": "Graduated with honors. Focused on full-stack web development and user interface design.",
+      "summary": "Pursuing Bachelor of Technology with a focus on full-stack web development and user interface design.",
       "visible": true
     },
     {
-      "id": "2",
-      "degree": "Advanced UI/UX Certification",
-      "institution": "Design Academy",
-      "timeline": "2023",
-      "summary": "Intensive coursework on modern design principles, wireframing, and interactive prototyping.",
+      "id": "cert_flutter",
+      "degree": "Mobile App Development Using Flutter",
+      "institution": "W3grads & GLA University",
+      "timeline": "Jun 2025 - Jul 2025",
+      "summary": "Successfully completed the 45 days Summer Training Program (JOVAC' 25).",
+      "visible": true
+    },
+    {
+      "id": "cert_csharp",
+      "degree": "Foundational C# with Microsoft",
+      "institution": "freeCodeCamp & Microsoft",
+      "timeline": "April 2026",
+      "summary": "Developer Certification for successfully completing Foundational C# with Microsoft.",
+      "visible": true
+    },
+    {
+      "id": "cert_hackerrank",
+      "degree": "Problem Solving (Basic)",
+      "institution": "HackerRank",
+      "timeline": "April 2026",
+      "summary": "Passed the HackerRank skill certification test for Problem Solving (Basic).",
+      "visible": true
+    },
+    {
+      "id": "cert_java",
+      "degree": "Java Programming",
+      "institution": "Great Learning Academy",
+      "timeline": "July 2024",
+      "summary": "Successfully completed course on Java Programming.",
+      "visible": true
+    },
+    {
+      "id": "cert_english",
+      "degree": "Smart English Basics for Professionals",
+      "institution": "Great Learning Academy",
+      "timeline": "July 2024",
+      "summary": "Successfully completed course on Smart English Basics for Professionals.",
+      "visible": true
+    },
+    {
+      "id": "edu_xii",
+      "degree": "Intermediate (Class XII)",
+      "institution": "Springer Loretto Girls' School, Gorakhpur",
+      "timeline": "May 2022",
+      "summary": "Completed with 68%.",
+      "visible": true
+    },
+    {
+      "id": "edu_x",
+      "degree": "High School (Class X)",
+      "institution": "Springer Loretto Girls' School, Gorakhpur",
+      "timeline": "May 2020",
+      "summary": "Completed with 78.6%.",
       "visible": true
     }
   ],
@@ -390,13 +468,25 @@
     {
       "id": "s1",
       "platform": "GitHub",
-      "url": "https://github.com/naina",
+      "url": "https://github.com/nainaverma77",
       "enabled": true
     },
     {
       "id": "s2",
       "platform": "LinkedIn",
-      "url": "https://linkedin.com/in/naina",
+      "url": "https://linkedin.com/in/naina-verma",
+      "enabled": true
+    },
+    {
+      "id": "s3",
+      "platform": "Email",
+      "url": "mailto:nainaverma6080@gmail.com",
+      "enabled": true
+    },
+    {
+      "id": "s4",
+      "platform": "Phone",
+      "url": "tel:+918896256080",
       "enabled": true
     }
   ],
@@ -414,8 +504,8 @@
     "prs": 1
   },
   "leetcode": {
-    "enabled": false,
-    "username": "",
-    "solvedCount": 0
+    "enabled": true,
+    "username": "nainaverma77",
+    "solvedCount": 150
   }
 }
