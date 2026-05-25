@@ -290,7 +290,7 @@ export default function SkillsTab({ data, setData }: SkillsTabProps) {
                     },
                   })
                 }
-                className="w-full accent-neon-cyan cursor-pointer"
+                className="w-full accent-neon-cyan cursor-pointer bg-gray-300 rounded-full h-2 shadow-inner appearance-auto"
               />
             </div>
 

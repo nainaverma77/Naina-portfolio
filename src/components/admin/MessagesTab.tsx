@@ -158,26 +158,26 @@ export default function MessagesTab() {
             <p>No transmissions intercepted yet.</p>
           </div>
         ) : (
-          <div className="p-6">
+          <div className="w-full flex flex-col h-full">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-white/30 border-b border-white/60 font-serif text-xs tracking-widest text-gray-600 uppercase">
-                    <th className="p-4 font-normal">Timestamp</th>
+                    <th className="p-4 pl-6 font-normal">Timestamp</th>
                     <th className="p-4 font-normal">Identity</th>
                     <th className="p-4 font-normal">Vector (Email)</th>
                     <th className="p-4 font-normal w-1/2">Payload (Snippet)</th>
-                    <th className="p-4 font-normal text-right">Actions</th>
+                    <th className="p-4 pr-6 font-normal text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="font-inter text-sm divide-y divide-white/5">
+                <tbody className="font-inter text-sm divide-y divide-white/10">
                   {paginatedMessages.map((msg) => (
                     <tr
                       key={msg.id}
                       onClick={() => setSelectedMessage(msg)}
-                      className="hover:bg-white/5 transition-colors group cursor-pointer"
+                      className="hover:bg-white/10 transition-colors group cursor-pointer"
                     >
-                      <td className="p-4 text-gray-500 font-sans text-xs whitespace-nowrap">
+                      <td className="p-4 pl-6 text-gray-500 font-sans text-xs whitespace-nowrap">
                         {new Date(msg.timestamp).toLocaleString()}
                       </td>
                       <td className="p-4 text-gray-800/90 font-medium">
@@ -199,8 +199,8 @@ export default function MessagesTab() {
                           {msg.message}
                         </div>
                       </td>
-                      <td className="p-4 text-right">
-                        <div className="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <td className="p-4 pr-6 text-right">
+                        <div className="flex items-center justify-end gap-3 opacity-0 lg:opacity-100 group-hover:opacity-100 transition-opacity">
                           <button
                             className="text-gray-600 hover:text-rose-500 transition-colors"
                             onClick={(e) => {
@@ -224,17 +224,19 @@ export default function MessagesTab() {
               </table>
             </div>
 
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-              itemsPerPage={itemsPerPage}
-              onItemsPerPageChange={(num) => {
-                setItemsPerPage(num);
-                setCurrentPage(1);
-              }}
-              totalItems={messages.length}
-            />
+            <div className="p-6 border-t border-white/20">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+                itemsPerPage={itemsPerPage}
+                onItemsPerPageChange={(num) => {
+                  setItemsPerPage(num);
+                  setCurrentPage(1);
+                }}
+                totalItems={messages.length}
+              />
+            </div>
           </div>
         )}
       </div>
