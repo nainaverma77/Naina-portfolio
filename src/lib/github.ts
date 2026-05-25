@@ -2,8 +2,14 @@ import { Project } from "@/types/portfolio";
 
 export async function fetchGithubRepos(username: string): Promise<Project[]> {
   try {
+    const headers: Record<string, string> = {};
+    if (process.env.GITHUB_TOKEN) {
+      headers["Authorization"] = `token ${process.env.GITHUB_TOKEN}`;
+    }
+
     const response = await fetch(
       `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`,
+      { headers }
     );
 
     if (!response.ok) {
@@ -76,10 +82,15 @@ export async function fetchGithubReadme(repoUrl: string): Promise<string> {
   const repoPath = urlParts[1].replace(/\/$/, ""); // Remove trailing slash if any
   
   try {
+    const headers: Record<string, string> = {
+      Accept: 'application/vnd.github.v3.raw',
+    };
+    if (process.env.GITHUB_TOKEN) {
+      headers["Authorization"] = `token ${process.env.GITHUB_TOKEN}`;
+    }
+
     const res = await fetch(`https://api.github.com/repos/${repoPath}/readme`, {
-      headers: {
-        Accept: 'application/vnd.github.v3.raw',
-      },
+      headers,
       next: { revalidate: 3600 } // Cache for 1 hour
     });
     

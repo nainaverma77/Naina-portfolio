@@ -34,13 +34,23 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the portfolio in action.
 
 ### Admin Access
-Navigate to `/admin` in your browser. The default login is configured via environment variables.
-Ensure you have an `.env.local` file at the root of the project:
+Navigate to `/admin` in your browser. Admin credentials are securely stored and verified against MongoDB using PBKDF2 cryptography.
+
+#### Initial Seeding
+On your very first login attempt, if the `admins` collection in MongoDB is empty, the system will automatically seed it using the credentials defined in your `.env.local` file:
 ```env
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD=your_secure_password
-GITHUB_TOKEN=your_github_personal_access_token (optional, for higher rate limits)
+ADMIN_USERNAME=your_admin_username
+ADMIN_PASSWORD=your_admin_password
+MASTER_USERNAME=your_master_username
+MASTER_PASSWORD=your_master_password
 ```
+
+All subsequent logins will verify against the database records.
+
+#### OTP Verification & Fallback
+To log in securely, an OTP is generated:
+1. It is sent via email using the SMTP settings (`EMAIL_USER`, `EMAIL_PASS`) in `.env.local`.
+2. If email sending fails or is not configured, the system falls back gracefully, showing a warning in the UI, and logs the secure OTP code directly to the server terminal console (where `npm run dev` is running) so you can still log in instantly.
 
 ## 🎨 Customization
 Most data (Skills, Projects, Bio, etc.) is persistently stored and read from `src/data/portfolio.json`. You can safely modify this from the Admin Panel, or edit the JSON manually.

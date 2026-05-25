@@ -33,8 +33,12 @@ export default function LoginScreen() {
     if (result.success && result.requiresOtp) {
       setResendTimer(30);
       setIsLoading(false);
-      setError("OTP resent successfully!");
-      setTimeout(() => setError(""), 3000);
+      if (result.error) {
+        setError(result.error);
+      } else {
+        setError("OTP resent successfully!");
+        setTimeout(() => setError(""), 3000);
+      }
     } else {
       setError(result.error || "Failed to resend OTP");
       setIsLoading(false);
@@ -52,6 +56,9 @@ export default function LoginScreen() {
         setShowOtp(true);
         setResendTimer(30);
         setIsLoading(false);
+        if (result.error) {
+          setError(result.error);
+        }
       } else {
         setError(result.error || "Login failed");
         setIsLoading(false);

@@ -1,12 +1,16 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { AdminModel } from '@/models/Admin';
+import { verifyPassword, seedAdminsIfEmpty } from '@/lib/auth-db';
 
 export async function POST(request: Request) {
   try {
     const { password } = await request.json();
-    const correctPassword = process.env.ADMIN_PASSWORD || 'naina123';
 
-    if (password === correctPassword) {
+    await seedAdminsIfEmpty();
+    const adminUser = await AdminModel.findOne({ role: 'admin' });
+    
+    if (adminUser && verifyPassword(password, adminUser.password)) {
       // Set an HTTP-Only secure cookie for authentication
       const cookieStore = await cookies();
       cookieStore.set('admin_token', 'authenticated', {

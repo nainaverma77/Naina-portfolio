@@ -14,6 +14,8 @@ import {
 } from "@/lib/data";
 import { PortfolioData, Message } from "@/types/portfolio";
 import { fetchGithubRepos } from "@/lib/github";
+import { AdminModel } from "@/models/Admin";
+import { verifyPassword, seedAdminsIfEmpty } from "@/lib/auth-db";
 
 const AUTH_COOKIE_NAME = "anikesh_os_admin_session";
 
@@ -49,18 +51,22 @@ function getTransporter() {
 }
 
 export async function verifyLogin(username: string, pass: string) {
-  const validUser = process.env.ADMIN_USERNAME || "admin";
-  const validPass = process.env.ADMIN_PASSWORD || "password";
+  // Seed first if DB is empty
+  await seedAdminsIfEmpty();
 
-  const masterUser = process.env.MASTER_USERNAME;
-  const masterPass = process.env.MASTER_PASSWORD;
-
-  const isMasterBypass = !!masterUser && !!masterPass && username === masterUser && pass === masterPass;
-  const isStandardLogin = username === validUser && pass === validPass;
-
-  if (!isStandardLogin && !isMasterBypass) {
+  // Find user by username
+  const user = await AdminModel.findOne({ username: username.trim() });
+  if (!user) {
     return { success: false, error: "Invalid credentials" };
   }
+
+  // Verify password using PBKDF2 hash comparison
+  const isValidPassword = verifyPassword(pass, user.password);
+  if (!isValidPassword) {
+    return { success: false, error: "Invalid credentials" };
+  }
+
+  const isMasterBypass = user.role === 'master';
 
   const cookieStore = await cookies();
   let deviceId = cookieStore.get("device_id")?.value;
@@ -87,14 +93,13 @@ export async function verifyLogin(username: string, pass: string) {
   const currentOtp = crypto.randomInt(100000, 1000000).toString();
 
   // Determine which email to send to
-  const targetEmail = isMasterBypass
-    ? (process.env.MASTER_EMAIL || process.env.EMAIL_USER)
-    : (process.env.OTP_RECEIVER_EMAIL || process.env.EMAIL_USER);
+  const targetEmail = user.email || process.env.EMAIL_USER;
 
   const subjectPrefix = isMasterBypass ? "MASTER" : "Admin";
 
   // Send Email
   const transporter = getTransporter();
+  let emailError: string | undefined = undefined;
   if (transporter) {
     try {
       const htmlEmail = `
@@ -132,9 +137,12 @@ export async function verifyLogin(username: string, pass: string) {
       });
     } catch (err) {
       console.error("Failed to send OTP email:", err);
+      console.log(`\n🔐 ${subjectPrefix.toUpperCase()} LOGIN OTP (Fallback due to email error): ${currentOtp}\n`);
+      emailError = `Failed to send OTP email (Invalid credentials/SMTP error). For local testing, find the OTP in your server terminal.`;
     }
   } else {
     console.log(`\n🔐 ${subjectPrefix.toUpperCase()} LOGIN OTP (Fallback): ${currentOtp}\n`);
+    emailError = `SMTP credentials not configured. Find the OTP in your server terminal.`;
   }
 
   if (existingDevice) {
@@ -161,7 +169,7 @@ export async function verifyLogin(username: string, pass: string) {
     path: "/",
   });
 
-  return { success: true, requiresOtp: true };
+  return { success: true, requiresOtp: true, error: emailError };
 }
 
 export async function verifyLoginOtp(otp: string) {

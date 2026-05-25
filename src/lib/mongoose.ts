@@ -6,10 +6,20 @@ if (!MONGODB_URI) {
   console.warn('⚠️ MONGODB_URI is not defined in the environment variables. Using fallback for local dev.');
 }
 
-let cached = (global as any).mongoose;
+interface MongooseCache {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+}
 
-if (!cached) {
-  cached = (global as any).mongoose = { conn: null, promise: null };
+declare global {
+  // eslint-disable-next-line no-var
+  var mongoose: MongooseCache | undefined;
+}
+
+const cached: MongooseCache = globalThis.mongoose || { conn: null, promise: null };
+
+if (!globalThis.mongoose) {
+  globalThis.mongoose = cached;
 }
 
 export async function connectToDatabase() {

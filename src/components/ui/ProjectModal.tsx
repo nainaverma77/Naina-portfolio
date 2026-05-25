@@ -72,7 +72,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
 
   useEffect(() => {
     if (isOpen && project?.links?.github && !project.hideCode) {
-      setIsLoading(true);
+      const timer = setTimeout(() => setIsLoading(true), 0);
       fetch(`/api/github/readme?repoUrl=${encodeURIComponent(project.links.github)}`)
         .then(res => res.json())
         .then(data => {
@@ -84,6 +84,10 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
           setReadme('Failed to load README.');
           setIsLoading(false);
         });
+      return () => clearTimeout(timer);
+    } else {
+      setReadme('');
+      setIsLoading(false);
     }
   }, [isOpen, project]);
 

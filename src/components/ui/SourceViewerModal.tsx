@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Search, FileCode, FileText, FileImage, Folder, ChevronRight, Terminal, Loader2 } from 'lucide-react';
+import { X, Search, FileCode, FileText, FileImage, Terminal, Loader2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -36,49 +36,7 @@ export default function SourceViewerModal({ repoUrl, projectName, isOpen, onClos
   // Extract owner/repo
   const repoPath = repoUrl?.split('github.com/')[1]?.replace(/\/$/, "");
 
-  useEffect(() => {
-    if (isOpen && repoPath) {
-      fetchFiles();
-    }
-  }, [isOpen, repoPath]);
-
-  const fetchFiles = async () => {
-    setLoadingFiles(true);
-    setError('');
-    try {
-      // Try main branch
-      let res = await fetch(`https://api.github.com/repos/${repoPath}/git/trees/main?recursive=1`);
-      if (!res.ok) {
-        // Try master branch
-        res = await fetch(`https://api.github.com/repos/${repoPath}/git/trees/master?recursive=1`);
-      }
-      
-      if (!res.ok) {
-        throw new Error('Failed to fetch repository tree. It might be private or empty.');
-      }
-      
-      const data = await res.json();
-      if (data.tree) {
-        // Filter out trees (directories) if you just want a flat list, but let's keep all and filter blobs
-        const blobs = data.tree.filter((item: GithubFile) => item.type === 'blob');
-        setFiles(blobs);
-        
-        // Auto-select README.md if it exists
-        const readme = blobs.find((f: GithubFile) => f.path.toLowerCase() === 'readme.md');
-        if (readme) {
-          handleFileSelect(readme);
-        } else if (blobs.length > 0) {
-          handleFileSelect(blobs[0]);
-        }
-      }
-    } catch (err: any) {
-      setError(err.message || 'An error occurred');
-    } finally {
-      setLoadingFiles(false);
-    }
-  };
-
-  const handleFileSelect = async (file: GithubFile) => {
+  const handleFileSelect = useCallback(async (file: GithubFile) => {
     setSelectedFile(file);
     setLoadingContent(true);
     try {
@@ -97,7 +55,52 @@ export default function SourceViewerModal({ repoUrl, projectName, isOpen, onClos
     } finally {
       setLoadingContent(false);
     }
-  };
+  }, [repoPath]);
+
+  const fetchFiles = useCallback(async () => {
+    setLoadingFiles(true);
+    setError('');
+    try {
+      // Try main branch
+      let res = await fetch(`https://api.github.com/repos/${repoPath}/git/trees/main?recursive=1`);
+      if (!res.ok) {
+        // Try master branch
+        res = await fetch(`https://api.github.com/repos/${repoPath}/git/trees/master?recursive=1`);
+      }
+      
+      if (!res.ok) {
+        throw new Error('Failed to fetch repository tree. It might be private or empty.');
+      }
+      
+      const data = await res.json();
+      if (data.tree) {
+        const blobs = data.tree.filter((item: GithubFile) => item.type === 'blob');
+        setFiles(blobs);
+        
+        // Auto-select README.md if it exists
+        const readme = blobs.find((f: GithubFile) => f.path.toLowerCase() === 'readme.md');
+        if (readme) {
+          handleFileSelect(readme);
+        } else if (blobs.length > 0) {
+          handleFileSelect(blobs[0]);
+        }
+      }
+    } catch (err) {
+      const errMsg = err instanceof Error ? err.message : 'An error occurred';
+      setError(errMsg);
+    } finally {
+      setLoadingFiles(false);
+    }
+  }, [repoPath, handleFileSelect]);
+
+  useEffect(() => {
+    if (isOpen && repoPath) {
+      const timer = setTimeout(() => {
+        fetchFiles();
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen, repoPath, fetchFiles]);
 
   const filteredFiles = files.filter(f => f.path.toLowerCase().includes(searchQuery.toLowerCase()));
 
@@ -160,7 +163,7 @@ export default function SourceViewerModal({ repoUrl, projectName, isOpen, onClos
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <Terminal size={18} color="var(--color-primary)" />
               <h2 style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--color-text-primary)', letterSpacing: '0.05em' }}>
-                SOURCE_VIEWER <span style={{ color: 'var(--color-text-muted)' }}>//</span> {projectName.toUpperCase()}
+                SOURCE_VIEWER <span style={{ color: 'var(--color-text-muted)' }}>{"//"}</span> {projectName.toUpperCase()}
               </h2>
             </div>
             <button 
