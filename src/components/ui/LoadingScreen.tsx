@@ -121,7 +121,7 @@ export default function LoadingScreen() {
             />
 
             {/* Glowing Pollen Particles */}
-            {[...Array(30)].map((_, i) => (
+            {[...Array(20)].map((_, i) => (
               <motion.div
                 key={`pollen-${i}`}
                 initial={{ y: 0, x: 0, opacity: 0, scale: 0 }}
@@ -143,8 +143,13 @@ export default function LoadingScreen() {
                 }}
               />
             ))}
-
-            {/* Glassmorphism Petals (Outer) */}
+            {/* Rotating Flower Container tied to progress */}
+            <motion.div
+              animate={{ rotate: (progress / 100) * 360 }}
+              transition={{ ease: "linear", duration: 0.1 }}
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              {/* Glassmorphism Petals (Outer) */}
             {[...Array(8)].map((_, i) => (
               <motion.div
                 key={`outer-${i}`}
@@ -152,7 +157,7 @@ export default function LoadingScreen() {
                 variants={petalVariants}
                 initial="hidden"
                 animate="visible"
-                className="absolute origin-bottom backdrop-blur-md border border-red-400/60"
+                className="absolute origin-bottom border border-red-400/60"
                 style={{
                   width: '50px',
                   height: '140px',
@@ -173,7 +178,7 @@ export default function LoadingScreen() {
                 variants={innerPetalVariants}
                 initial="hidden"
                 animate="visible"
-                className="absolute origin-bottom backdrop-blur-md border border-white/30"
+                className="absolute origin-bottom border border-white/30"
                 style={{
                   width: '35px',
                   height: '100px',
@@ -186,17 +191,18 @@ export default function LoadingScreen() {
               />
             ))}
 
-            {/* Glowing Center Core */}
-            <motion.div
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 1, duration: 0.8, type: "spring", bounce: 0.5 }}
-              className="absolute w-[40px] h-[40px] rounded-full z-20"
-              style={{
-                background: 'linear-gradient(135deg, #FFF 0%, #ff4d4d 100%)',
-                boxShadow: '0 0 40px #ff4d4d, inset 0 0 10px rgba(255,255,255,0.8)'
-              }}
-            />
+              {/* Glowing Center Core */}
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 1, duration: 0.8, type: "spring", bounce: 0.5 }}
+                className="absolute w-[40px] h-[40px] rounded-full z-20"
+                style={{
+                  background: 'linear-gradient(135deg, #FFF 0%, #ff4d4d 100%)',
+                  boxShadow: '0 0 40px #ff4d4d, inset 0 0 10px rgba(255,255,255,0.8)'
+                }}
+              />
+            </motion.div>
           </div>
 
           {/* Elegant Typography */}
