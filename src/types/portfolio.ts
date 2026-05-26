@@ -57,6 +57,7 @@ export interface Education {
   timeline: string;
   summary: string;
   visible?: boolean;
+  pinned?: boolean;
 }
 
 export interface Testimonial {

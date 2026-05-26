@@ -22,10 +22,10 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
-    // Wait 4 seconds for the bee to fly around before it officially 'lands'
+    // Wait for the 4s loading screen + 2s flight time before it officially 'lands'
     const timer = setTimeout(() => {
       setBeeLanded(true);
-    }, 4000);
+    }, 6000);
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -319,7 +319,8 @@ export default function Home() {
                     rotate: [-45, 30, -30, 20, 0]
                   }}
                   transition={{
-                    duration: 4,
+                    delay: 4, // Wait for loading screen to finish
+                    duration: 2,
                     ease: "easeInOut",
                     times: [0, 0.3, 0.6, 0.85, 1]
                   }}
@@ -352,7 +353,7 @@ export default function Home() {
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5, duration: 1.5, ease: "easeOut" }}
+              transition={{ delay: 4.5, duration: 1.5, ease: "easeOut" }}
               className="flex flex-col items-center gap-4 mb-12 max-w-2xl text-center relative z-10"
             >
               <div className="flex items-center gap-4 w-full justify-center opacity-70">

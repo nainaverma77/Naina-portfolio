@@ -14,6 +14,7 @@ import {
   GraduationCap,
   Calendar,
   FileText,
+  Pin,
 } from "lucide-react";
 
 interface EducationTabProps {
@@ -77,6 +78,15 @@ export default function EducationTab({ data, setData }: EducationTabProps) {
     });
   };
 
+  const handleTogglePinned = (id: string, currentPinned: boolean) => {
+    setData({
+      ...data,
+      education: data.education.map((ed) =>
+        ed.id === id ? { ...ed, pinned: !currentPinned } : ed,
+      ),
+    });
+  };
+
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
@@ -106,7 +116,11 @@ export default function EducationTab({ data, setData }: EducationTabProps) {
             </p>
           </div>
         ) : (
-          data.education.map((ed) => (
+          [...data.education].sort((a, b) => {
+            if (a.pinned && !b.pinned) return -1;
+            if (!a.pinned && b.pinned) return 1;
+            return 0;
+          }).map((ed) => (
             <div
               key={ed.id}
               className={`bg-white/40 backdrop-blur border rounded-xl overflow-hidden transition-all ${ed.visible !== false ? "border-white/60" : "border-white/30 opacity-60"}`}
@@ -200,6 +214,11 @@ export default function EducationTab({ data, setData }: EducationTabProps) {
                           HIDDEN
                         </span>
                       )}
+                      {ed.pinned && (
+                        <span className="text-[10px] font-sans bg-rose-500/10 text-rose-600 px-2 py-0.5 rounded flex items-center gap-1">
+                          <Pin size={10} /> PINNED
+                        </span>
+                      )}
                     </div>
                     <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 text-sm">
                       <span className="flex items-center gap-1.5 text-rose-500 font-medium">
@@ -215,6 +234,15 @@ export default function EducationTab({ data, setData }: EducationTabProps) {
                   </div>
 
                   <div className="flex items-center gap-2 self-end md:self-center opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button
+                      onClick={() =>
+                        handleTogglePinned(ed.id, ed.pinned || false)
+                      }
+                      className={`p-2 bg-white/30 border border-white/40 rounded transition-colors ${ed.pinned ? 'text-rose-500 hover:text-rose-600' : 'text-gray-600 hover:text-gray-800'}`}
+                      title={ed.pinned ? "Unpin record" : "Pin record to top"}
+                    >
+                      <Pin size={16} />
+                    </button>
                     <button
                       onClick={() =>
                         handleToggleVisible(ed.id, ed.visible !== false)

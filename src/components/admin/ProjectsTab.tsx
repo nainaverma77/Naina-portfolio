@@ -9,6 +9,7 @@ import {
   EyeOff,
   RefreshCw,
   Pin,
+  Image as ImageIcon,
 } from "lucide-react";
 import Pagination from "./Pagination";
 import Modal from "./Modal";
@@ -213,6 +214,7 @@ export default function ProjectsTab({
               <tr className="bg-white/30 border-b border-white/60 font-serif text-xs tracking-wider uppercase text-gray-600">
                 <th className="p-4 font-normal">Visibility</th>
                 <th className="p-4 font-normal">ID</th>
+                <th className="p-4 font-normal w-16 text-center">Image</th>
                 <th className="p-4 font-normal">Project Name</th>
                 <th className="p-4 font-normal">Category</th>
                 <th className="p-4 font-normal">Status</th>
@@ -224,7 +226,7 @@ export default function ProjectsTab({
               {paginatedProjects.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={7}
+                    colSpan={8}
                     className="p-8 text-center text-gray-500 font-sans text-sm"
                   >
                     NO_RECORDS_FOUND
@@ -253,6 +255,18 @@ export default function ProjectsTab({
                     </td>
                     <td className="p-4 font-sans text-xs text-gray-500">
                       {project.id}
+                    </td>
+                    <td className="p-4 w-16 text-center">
+                      {project.imageUrl ? (
+                        <div className="w-8 h-8 rounded border border-white/40 overflow-hidden bg-white/20 mx-auto">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={project.imageUrl} alt={project.name} className="w-full h-full object-cover" />
+                        </div>
+                      ) : (
+                        <div className="w-8 h-8 rounded border border-white/40 border-dashed flex items-center justify-center bg-white/10 text-gray-400 mx-auto">
+                          <ImageIcon size={14} />
+                        </div>
+                      )}
                     </td>
                     <td className="p-4">
                       <button 
@@ -404,9 +418,20 @@ export default function ProjectsTab({
             </div>
 
             <div>
-              <label className="block text-xs font-sans text-gray-600 mb-1">
-                Project Image URL (Optional)
-              </label>
+              <div className="flex justify-between items-center mb-1">
+                <label className="block text-xs font-sans text-gray-600">
+                  Project Image URL (Optional)
+                </label>
+                {editingProject.imageUrl && (
+                  <button 
+                    type="button"
+                    onClick={() => setEditingProject({ ...editingProject, imageUrl: "" })}
+                    className="text-[10px] text-red-400 hover:text-red-500 font-medium bg-white/30 px-2 py-0.5 rounded border border-white/60"
+                  >
+                    Clear Image
+                  </button>
+                )}
+              </div>
               <input
                 type="text"
                 placeholder="https://..."
@@ -422,9 +447,20 @@ export default function ProjectsTab({
             </div>
 
             <div>
-              <label className="block text-xs font-sans text-gray-600 mb-1">
-                Gallery Images (comma separated URLs)
-              </label>
+              <div className="flex justify-between items-center mb-1">
+                <label className="block text-xs font-sans text-gray-600">
+                  Gallery Images (comma separated URLs)
+                </label>
+                {((Array.isArray(editingProject.gallery) && editingProject.gallery.length > 0) || (typeof editingProject.gallery === 'string' && editingProject.gallery !== "")) && (
+                  <button 
+                    type="button"
+                    onClick={() => setEditingProject({ ...editingProject, gallery: [] })}
+                    className="text-[10px] text-red-400 hover:text-red-500 font-medium bg-white/30 px-2 py-0.5 rounded border border-white/60"
+                  >
+                    Clear Gallery
+                  </button>
+                )}
+              </div>
               <textarea
                 rows={2}
                 placeholder="https://image1.jpg, https://image2.jpg..."

@@ -7,7 +7,13 @@ import siteConfig from '@/data/site_config.json';
 
 export default function EducationSection() {
   const portfolioData = usePortfolio();
-  const activeEducation = portfolioData.education.filter(ed => ed.visible !== false);
+  const activeEducation = portfolioData.education
+    .filter(ed => ed.visible !== false)
+    .sort((a, b) => {
+      if (a.pinned && !b.pinned) return -1;
+      if (!a.pinned && b.pinned) return 1;
+      return 0;
+    });
 
   return (
     <section id="education" className="px-4 py-12 md:px-8 md:py-16 relative z-10 min-h-screen flex flex-col justify-center">
