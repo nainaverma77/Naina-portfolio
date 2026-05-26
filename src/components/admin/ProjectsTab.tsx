@@ -244,6 +244,7 @@ export default function ProjectsTab({
                     <td className="p-4 w-12 text-center">
                       <button
                         onClick={() => toggleVisibility(project.id)}
+                        title={project.visible !== false ? "Hide Project" : "Show Project"}
                         className={`p-1.5 rounded-md transition-colors ${project.visible !== false ? "bg-neon-cyan/10 text-rose-500 border border-neon-cyan/20" : "bg-white/40 text-gray-400 border border-white/60"}`}
                       >
                         {project.visible !== false ? (
@@ -269,12 +270,19 @@ export default function ProjectsTab({
                       )}
                     </td>
                     <td className="p-4">
-                      <button 
-                        onClick={() => handleEdit(project)}
-                        className="font-bold text-gray-800 group-hover:text-rose-500 transition-colors text-left focus:outline-none"
-                      >
-                        {project.name}
-                      </button>
+                      <div className="flex flex-col">
+                        <button 
+                          onClick={() => handleEdit(project)}
+                          className="font-bold text-gray-800 group-hover:text-rose-500 transition-colors text-left focus:outline-none"
+                        >
+                          {project.name}
+                        </button>
+                        {project.description && (
+                          <span className="text-[10px] text-gray-500 line-clamp-1 mt-0.5 max-w-[200px]" title={project.description}>
+                            {project.description}
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="p-4">
                       <span className="text-[10px] font-sans border border-electric-purple/30 bg-electric-purple/10 text-green-600 px-2 py-0.5 rounded">
@@ -304,12 +312,14 @@ export default function ProjectsTab({
                         </button>
                         <button
                           onClick={() => handleEdit(project)}
+                          title="Edit Project"
                           className="p-1.5 rounded bg-white/30 border border-white/40 text-gray-800/60 hover:text-gray-800 hover:border-white/20 transition-all"
                         >
                           <Edit2 size={14} />
                         </button>
                         <button
                           onClick={() => handleDelete(project.id)}
+                          title="Delete Project"
                           className="p-1.5 rounded bg-white/30 border border-white/40 text-red-400/70 hover:text-red-400 hover:border-red-400/30 hover:bg-red-400/10 transition-all"
                         >
                           <Trash2 size={14} />
@@ -350,7 +360,7 @@ export default function ProjectsTab({
       >
         {editingProject && (
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-sans text-gray-600 mb-1">
                   Project ID
@@ -479,7 +489,7 @@ export default function ProjectsTab({
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-sans text-gray-600 mb-1">
                   Category
@@ -540,7 +550,7 @@ export default function ProjectsTab({
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-sans text-gray-600 mb-1">
                   GitHub Link
@@ -578,7 +588,7 @@ export default function ProjectsTab({
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 pt-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
               <label className="flex items-center gap-3 cursor-pointer p-3 bg-white/30 border border-white/40 rounded hover:bg-white/40 transition-colors">
                 <div className="relative">
                   <input

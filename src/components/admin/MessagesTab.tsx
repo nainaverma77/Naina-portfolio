@@ -248,7 +248,7 @@ export default function MessagesTab() {
       >
         {selectedMessage && (
           <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-white/30 p-4 rounded-md border border-white/40">
                 <p className="text-[10px] font-serif tracking-widest text-gray-500 uppercase mb-1">
                   Identity

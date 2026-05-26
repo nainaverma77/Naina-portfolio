@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 
 export default function LoadingScreen() {
@@ -40,7 +40,7 @@ export default function LoadingScreen() {
     return null;
   }
 
-  const petalVariants = {
+  const petalVariants: Variants = {
     hidden: { scale: 0, opacity: 0, rotate: 0 },
     visible: (i: number) => ({
       scale: 1,
@@ -55,7 +55,7 @@ export default function LoadingScreen() {
     })
   };
 
-  const innerPetalVariants = {
+  const innerPetalVariants: Variants = {
     hidden: { scale: 0, opacity: 0, rotate: 22.5 },
     visible: (i: number) => ({
       scale: 1,
@@ -70,7 +70,7 @@ export default function LoadingScreen() {
     })
   };
 
-  const ringVariants = {
+  const ringVariants: Variants = {
     hidden: { scale: 0.5, opacity: 0, borderWidth: "8px" },
     visible: {
       scale: 2,
